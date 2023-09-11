@@ -53,12 +53,12 @@ O sistema deve estar sempre disponível, para que agendamentos possam ser regist
 Deve haver backup regular para proteger os dados contra perda ou corrupção.
 
 # Ferramentas, dependências e configurações
-"cookie-parser": "~1.4.4",
-"debug": "~2.6.9",
-"ejs": "^3.1.8",
-"express": "^4.18.2",
-"http-errors": "~1.6.3",
-"morgan": "~1.9.1",
+"cookie-parser": "~1.4.4"\n
+"debug": "~2.6.9"\n
+"ejs": "^3.1.8"\n
+"express": "^4.18.2"\n
+"http-errors": "~1.6.3"\n
+"morgan": "~1.9.1"\n
 "mysql2": "^2.3.3"
 
 # Instruções para Novos Desenvolvedores
