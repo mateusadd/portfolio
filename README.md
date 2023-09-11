@@ -45,7 +45,7 @@ Ajudar um estabelecimento que mantém seus processos de histórico de agendament
 
 14 - Os relatórios de pagamentos devem mostrar uma lista de transações correspondentes ao período e método selecionados.​
 
-​## Requisitos não funcionais
+## Requisitos Não Funcionais
 A interface do sistema deve ser fácil de usar, tendo atualizações dinâmicas conforme as informações são alteradas, sendo intuitiva para o usuário​
 
 O sistema deve estar sempre disponível, para que agendamentos possam ser registrados a qualquer momento. Essencialmente durante o período de atendimento, para registrar os pagamentos.​
