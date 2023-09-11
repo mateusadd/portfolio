@@ -62,7 +62,7 @@ Deve haver backup regular para proteger os dados contra perda ou corrupção.
 "mysql2": "^2.3.3"
 
 # Instruções para Novos Desenvolvedores
-git clone https://github.com/mateusadd/portfolio/edit/main
+git clone https://github.com/mateusadd/portfolio/edit/main  
 npm start
 
 # Organização das Tarefas
