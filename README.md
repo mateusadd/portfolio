@@ -15,6 +15,10 @@ m.andrade@catolicasc.edu.br
 # Motivação do Projeto
 Ajudar um estabelecimento que mantém seus processos de histórico de agendamento, cálculo de comissões e controle de faturamento em papel e caneta, acarretando perda dos registros de atendimento, erros na distribuição das comissões e multas por conta do limite de faturamento da MEI
 
+# Arquitetura do Projeto
+![image](https://github.com/mateusadd/portfolio/assets/81190849/1a4f4f98-745b-42e5-9bb5-eb37b389fd2d)
+
+
 # Requisitos do projeto
 ## Requisitos Funcionais
 1 - O usuário deve cadastrar novos clientes detalhando nome e telefone​
