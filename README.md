@@ -53,16 +53,15 @@ O sistema deve estar sempre disponível, para que agendamentos possam ser regist
 Deve haver backup regular para proteger os dados contra perda ou corrupção.
 
 # Ferramentas, dependências e configurações
-"cookie-parser": "~1.4.4"  
-"debug": "~2.6.9"  
-"ejs": "^3.1.8"  
-"express": "^4.18.2"  
-"http-errors": "~1.6.3"  
-"morgan": "~1.9.1"  
-"mysql2": "^2.3.3"
+Express​  
+Sequelize​  
+Mysql2​  
+Cors​  
+Axios​  
+React Router DOM  
 
 # Instruções para Novos Desenvolvedores
-git clone https://github.com/mateusadd/portfolio/edit/main  
+git clone https://github.com/mateusadd/portfolio.git  
 npm start
 
 # Organização das Tarefas
