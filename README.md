@@ -57,12 +57,10 @@ O sistema deve estar sempre disponível, para que agendamentos possam ser regist
 Deve haver backup regular para proteger os dados contra perda ou corrupção.
 
 # Ferramentas, dependências e configurações
-Express​  
-Sequelize​  
-Mysql2​  
-Cors​  
-Axios​  
-React Router DOM  
+Express​   
+Mysql8   
+Nodemon  
+Sequelize  
 
 # Instruções para Novos Desenvolvedores
 git clone https://github.com/mateusadd/portfolio.git  
