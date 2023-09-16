@@ -1,9 +1,14 @@
 # Portfolio
 Sistema de Gestão Salão de Beleza
 
+# Organização das Tarefas
+Utilização do método FDD(Feature Driven Development)
+**https://trello.com/invite/b/097zIW16/ATTI8622f07b55f3a3ed291b4fec72dca709E4B80A10/portfolio**
+
+
 # Execução
 npm start
-Acesso em http://localhost:3001/
+Acesso em http://localhost:3000/
 
 ## Licença
 Este projeto é licenciado sob a [Licença MIT](LICENSE). Consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
@@ -60,12 +65,13 @@ Deve haver backup regular para proteger os dados contra perda ou corrupção.
 Express​   
 Mysql8   
 Nodemon  
-Sequelize  
+Sequelize    
+
+Axios  
+react-big-calendar  
+date-fns  
+moment  
 
 # Instruções para Novos Desenvolvedores
 git clone https://github.com/mateusadd/portfolio.git  
 npm start
-
-# Organização das Tarefas
-Utilização do método FDD(Feature Driven Development)
-**https://trello.com/invite/b/097zIW16/ATTI8622f07b55f3a3ed291b4fec72dca709E4B80A10/portfolio**
