@@ -11,8 +11,8 @@ module.exports = {
             cliente_id: req.body.cliente_id,
             servico_id: req.body.servico_id,
             funcionario_id: req.body.funcionario_id,
-            agendamento_data: req.body.agendamento_data,
-            agendamento_hora: req.body.agendamento_hora,
+            agendamento_datetime_start: req.body.agendamento_datetime_start,
+            agendamento_datetime_end: req.body.agendamento_datetime_end,
             pago: req.body.pago
         }
 
@@ -38,7 +38,7 @@ module.exports = {
                 }, 
                 {
                     model: Funcionario,
-                    as: 'funcioario',
+                    as: 'funcionario',
                     attributes: ['funcionario_id', 'funcionario_nome']
                 }]
             })
@@ -59,8 +59,8 @@ module.exports = {
         agendamento.cliente_id = req.body.cliente_id
         agendamento.servico_id = req.body.servico_id
         agendamento.funcionario_id = req.body.funcionario_id
-        agendamento.agendamento_data = req.body.agendamento_data
-        agendamento.agendamento_hora = req.body.agendamento_hora
+        agendamento.agendamento_datetime_start = req.body.agendamento_datetime_start
+        agendamento.agendamento_datetime_end = req.body.agendamento_datetime_end
 
         await agendamento.save()
 

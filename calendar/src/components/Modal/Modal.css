@@ -1,0 +1,236 @@
+.background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 5%;
+    width: 90%;
+    height: 90%;
+    background-color: #fff;
+  }
+  
+  .modal-header {
+    background-color: rgb(49, 116, 173);
+    color: #fff;
+    margin-top: -2.5%;
+    height: 5%;
+    padding-left: 15px;
+  }
+  
+  .modal-header p {
+    font-size: 18px;
+  }
+  
+  .modal-assunto {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    height: 6%;
+    margin-left: 3%;
+  }
+  
+  .modal-assunto input {
+    border: none;
+    border-bottom: 1px solid #eee;
+    outline: none;
+    transition: border-bottom 0.3s;
+    width: 90%;
+    padding: 1%;
+  }
+  
+  .modal-assunto input:focus {
+    border-bottom: 2px solid #333; /* Por exemplo, mude a cor da borda inferior quando o input está focado */
+  }
+  
+  .modal-descricao {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    height: 15%;
+    margin-left: 3%;
+  }
+  
+  .modal-descricao textarea {
+    border: none;
+    border-bottom: 1px solid #eee;
+    outline: none;
+    transition: border-bottom 0.3s;
+    width: 90%;
+    padding: 1%;
+    resize: none; /* Impede o redimensionamento */
+    outline: none; /* Remove a borda de foco */
+    overflow: auto; /*Remove scrollbar*/
+  }
+  
+  .modal-descricao textarea:focus {
+    border-bottom: 2px solid #333; /* Por exemplo, mude a cor da borda inferior quando o input está focado */
+  }
+  
+  .modal-details {
+    display: flex; /* Ativar o layout flexbox */
+    justify-content: space-between; /* Distribuir igualmente as divs ao longo do eixo principal */
+    align-items: center; /* Alinhar as divs verticalmente no centro */
+    width: 100%; /* Largura total da div container */
+    height: 30%; /* Altura da div container */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .modal-details-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Crescer igualmente para ocupar o espaço disponível */
+    height: 100%;
+    padding: 1%;
+  }
+  
+  .modal-details-select {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 15%;
+    margin-left: 1%;
+  }
+  
+  .modal-details-select p{
+    margin-top: 1%;
+  }
+  
+  .modal-details-select select{
+    border: none;
+    border-bottom: 1px solid #eee;
+    width: 70%;
+    outline: none; /* Remove a borda de foco */
+  }
+  
+  .modal-details-select input{
+    border: none;
+    border-bottom: 1px solid #eee;
+    width: 70%;
+    outline: none; /* Remove a borda de foco */
+  }
+  
+  .modal-details-sla-tecnico {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 2%;
+    padding-left: 3%;
+  }
+  
+  .modal-details-sla {
+    display: flex;
+    justify-content: space-between;
+    width: 55%;
+    height: 15%;
+  }
+  
+  .modal-details-sla p{
+    margin-top: 1%;
+  }
+  
+  .modal-details-sla select{
+    border: none;
+    border-bottom: 1px solid #eee;
+    width: 62%;
+    margin-left: 8%;
+    outline: none; /* Remove a borda de foco */
+  }
+  
+  .modal-details-sla button{
+    height: 80%;
+    margin-top: 2%;
+    padding: 5px 20px;
+    border-radius: 3px;
+    background-color: rgb(145, 204, 142);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+  }
+  
+  .modal-details-tecnico {
+    display: flex;
+    justify-content: space-between;
+    width: 32%;
+    height: 15%;
+    margin-left: 1%;
+  }
+  
+  .modal-details-tecnico p{
+    margin-top: 1%;
+  }
+  
+  .modal-details-tecnico select{
+    border: none;
+    border-bottom: 1px solid #eee;
+    width: 70%;
+    outline: none; /* Remove a borda de foco */
+  }
+  
+  .modal-details-data-solicitante {
+    display: flex; /* Ativar o layout flexbox */
+    justify-content: space-between; /* Distribuir igualmente as divs ao longo do eixo principal */
+    align-items: center; /* Alinhar as divs verticalmente no centro */
+    width: 100%; /* Largura total da div container */
+    height: 30%; /* Altura da div container */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .modal-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 5%;
+    padding-left: 5px;
+    padding-top: 5px;
+    display: flex;
+  }
+  
+  .modal-footer .modal-salvar {
+    height: 80%;
+    padding: 5px 20px;
+    margin-right: 5px;
+    border-radius: 1px;
+    background-color: rgb(49, 116, 173);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+  }
+  
+  .modal-footer .modal-fechar {
+    height: 80%;
+    padding: 5px 20px;
+    margin-right: 5px;
+    border-radius: 1px;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+  }
+
+  .modal-footer .modal-delete {
+    height: 80%;
+    padding: 5px 20px;
+    margin-right: 5px;
+    border-radius: 1px;
+    background-color: red;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+  }

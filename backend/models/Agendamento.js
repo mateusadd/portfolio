@@ -24,17 +24,17 @@ const Agendamento = sequelize.define('agendamento', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    agendamento_data: {
+    agendamento_datetime_start: {
         type: DataTypes.DATE,
         allowNull: false
     },
-    agendamento_hora: {
-        type: DataTypes.STRING,
-        allowNull: true
+    agendamento_datetime_end: {
+        type: DataTypes.DATE,
+        allowNull: false
     },
     pago: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: true
     }
 }, {
     timestamps : false,
