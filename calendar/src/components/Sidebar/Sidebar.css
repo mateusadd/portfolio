@@ -1,0 +1,35 @@
+.sidebar {
+    width: 200px;
+    background-color: darkblue;
+    height: 100%;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    transition: width 0.2s ease-in-out;
+    z-index: 999
+}
+
+ul {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: auto;
+}
+
+li {
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+li:hover {
+    background-color: blue;
+}
+
+.navigate {
+    text-decoration: none;
+    color: #fff;
+}

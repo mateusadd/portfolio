@@ -3,7 +3,7 @@ import "./Modal.css";
 import api from '../../services/api'
 import { dateFormat } from '../../utils/dateFormat';
 
-const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, clientes, servicos, funcionarios, clearSelected }) => {
+const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, clientes, servicos, funcionarios, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
 
     const [cliente, setCliente] = useState('')
     const [servico, setServico] = useState('')
@@ -63,15 +63,18 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
     async function handleDelete() {
 
         let res = await deleteDataFromBackend()
-        onDelete()
-        openModal()
-        clearSelected()
+        if(res){
+            onDelete()
+            openModal()
+            clearSelected()
+        }
 
     }
 
     function handleClose() {
         openModal()
         clearSelected()
+        clearSelectedDateTime()
     }
 
     function handleCliente(e) {
@@ -92,24 +95,40 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
         setfkFuncionario(select)
     }
 
+    function handleHorario(value) {
+
+        setStart(value)
+        let inputDate = new Date(value)
+        // Adicione meia hora em milissegundos (30 minutos = 30 * 60 * 1000)
+        var novaDataEmMilissegundos = inputDate.getTime() + (30 * 60 * 1000);
+
+        // Crie um novo objeto Date com a nova data em milissegundos
+        var novaData = new Date(novaDataEmMilissegundos);
+
+        // Formate a nova data para exibição (por exemplo, no formato ISO)
+        var novaDataFormatada = novaData.toISOString();
+            
+        setEnd(novaDataFormatada)
+       
+    }
+
     useEffect(() => {
 
-        setCliente(selected.cliente ? selected.cliente.cliente_id : '')
-        setServico(selected.servico ? selected.servico.servico_id : '')
-        setFuncionario(selected.funcionario ? selected.funcionario.funcionario_id : '')
+        if(isOpen){
+            setCliente(selected.cliente ? selected.cliente.cliente_id : '')
+            setServico(selected.servico ? selected.servico.servico_id : '')
+            setFuncionario(selected.funcionario ? selected.funcionario.funcionario_id : '')
 
-        if (selected.start) {
-            setStart(dateFormat(selected.start).toISOString().slice(0, 16));
-        } else {
-            setStart('');
+            if (selected.start) {
+                setStart(dateFormat(selected.start).toISOString().slice(0, 16));
+                setEnd(dateFormat(selected.end).toISOString().slice(0, 16));
+            } else {
+                handleHorario(selectedDateTime)
+            }
         }
-            
-        if (selected.end) {
-            setEnd(dateFormat(selected.end).toISOString().slice(0, 16));
-        } else {
-            setEnd('');
-        }
-    }, [selected])
+        
+    }, [isOpen])
+
 
   if(isOpen) {
     return (
@@ -149,11 +168,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
                 
                 <div>
                     <p>Start: </p>
-                    <input type='datetime-local' id='start' name='start' defaultValue={agendamento_datetime_start} onChange={(event) => setStart(event.target.value)}/>
-                </div>
-                <div>
-                    <p>End: </p>
-                    <input type='datetime-local' id='end' name='end' defaultValue={agendamento_datetime_end} onChange={(event) => setEnd(event.target.value)}/>
+                    <input type='datetime-local' id='start' name='start' value={agendamento_datetime_start} onChange={e => handleHorario(e.target.value)}/>
                 </div>
 
                 <div className='modal-footer'>
