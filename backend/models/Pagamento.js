@@ -24,11 +24,11 @@ const Pagamento = sequelize.define('pagamento', {
     },
     pagamento_metodo: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
     valor_dividido: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull: true
     }
 }, {
     timestamps : false,

@@ -14,6 +14,11 @@ module.exports = {
         }
 
         const pagamentoCriado = await Pagamento.create(pagamento)
+
+        const agendamento = await Agendamento.findOne({where: {agendamento_id: req.body.agendamento_id}})
+        agendamento.pago = 1
+        await agendamento.save()
+
         return res.json(pagamentoCriado)
 
     },
@@ -26,7 +31,7 @@ module.exports = {
                 include: [{
                     model: Agendamento,
                     as: 'agendamento',
-                    attributes: ['agendamento_id', 'cliente_id', 'servico_id', 'funcionario_id', 'agendamento_data', 'pago']
+                    attributes: ['agendamento_id', 'cliente_id', 'servico_id', 'funcionario_id', 'agendamento_datetime_start', 'pago']
                 }]
             })
             return res.json(registers)
@@ -58,6 +63,10 @@ module.exports = {
     async delete(req, res) {
 
         await Pagamento.destroy({where: {pagamento_id: req.params.pagamento_id}})
+
+        const agendamento = await Agendamento.findOne({where: {agendamento_id: req.body.agendamento_id}})
+        agendamento.pago = 0
+        await agendamento.save()
 
         return res.json({ msg:`${req.params.pagamento_id} deleted successfully!` })
 
