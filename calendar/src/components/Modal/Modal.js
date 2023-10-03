@@ -135,49 +135,57 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
         <div className='background'>
             <div className='modal'>
                 <div className='modal-header'>
-                    <p>ADICIONAR</p>
+                </div>
+                <div className='modal-body'>
+                    <div className='modal-left'>
+                        <div className='modal-input'>
+                            <p className='modal-label'>Cliente: </p>
+                            <select className='modal-select' id='cliente' name='cliente' value={cliente} onChange={e => handleCliente(e.target)}>
+                                <option value=""></option>
+                                {clientes.map(cliente => (
+                                    <option key={cliente.cliente_id} value={cliente.cliente_id}>{cliente.cliente_nome}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='modal-input'>
+                            <p className='modal-label'>Serviço: </p>
+                            <select className='modal-select' id='servico' name='servico' value={servico} onChange={e => handleServico(e.target)}>
+                                <option value=""></option>
+                                {servicos.map(servico => (
+                                    <option key={servico.servico_id} value={servico.servico_id}>{servico.servico_nome}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='modal-input'>
+                            <p className='modal-label'>Funcionário: </p>
+                            <select className='modal-select' id='funcionario' name='funcionario' value={funcionario} onChange={e => handleFuncionario(e.target)}>
+                                <option value=""></option>
+                                {funcionarios.map(funcionario => (
+                                    <option key={funcionario.funcionario_id} value={funcionario.funcionario_id}>{funcionario.funcionario_nome}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='modal-input'>
+                            <p className='modal-label'>Data/Hora: </p>
+                            <input className='modal-select' type='datetime-local' id='start' name='start' value={agendamento_datetime_start} onChange={e => handleHorario(e.target.value)}/>
+                        </div>
+                        <div className='modal-footer'>
+                            <button onClick={handleSave} className='modal-salvar'>SALVAR</button>
+                            <button onClick={handleClose} className='modal-fechar'>FECHAR</button>
+                            {selected.agendamento_id && (
+                                <button onClick={handleDelete} className='modal-delete'>DELETAR</button>
+                            )}
+                        </div>
+                    </div>
+                    <div className='modal-right'>
+                        <div className='modal-add-pay'>
+                            <div className='modal-add-pay-button'>+</div>
+                            <p className='modal-add-pay-label'>Adicionar pagamento</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div className='modal-details-tecnico'>
-                    <p>Cliente: </p>
-                    <select id='cliente' name='cliente' value={cliente} onChange={e => handleCliente(e.target)}>
-                        <option value=""></option>
-                        {clientes.map(cliente => (
-                            <option key={cliente.cliente_id} value={cliente.cliente_id}>{cliente.cliente_nome}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='modal-details-tecnico'>
-                    <p>Serviço: </p>
-                    <select id='servico' name='servico' value={servico} onChange={e => handleServico(e.target)}>
-                        <option value=""></option>
-                        {servicos.map(servico => (
-                            <option key={servico.servico_id} value={servico.servico_id}>{servico.servico_nome}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='modal-details-tecnico'>
-                    <p>Funcionário: </p>
-                    <select id='funcionario' name='funcionario' value={funcionario} onChange={e => handleFuncionario(e.target)}>
-                        <option value=""></option>
-                        {funcionarios.map(funcionario => (
-                            <option key={funcionario.funcionario_id} value={funcionario.funcionario_id}>{funcionario.funcionario_nome}</option>
-                        ))}
-                    </select>
-                </div>
                 
-                <div>
-                    <p>Start: </p>
-                    <input type='datetime-local' id='start' name='start' value={agendamento_datetime_start} onChange={e => handleHorario(e.target.value)}/>
-                </div>
-
-                <div className='modal-footer'>
-                    <button onClick={handleSave} className='modal-salvar'>SALVAR</button>
-                    <button onClick={handleClose} className='modal-fechar'>FECHAR</button>
-                    {selected.agendamento_id && (
-                        <button onClick={handleDelete} className='modal-delete'>DELETAR</button>
-                    )}
-                </div>
             </div>
         </div>
     );
@@ -188,3 +196,9 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
 };
 
 export default Modal;
+
+/**
+
+
+                
+ */
