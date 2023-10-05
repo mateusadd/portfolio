@@ -2,9 +2,12 @@ import React, {useState, useEffect} from 'react';
 import "./Modal.css";
 import api from '../../services/api'
 import { dateFormat } from '../../utils/dateFormat';
+import Payment from '../Payment/Payment';
 
-const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, clientes, servicos, funcionarios, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
+const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, clientes, servicos, funcionarios, payMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
 
+    const [payment, setPayment] = useState([])
+    const [addButton, setAddButton] = useState(true)
     const [cliente, setCliente] = useState('')
     const [servico, setServico] = useState('')
     const [funcionario, setFuncionario] = useState('')
@@ -13,6 +16,30 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
     const [fkCliente, setfkCliente] = useState({})
     const [fkServico, setfkServico] = useState({})
     const [fkFuncionario, setfkFuncionario] = useState({})
+
+    function addComponent(data) {
+        const newComponent = (
+            <Payment 
+                key={payment.length} 
+                onRemove={() => removeComponent(payment.length)}
+                data={data}
+            />
+        )                     
+        setPayment([...payment, newComponent]);
+
+        if (payment.length === 2) {
+            setAddButton(false);
+        }
+    }
+
+    function removeComponent(index) {
+        const updatedList = payment.filter((_, i) => i !== index);
+        setPayment(updatedList);
+
+        if (payment.length < 3) {
+            setAddButton(true);
+        }
+    }
 
     async function createDataInBackend() {
 
@@ -75,6 +102,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
         openModal()
         clearSelected()
         clearSelectedDateTime()
+        setPayment([])
     }
 
     function handleCliente(e) {
@@ -115,6 +143,13 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
     useEffect(() => {
 
         if(isOpen){
+
+            let list = payMethods.filter(item => item.agendamento_id === selected.agendamento_id)
+
+            if(list) {
+                list.map((data) => addComponent(data));
+            }
+
             setCliente(selected.cliente ? selected.cliente.cliente_id : '')
             setServico(selected.servico ? selected.servico.servico_id : '')
             setFuncionario(selected.funcionario ? selected.funcionario.funcionario_id : '')
@@ -178,10 +213,17 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
                         </div>
                     </div>
                     <div className='modal-right'>
-                        <div className='modal-add-pay'>
-                            <div className='modal-add-pay-button'>+</div>
-                            <p className='modal-add-pay-label'>Adicionar pagamento</p>
-                        </div>
+                        {payment.map((component, index) => (
+                            <div key={index}>
+                                {component}
+                            </div>
+                        ))}
+                        {addButton && (
+                            <div className='modal-add-pay' onClick={addComponent}>
+                                <div className='modal-add-pay-button'>+</div>
+                                <p className='modal-add-pay-label'>Adicionar pagamento</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -196,9 +238,3 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
 };
 
 export default Modal;
-
-/**
-
-
-                
- */

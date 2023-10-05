@@ -30,6 +30,7 @@ function Agendamento() {
   const [clientes, setClientes] = useState([])
   const [servicos, setServicos] = useState([])
   const [funcionarios, setFuncionarios] = useState([])
+  const [payMethods, setPayMethods] = useState([])
 
 async function getCalendar() {
   let res = await api.get('/agendamento')
@@ -66,6 +67,11 @@ async function getServicos() {
 async function getFuncionarios() {
   let res = await api.get('/funcionario')
   setFuncionarios(res.data)
+}
+
+async function getPayMethods() {
+  let res = await api.get('/pagamento')
+  setPayMethods(res.data)
 }
 
 const onSave = (response, fkCliente, fkServico, fkFuncionario) => {
@@ -144,6 +150,7 @@ useEffect(() => {
   getClientes()
   getServicos()
   getFuncionarios()
+  getPayMethods()
 }, [])
 
   return (
@@ -175,6 +182,7 @@ useEffect(() => {
           clientes={clientes}
           servicos={servicos}
           funcionarios={funcionarios}
+          payMethods={payMethods}
           clearSelected={() => setSelected([])}
           selectedDateTime={moment(selectedDateTime).format('YYYY-MM-DDTHH:mm')}
           clearSelectedDateTime={() => setSelectedDateTime(null)}

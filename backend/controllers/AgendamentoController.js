@@ -34,7 +34,7 @@ module.exports = {
                 {
                     model: Servico,
                     as: 'servico',
-                    attributes: ['servico_id', 'servico_nome']
+                    attributes: ['servico_id', 'servico_nome', 'servico_preco']
                 }, 
                 {
                     model: Funcionario,
