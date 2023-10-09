@@ -25,15 +25,15 @@ jobs:
         cache: 'npm'
 
     - name: Install Backend Dependencies
-      working-directory: backend  # Define o diretório onde estão os arquivos do backend
+      working-directory: portfolio/backend  # Define o diretório onde estão os arquivos do backend
       run: npm ci
 
     - name: Build Backend
-      working-directory: backend
+      working-directory: portfolio/backend
       run: npm run build --if-present
 
     - name: Test Backend
-      working-directory: backend
+      working-directory: portfolio/backend
       run: npm test
 
     - name: Install Frontend Dependencies
