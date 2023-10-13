@@ -6,6 +6,13 @@ import Payment from '../Payment/Payment';
 
 const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, clientes, servicos, funcionarios, payMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
 
+    const [valoresPagamento, setValoresPagamento] = useState([
+        { valor: 0 },
+        { valor: 0 },
+        { valor: 0 }
+    ])
+    
+    const [index, setIndex] = useState(0)
     const [payment, setPayment] = useState([])
     const [addButton, setAddButton] = useState(true)
     const [cliente, setCliente] = useState('')
@@ -17,15 +24,26 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
     const [fkServico, setfkServico] = useState({})
     const [fkFuncionario, setfkFuncionario] = useState({})
 
+    function atualizaValor(index, novoValor) {
+        setValoresPagamento((prevValores) => {
+            const novosValores = [...prevValores];
+            novosValores[index].valor = novoValor;
+            return novosValores;
+        });
+    }
+
     function addComponent(data) {
         const newComponent = (
             <Payment 
                 key={payment.length} 
                 onRemove={() => removeComponent(payment.length)}
                 data={data}
+                index={index}
+                onValorChange={atualizaValor}
             />
         )                     
         setPayment([...payment, newComponent]);
+        setIndex(index + 1)
 
         if (payment.length === 2) {
             setAddButton(false);
@@ -103,6 +121,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
         clearSelected()
         clearSelectedDateTime()
         setPayment([])
+        setIndex(0)
+        console.log(valoresPagamento)
     }
 
     function handleCliente(e) {
