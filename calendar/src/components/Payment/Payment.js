@@ -3,25 +3,34 @@ import './Payment.css'
 import {AiFillDelete} from 'react-icons/ai'
 import { useState } from 'react';
 
-function Payment({ onRemove, data, index, onValorChange }) {
+function Payment({ id, onRemove, data, index, onValorChange, onMetodoChange }) {
     const [valor, setValor] = useState(data.pagamento_valor)
     const [metodo, setMetodo] = useState(data.pagamento_metodo)
 
-    const handleChange = (e) => {
-        const novoValor = e.target.value;
-        onValorChange(index, novoValor);
-      };
+    const handleChangeValor = (e) => {
+        setValor(e.target.value)
+        onValorChange(index, valor);
+    };
+
+    const handleChangeMetodo = (e) => {
+        setMetodo(e.target.value)
+        onMetodoChange(index, metodo);
+    };
+
+    function handleDelete() {
+        onRemove(index)
+    }
 
     return (
         <div className='modal-payment'>
             <div className='payment-body'>
                 <div className='payment-input'>
                     <p className='payment-label'>Valor: </p>
-                    <input className='payment-field' type='text' defaultValue={valor} onChange={handleChange} />
+                    <input className='payment-field' type='text' defaultValue={valor} onChange={handleChangeValor} />
                 </div>
                 <div className='payment-input'>
                     <p className='payment-label'>Método de pagamento: </p>
-                    <select className='payment-field' defaultValue={metodo} onChange={(event) => setMetodo(event.target.value)}>
+                    <select className='payment-field' defaultValue={metodo} onChange={handleChangeMetodo}>
                         <option value=""></option>
                         <option value="Método1">Primeiro</option>
                         <option value="Segundo">Segundo</option>
@@ -29,7 +38,7 @@ function Payment({ onRemove, data, index, onValorChange }) {
                     </select>
                 </div>
             </div>
-            <div className='payment-delete' onClick={onRemove}>
+            <div className='payment-delete' onClick={handleDelete}>
                 <AiFillDelete size={15} color='#fff' />
             </div>
         </div>

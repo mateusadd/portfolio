@@ -4,15 +4,27 @@ import api from '../../services/api'
 import { dateFormat } from '../../utils/dateFormat';
 import Payment from '../Payment/Payment';
 
-const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, clientes, servicos, funcionarios, payMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
+const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, selected, clientes, servicos, funcionarios, payMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
 
     const [valoresPagamento, setValoresPagamento] = useState([
         { valor: 0 },
         { valor: 0 },
         { valor: 0 }
     ])
+
+    const [metodosPagamento, setMetodosPagamento] = useState([
+        { metodo: '' },
+        { metodo: '' },
+        { metodo: '' }
+    ])
+
+    const [idsPagamento, setIdsPagamento] = useState([
+        { id: null },
+        { id: null },
+        { id: null }
+    ])
     
-    const [index, setIndex] = useState(0)
+    const [indexController, setIndexController] = useState(0)
     const [payment, setPayment] = useState([])
     const [addButton, setAddButton] = useState(true)
     const [cliente, setCliente] = useState('')
@@ -24,39 +36,63 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
     const [fkServico, setfkServico] = useState({})
     const [fkFuncionario, setfkFuncionario] = useState({})
 
-    function atualizaValor(index, novoValor) {
+    function addComponent(data, index) {
+
+        if(index===undefined){
+            index = indexController + 1
+        }
+
+        const newComponent = (
+            <Payment 
+                key={payment.length} 
+                id={data.pagamento_id}
+                onRemove={() => removeComponent(index)}
+                data={data}
+                index={index}
+                onValorChange={atualizaValor}
+                onMetodoChange={atualizaMetodo}
+            />
+        )   
+        
+        if(data.pagamento_id) {
+            atualizaValor(index, data.pagamento_valor)
+            atualizaMetodo(index, data.pagamento_metodo)
+            atualizaIdPagamento(index, data.pagamento_id)
+        }
+        
+        setIndexController(index)
+        setPayment(prevPayment => [...prevPayment, newComponent]);
+    
+    }
+
+    function atualizaValor(ind, novoValor) {
         setValoresPagamento((prevValores) => {
             const novosValores = [...prevValores];
-            novosValores[index].valor = novoValor;
+            novosValores[ind].valor = parseFloat(novoValor);
             return novosValores;
         });
     }
 
-    function addComponent(data) {
-        const newComponent = (
-            <Payment 
-                key={payment.length} 
-                onRemove={() => removeComponent(payment.length)}
-                data={data}
-                index={index}
-                onValorChange={atualizaValor}
-            />
-        )                     
-        setPayment([...payment, newComponent]);
-        setIndex(index + 1)
-
-        if (payment.length === 2) {
-            setAddButton(false);
-        }
+    function atualizaMetodo(ind, novoMetodo) {
+        setMetodosPagamento((prevMetodos) => {
+            const novosMetodos = [...prevMetodos];
+            novosMetodos[ind].metodo = novoMetodo;
+            return novosMetodos;
+        });
     }
 
-    function removeComponent(index) {
-        const updatedList = payment.filter((_, i) => i !== index);
-        setPayment(updatedList);
+    function atualizaIdPagamento(ind, id) {
+        setIdsPagamento((prevIds) => {
+            const novosIds = [...prevIds];
+            novosIds[ind].id = id;
+            return novosIds;
+        });
+    }
 
-        if (payment.length < 3) {
-            setAddButton(true);
-        }
+    function removeComponent(indexToRemove) {
+
+        const updatedList = payment.filter(i => i.key !== indexToRemove);
+        setPayment(updatedList);
     }
 
     async function createDataInBackend() {
@@ -91,6 +127,30 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
 
     }
 
+    async function createPayment(index) {
+        let res = await api.post(`/pagamento`, {
+            agendamento_id: selected.agendamento_id,
+            dividido: 0,
+            valor_dividido: null,
+            pagamento_metodo: metodosPagamento[index].metodo,
+            pagamento_valor: valoresPagamento[index].valor
+        })
+
+        return res.data
+    }
+
+    async function updatePayment(index, id) {
+        let res = await api.post(`/pagamento/${id}`, {
+            pagamento_id: id,
+            dividido: 0,
+            valor_dividido: null,
+            pagamento_metodo: metodosPagamento[index].metodo,
+            pagamento_valor: valoresPagamento[index].valor
+        })
+
+        return res.data
+    }
+
     async function handleSave() {
 
         if(Array.isArray(selected)) {
@@ -98,9 +158,20 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
             onSave(res.data, fkCliente, fkServico, fkFuncionario)
         } else {
             let res = await updateDataInBackend()
+            let resPay = []
+            for (const [index, item] of valoresPagamento.entries()) {
+                if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id === null){
+                    let res = await createPayment(index)
+                    resPay.push(res)
+                } else if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id !== null){
+                    let res = await updatePayment(index, idsPagamento[index].id)
+                    resPay.push(res)
+                }
+            }
             onUpdate(res.data, fkCliente, fkServico, fkFuncionario)
+            handlePayments(resPay, selected.agendamento_id)
             openModal()
-            clearSelected()
+            clearAll()
         }
 
     }
@@ -118,11 +189,30 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
 
     function handleClose() {
         openModal()
+        clearAll()
+    }
+
+    function clearAll(){
         clearSelected()
         clearSelectedDateTime()
         setPayment([])
-        setIndex(0)
-        console.log(valoresPagamento)
+        setAddButton(true)
+        setIndexController(0)
+        setValoresPagamento([
+            { valor: 0 },
+            { valor: 0 },
+            { valor: 0 }
+        ])
+        setMetodosPagamento([
+            { metodo: '' },
+            { metodo: '' },
+            { metodo: '' }
+        ])
+        setIdsPagamento([
+            { id: null },
+            { id: null },
+            { id: null }
+        ])
     }
 
     function handleCliente(e) {
@@ -167,12 +257,12 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
             let list = payMethods.filter(item => item.agendamento_id === selected.agendamento_id)
 
             if(list) {
-                list.map((data) => addComponent(data));
+                list.forEach((data, index) => {addComponent(data, index)});
             }
 
-            setCliente(selected.cliente ? selected.cliente.cliente_id : '')
-            setServico(selected.servico ? selected.servico.servico_id : '')
-            setFuncionario(selected.funcionario ? selected.funcionario.funcionario_id : '')
+            setCliente(selected.cliente.cliente_id)
+            setServico(selected.servico.servico_id)
+            setFuncionario(selected.funcionario.funcionario_id)
 
             if (selected.start) {
                 setStart(dateFormat(selected.start).toISOString().slice(0, 16));
@@ -183,6 +273,14 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
         }
         
     }, [isOpen])
+
+    useEffect(() => {
+        if (payment.length === 3) {
+            setAddButton(false);
+        } else {
+            setAddButton(true);
+        }
+    }, [payment]);
 
 
   if(isOpen) {
@@ -195,7 +293,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
                     <div className='modal-left'>
                         <div className='modal-input'>
                             <p className='modal-label'>Cliente: </p>
-                            <select className='modal-select' id='cliente' name='cliente' value={cliente} onChange={e => handleCliente(e.target)}>
+                            <select className='modal-select' id='cliente' name='cliente' defaultValue={cliente} onChange={e => handleCliente(e.target)}>
                                 <option value=""></option>
                                 {clientes.map(cliente => (
                                     <option key={cliente.cliente_id} value={cliente.cliente_id}>{cliente.cliente_nome}</option>
@@ -204,7 +302,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
                         </div>
                         <div className='modal-input'>
                             <p className='modal-label'>Serviço: </p>
-                            <select className='modal-select' id='servico' name='servico' value={servico} onChange={e => handleServico(e.target)}>
+                            <select className='modal-select' id='servico' name='servico' defaultValue={servico} onChange={e => handleServico(e.target)}>
                                 <option value=""></option>
                                 {servicos.map(servico => (
                                     <option key={servico.servico_id} value={servico.servico_id}>{servico.servico_nome}</option>
@@ -213,7 +311,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
                         </div>
                         <div className='modal-input'>
                             <p className='modal-label'>Funcionário: </p>
-                            <select className='modal-select' id='funcionario' name='funcionario' value={funcionario} onChange={e => handleFuncionario(e.target)}>
+                            <select className='modal-select' id='funcionario' name='funcionario' defaultValue={funcionario} onChange={e => handleFuncionario(e.target)}>
                                 <option value=""></option>
                                 {funcionarios.map(funcionario => (
                                     <option key={funcionario.funcionario_id} value={funcionario.funcionario_id}>{funcionario.funcionario_nome}</option>
@@ -222,7 +320,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, onDelete, selected, client
                         </div>
                         <div className='modal-input'>
                             <p className='modal-label'>Data/Hora: </p>
-                            <input className='modal-select' type='datetime-local' id='start' name='start' value={agendamento_datetime_start} onChange={e => handleHorario(e.target.value)}/>
+                            <input className='modal-select' type='datetime-local' id='start' name='start' defaultValue={agendamento_datetime_start} onChange={e => handleHorario(e.target.value)}/>
                         </div>
                         <div className='modal-footer'>
                             <button onClick={handleSave} className='modal-salvar'>SALVAR</button>

@@ -90,6 +90,7 @@ const onSave = (response, fkCliente, fkServico, fkFuncionario) => {
 }
 
 const onUpdate = (response, fkCliente, fkServico, fkFuncionario) => {
+
   let newData = {
     title: `${fkCliente.cliente_nome} - ${fkServico.servico_nome}`,
     start: new Date(response.agendamento_datetime_start),
@@ -106,6 +107,16 @@ const onUpdate = (response, fkCliente, fkServico, fkFuncionario) => {
   updatedCalendar[indexToUpdate] = newData
   setCalendar(updatedCalendar)
 
+}
+
+function handlePayments(resPay, agendamento_id) {
+  resPay.forEach(element => {
+    let temp = payMethods.filter(pay => pay.pagamento_id !== element.pagamento_id)
+    temp.push(element)
+    setPayMethods(temp)
+  })
+
+  console.log(payMethods)
 }
 
 const onDelete = () => {
@@ -177,6 +188,7 @@ useEffect(() => {
           openModal={() => setModalOpen(!modalOpen)}
           onSave={onSave}
           onUpdate={onUpdate}
+          handlePayments={handlePayments}
           onDelete={onDelete}
           selected={selected}
           clientes={clientes}
