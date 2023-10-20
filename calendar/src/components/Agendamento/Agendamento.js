@@ -24,7 +24,7 @@ const localizer = dateFnsLocalizer({
 function Agendamento() {
 
   const [calendar, setCalendar] = useState([])
-  const [selectedDateTime, setSelectedDateTime] = useState('2023-06-06T12:00')
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date())
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState([])
   const [clientes, setClientes] = useState([])
@@ -40,13 +40,16 @@ async function getCalendar() {
     t.agendamento_datetime_end = new Date(t.agendamento_datetime_end),
 
     events.push({
-      title: `${t.cliente.cliente_nome} - ${t.servico.servico_nome}`,
+      agendamento_id: t.agendamento_id,
+      cliente_id: t.cliente_id,
+      servico_id: t.servico_id,
+      funcionario_id: t.funcionario_id,
       start: t.agendamento_datetime_start,
       end: t.agendamento_datetime_end,
       cliente: t.cliente,
       servico: t.servico,
       funcionario: t.funcionario,
-      agendamento_id: t.agendamento_id
+      title: `${t.cliente.cliente_nome} - ${t.servico.servico_nome}`,
 
     })
   ))}
@@ -110,6 +113,7 @@ const onUpdate = (response, fkCliente, fkServico, fkFuncionario) => {
 }
 
 function handlePayments(resPay, agendamento_id) {
+  console.log(resPay)
   resPay.forEach(element => {
     let temp = payMethods.filter(pay => pay.pagamento_id !== element.pagamento_id)
     temp.push(element)
@@ -153,7 +157,9 @@ const handleSelectSlot = (slotInfo) => {
   // slotInfo contém a data e hora selecionadas
   const { start } = slotInfo;
   setSelectedDateTime(start);
-  setModalOpen(true);
+  setTimeout(function () {
+    setModalOpen(true);
+  }, 500);
 };
 
 useEffect(() => {
@@ -180,7 +186,7 @@ useEffect(() => {
           max={new Date(2023, 1, 0, 19, 0, 0)}
           selectable
           popup
-          style={{ height: 670 }}
+          style={{ height: 804 }}
           eventPropGetter={eventStyleGetter}
         />
         <Modal
@@ -197,7 +203,7 @@ useEffect(() => {
           payMethods={payMethods}
           clearSelected={() => setSelected([])}
           selectedDateTime={moment(selectedDateTime).format('YYYY-MM-DDTHH:mm')}
-          clearSelectedDateTime={() => setSelectedDateTime(null)}
+          clearSelectedDateTime={() => setSelectedDateTime(new Date())}
         />
       </div>
     </>

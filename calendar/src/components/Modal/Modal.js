@@ -38,6 +38,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
 
     function addComponent(data, index) {
 
+        
+
         if(index===undefined){
             index = indexController + 1
         }
@@ -170,8 +172,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
             }
             onUpdate(res.data, fkCliente, fkServico, fkFuncionario)
             handlePayments(resPay, selected.agendamento_id)
-            openModal()
             clearAll()
+            openModal()
         }
 
     }
@@ -188,13 +190,16 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
     }
 
     function handleClose() {
-        openModal()
+        console.log(metodosPagamento)
         clearAll()
+        openModal()
     }
 
     function clearAll(){
         clearSelected()
-        clearSelectedDateTime()
+        //clearSelectedDateTime()
+        setStart('')
+        setEnd('')
         setPayment([])
         setAddButton(true)
         setIndexController(0)
@@ -236,6 +241,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
     function handleHorario(value) {
 
         setStart(value)
+        
         let inputDate = new Date(value)
         // Adicione meia hora em milissegundos (30 minutos = 30 * 60 * 1000)
         var novaDataEmMilissegundos = inputDate.getTime() + (30 * 60 * 1000);
@@ -245,34 +251,31 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
 
         // Formate a nova data para exibição (por exemplo, no formato ISO)
         var novaDataFormatada = novaData.toISOString();
-            
+                    
         setEnd(novaDataFormatada)
-       
     }
 
     useEffect(() => {
 
-        if(isOpen){
-
+        if(selected){
             let list = payMethods.filter(item => item.agendamento_id === selected.agendamento_id)
 
             if(list) {
                 list.forEach((data, index) => {addComponent(data, index)});
             }
 
-            setCliente(selected.cliente.cliente_id)
-            setServico(selected.servico.servico_id)
-            setFuncionario(selected.funcionario.funcionario_id)
+            setCliente(selected.cliente_id)
+            setServico(selected.servico_id)
+            setFuncionario(selected.funcionario_id)
 
             if (selected.start) {
                 setStart(dateFormat(selected.start).toISOString().slice(0, 16));
                 setEnd(dateFormat(selected.end).toISOString().slice(0, 16));
-            } else {
-                handleHorario(selectedDateTime)
-            }
-        }
+            } 
+            
+        } 
         
-    }, [isOpen])
+    }, [selected])
 
     useEffect(() => {
         if (payment.length === 3) {
@@ -282,6 +285,9 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
         }
     }, [payment]);
 
+    useEffect(() => {
+        handleHorario(selectedDateTime)
+    }, [selectedDateTime]);
 
   if(isOpen) {
     return (
@@ -293,7 +299,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
                     <div className='modal-left'>
                         <div className='modal-input'>
                             <p className='modal-label'>Cliente: </p>
-                            <select className='modal-select' id='cliente' name='cliente' defaultValue={cliente} onChange={e => handleCliente(e.target)}>
+                            <select className='modal-select' id='cliente' name='cliente' value={cliente} onChange={e => handleCliente(e.target)}>
                                 <option value=""></option>
                                 {clientes.map(cliente => (
                                     <option key={cliente.cliente_id} value={cliente.cliente_id}>{cliente.cliente_nome}</option>
@@ -302,7 +308,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
                         </div>
                         <div className='modal-input'>
                             <p className='modal-label'>Serviço: </p>
-                            <select className='modal-select' id='servico' name='servico' defaultValue={servico} onChange={e => handleServico(e.target)}>
+                            <select className='modal-select' id='servico' name='servico' value={servico} onChange={e => handleServico(e.target)}>
                                 <option value=""></option>
                                 {servicos.map(servico => (
                                     <option key={servico.servico_id} value={servico.servico_id}>{servico.servico_nome}</option>
@@ -311,7 +317,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
                         </div>
                         <div className='modal-input'>
                             <p className='modal-label'>Funcionário: </p>
-                            <select className='modal-select' id='funcionario' name='funcionario' defaultValue={funcionario} onChange={e => handleFuncionario(e.target)}>
+                            <select className='modal-select' id='funcionario' name='funcionario' value={funcionario} onChange={e => handleFuncionario(e.target)}>
                                 <option value=""></option>
                                 {funcionarios.map(funcionario => (
                                     <option key={funcionario.funcionario_id} value={funcionario.funcionario_id}>{funcionario.funcionario_nome}</option>

@@ -8,13 +8,15 @@ function Payment({ id, onRemove, data, index, onValorChange, onMetodoChange }) {
     const [metodo, setMetodo] = useState(data.pagamento_metodo)
 
     const handleChangeValor = (e) => {
-        setValor(e.target.value)
-        onValorChange(index, valor);
+        let novoValue = e.target.value;
+        setValor(novoValue)
+        onValorChange(index, novoValue);
     };
 
     const handleChangeMetodo = (e) => {
-        setMetodo(e.target.value)
-        onMetodoChange(index, metodo);
+        let novoMetodo = e.target.value;
+        setMetodo(novoMetodo);
+        onMetodoChange(index, novoMetodo);
     };
 
     function handleDelete() {
@@ -26,11 +28,11 @@ function Payment({ id, onRemove, data, index, onValorChange, onMetodoChange }) {
             <div className='payment-body'>
                 <div className='payment-input'>
                     <p className='payment-label'>Valor: </p>
-                    <input className='payment-field' type='text' defaultValue={valor} onChange={handleChangeValor} />
+                    <input className='payment-field' type='text' value={valor} onChange={handleChangeValor} />
                 </div>
                 <div className='payment-input'>
                     <p className='payment-label'>Método de pagamento: </p>
-                    <select className='payment-field' defaultValue={metodo} onChange={handleChangeMetodo}>
+                    <select className='payment-field' value={metodo} onChange={handleChangeMetodo}>
                         <option value=""></option>
                         <option value="Método1">Primeiro</option>
                         <option value="Segundo">Segundo</option>
