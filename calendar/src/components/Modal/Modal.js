@@ -4,7 +4,7 @@ import api from '../../services/api'
 import { dateFormat } from '../../utils/dateFormat';
 import Payment from '../Payment/Payment';
 
-const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, selected, clientes, servicos, funcionarios, payMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
+const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAgendamento, selected, clientes, servicos, funcionarios, payMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
 
     const [valoresPagamento, setValoresPagamento] = useState([
         { valor: 0 },
@@ -24,6 +24,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
         { id: null }
     ])
     
+    const [indexToRemove, setIndexToRemove] = useState(null)
     const [indexController, setIndexController] = useState(0)
     const [payment, setPayment] = useState([])
     const [addButton, setAddButton] = useState(true)
@@ -48,7 +49,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
             <Payment 
                 key={payment.length} 
                 id={data.pagamento_id}
-                onRemove={() => removeComponent(index)}
+                setIndexToRemove={setIndexToRemove}
                 data={data}
                 index={index}
                 onValorChange={atualizaValor}
@@ -91,10 +92,10 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
         });
     }
 
-    function removeComponent(indexToRemove) {
-
-        const updatedList = payment.filter(i => i.key !== indexToRemove);
-        setPayment(updatedList);
+    function removeComponent(pagamento_id) {
+        const updatedPayment = [...payment]; // Cria uma cópia do estado payment
+        updatedPayment.splice(indexToRemove, 1); // Remove o item do array
+        setPayment(updatedPayment); // Atualiza o estado payment
     }
 
     async function createDataInBackend() {
@@ -153,6 +154,10 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
         return res.data
     }
 
+    async function deletePayment(index, id) {
+
+    }
+
     async function handleSave() {
 
         if(Array.isArray(selected)) {
@@ -178,11 +183,11 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
 
     }
 
-    async function handleDelete() {
+    async function handleDeleteAgendamento() {
 
         let res = await deleteDataFromBackend()
         if(res){
-            onDelete()
+            onDeleteAgendamento()
             openModal()
             clearSelected()
         }
@@ -201,6 +206,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
         setEnd('')
         setPayment([])
         setAddButton(true)
+        setIndexToRemove(null)
         setIndexController(0)
         setValoresPagamento([
             { valor: 0 },
@@ -288,6 +294,10 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
         handleHorario(selectedDateTime)
     }, [selectedDateTime]);
 
+    useEffect(() => {
+        removeComponent()
+    }, [indexToRemove])
+
   if(isOpen) {
     return (
         <div className='background'>
@@ -331,7 +341,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDelete, 
                             <button onClick={handleSave} className='modal-salvar'>SALVAR</button>
                             <button onClick={handleClose} className='modal-fechar'>FECHAR</button>
                             {selected.agendamento_id && (
-                                <button onClick={handleDelete} className='modal-delete'>DELETAR</button>
+                                <button onClick={handleDeleteAgendamento} className='modal-delete'>DELETAR</button>
                             )}
                         </div>
                     </div>

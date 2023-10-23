@@ -3,7 +3,7 @@ import './Payment.css'
 import {AiFillDelete} from 'react-icons/ai'
 import { useState } from 'react';
 
-function Payment({ id, onRemove, data, index, onValorChange, onMetodoChange }) {
+function Payment({ id, setIndexToRemove, data, index, onValorChange, onMetodoChange }) {
     const [valor, setValor] = useState(data.pagamento_valor)
     const [metodo, setMetodo] = useState(data.pagamento_metodo)
 
@@ -20,7 +20,7 @@ function Payment({ id, onRemove, data, index, onValorChange, onMetodoChange }) {
     };
 
     function handleDelete() {
-        onRemove(index)
+        setIndexToRemove(index)
     }
 
     return (

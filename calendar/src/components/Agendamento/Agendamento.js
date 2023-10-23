@@ -83,8 +83,11 @@ const onSave = (response, fkCliente, fkServico, fkFuncionario) => {
     start: new Date(response.agendamento_datetime_start),
     end: new Date(response.agendamento_datetime_end),
     cliente: fkCliente,
+    cliente_id: fkCliente.cliente_id,
     servico: fkServico,
+    servico_id: fkServico.servico_id,
     funcionario: fkFuncionario,
+    funcionario_id: fkFuncionario.funcionario_id,
     agendamento_id: response.agendamento_id
   }
   
@@ -123,7 +126,7 @@ function handlePayments(resPay, agendamento_id) {
   })
 }
 
-const onDelete = () => {
+const onDeleteAgendamento = () => {
   setCalendar(calendar.filter(ev => ev.agendamento_id !== selected.agendamento_id))
 }
 
@@ -195,7 +198,7 @@ useEffect(() => {
           onSave={onSave}
           onUpdate={onUpdate}
           handlePayments={handlePayments}
-          onDelete={onDelete}
+          onDeleteAgendamento={onDeleteAgendamento}
           selected={selected}
           clientes={clientes}
           servicos={servicos}
