@@ -99,12 +99,15 @@ const onUpdate = (response, fkCliente, fkServico, fkFuncionario) => {
     start: new Date(response.agendamento_datetime_start),
     end: new Date(response.agendamento_datetime_end),
     cliente: fkCliente,
+    cliente_id: fkCliente.cliente_id,
     servico: fkServico,
+    servico_id: fkServico.servico_id,
     funcionario: fkFuncionario,
+    funcionario_id: fkFuncionario.funcionario_id,
     agendamento_id: response.agendamento_id
   }
 
-  const indexToUpdate = calendar.findIndex((evento) => evento.agendamento_id === newData.agendamento_id)
+  const indexToUpdate = calendar.findIndex((evento) => evento.agendamento_id == newData.agendamento_id)
 
   let updatedCalendar = [...calendar]
   updatedCalendar[indexToUpdate] = newData
@@ -113,14 +116,11 @@ const onUpdate = (response, fkCliente, fkServico, fkFuncionario) => {
 }
 
 function handlePayments(resPay, agendamento_id) {
-  console.log(resPay)
   resPay.forEach(element => {
     let temp = payMethods.filter(pay => pay.pagamento_id !== element.pagamento_id)
     temp.push(element)
     setPayMethods(temp)
   })
-
-  console.log(payMethods)
 }
 
 const onDelete = () => {
