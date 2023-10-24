@@ -96,6 +96,25 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         const updatedPayment = [...payment]; // Cria uma cópia do estado payment
         updatedPayment.splice(indexToRemove, 1); // Remove o item do array
         setPayment(updatedPayment); // Atualiza o estado payment
+
+        //const updatedPayment = [...payment]
+        //let removeIndex = updatedPayment.findIndex((pay) => pay.pagamento_id === indexToRemove)
+        //updatedPayment.splice(removeIndex, 1);
+        //setPayment(updatedPayment)
+
+        setValoresPagamento((prevValores) => {
+            const removeValor = [...prevValores];
+            removeValor[indexToRemove] = { valor: 0 };
+            return removeValor;
+        });
+
+
+        setMetodosPagamento((prevMetodos) => {
+            const removeMetodo = [...prevMetodos];
+            removeMetodo[indexToRemove] = { metodo: '' };
+            return removeMetodo;
+        });
+
     }
 
     async function createDataInBackend() {

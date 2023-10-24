@@ -119,10 +119,18 @@ const onUpdate = (response, fkCliente, fkServico, fkFuncionario) => {
 }
 
 function handlePayments(resPay, agendamento_id) {
+  console.log(resPay)
   resPay.forEach(element => {
-    let temp = payMethods.filter(pay => pay.pagamento_id !== element.pagamento_id)
-    temp.push(element)
-    setPayMethods(temp)
+    let paymentIndex = payMethods.findIndex((pay) => pay.pagamento_id === element.pagamento_id)
+    if(paymentIndex === -1){
+      setPayMethods(prevPayMethods => [...prevPayMethods, element])
+    } else {
+      setPayMethods((prevPayMethods) => {
+        const updatedPayMethod = [...prevPayMethods];
+        updatedPayMethod[paymentIndex] = element;
+        return updatedPayMethod;
+      });
+    }
   })
 }
 
