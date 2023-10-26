@@ -88,9 +88,9 @@ module.exports = {
 
         await Pagamento.destroy({where: {pagamento_id: req.params.pagamento_id}})
 
-        const agendamento = await Agendamento.findOne({where: {agendamento_id: req.body.agendamento_id}})
-        agendamento.pago = 0
-        await agendamento.save()
+        //const agendamento = await Agendamento.findOne({where: {agendamento_id: req.body.agendamento_id}})
+        //agendamento.pago = 0
+        //await agendamento.save()
 
         return res.json({ msg:`${req.params.pagamento_id} deleted successfully!` })
 

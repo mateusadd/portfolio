@@ -118,8 +118,7 @@ const onUpdate = (response, fkCliente, fkServico, fkFuncionario) => {
 
 }
 
-function handlePayments(resPay, agendamento_id) {
-  console.log(resPay)
+function updatePaymentsList(resPay) {
   resPay.forEach(element => {
     let paymentIndex = payMethods.findIndex((pay) => pay.pagamento_id === element.pagamento_id)
     if(paymentIndex === -1){
@@ -132,6 +131,28 @@ function handlePayments(resPay, agendamento_id) {
       });
     }
   })
+}
+
+function deleteFromPaymentsList(idsToDelete) {
+
+  if(idsToDelete) {
+    idsToDelete.forEach(element => {
+      let paymentIndex = payMethods.findIndex((pay) => pay.pagamento_id === element)
+      if(paymentIndex !== -1){
+        setPayMethods((prevPayMethods) => {
+          const updatedPayMethod = [...prevPayMethods];
+          updatedPayMethod.splice(paymentIndex, 1)
+          return updatedPayMethod;
+        });
+      }
+    })
+  }
+  
+}
+
+function handlePayments(resPay, idsToDelete) {
+  updatePaymentsList(resPay)
+  deleteFromPaymentsList(idsToDelete)
 }
 
 const onDeleteAgendamento = () => {

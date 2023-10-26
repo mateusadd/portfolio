@@ -24,6 +24,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         { id: null }
     ])
     
+    //const [payList, setPayList] = useState([])
     const [indexToRemove, setIndexToRemove] = useState(null)
     const [indexController, setIndexController] = useState(0)
     const [payment, setPayment] = useState([])
@@ -115,6 +116,12 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
             return removeMetodo;
         });
 
+        setIdsPagamento((prevIdsPagamento) => {
+            const removeId = [...prevIdsPagamento];
+            removeId[indexToRemove] = { id: null };
+            return removeId;
+        });
+
     }
 
     async function createDataInBackend() {
@@ -149,9 +156,9 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     }
 
-    async function createPayment(index) {
+    async function createPayment(index, agendamentoId) {
         let res = await api.post(`/pagamento`, {
-            agendamento_id: selected.agendamento_id,
+            agendamento_id: agendamentoId,
             dividido: 0,
             valor_dividido: null,
             pagamento_metodo: metodosPagamento[index].metodo,
@@ -173,7 +180,33 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         return res.data
     }
 
-    async function deletePayment(index, id) {
+    async function deletePayment() {
+        let idsToDelete = []
+        let list = payMethods.filter(item => item.agendamento_id === selected.agendamento_id)
+        for (let pay of list) {
+            let found = idsPagamento.findIndex((el) => el.id === pay.pagamento_id)
+            if(found === -1) {
+                let res = await api.delete(`/pagamento/${pay.pagamento_id}`)
+                idsToDelete.push(pay.pagamento_id)
+            }
+        }
+
+        return idsToDelete
+    }
+
+    async function verifyPayment(agendamentoId) {
+        let resPay = []
+        for (const [index, item] of valoresPagamento.entries()) {
+            if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id === null){
+                let res = await createPayment(index, agendamentoId)
+                resPay.push(res)
+            } else if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id !== null){
+                let res = await updatePayment(index, idsPagamento[index].id)
+                resPay.push(res)
+            }
+        }
+
+        return resPay
 
     }
 
@@ -181,21 +214,15 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
         if(Array.isArray(selected)) {
             let res = await createDataInBackend()
+            let resPay = await verifyPayment(res.data.agendamento_id)
             onSave(res.data, fkCliente, fkServico, fkFuncionario)
+            handlePayments(resPay)
         } else {
             let res = await updateDataInBackend()
-            let resPay = []
-            for (const [index, item] of valoresPagamento.entries()) {
-                if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id === null){
-                    let res = await createPayment(index)
-                    resPay.push(res)
-                } else if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id !== null){
-                    let res = await updatePayment(index, idsPagamento[index].id)
-                    resPay.push(res)
-                }
-            }
+            let resPay = await verifyPayment()
+            let idsToDelete = await deletePayment()
             onUpdate(res.data, fkCliente, fkServico, fkFuncionario)
-            handlePayments(resPay, selected.agendamento_id)
+            handlePayments(resPay, idsToDelete)
             clearAll()
             openModal()
         }
@@ -214,6 +241,9 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     }
 
     function handleClose() {
+        //console.log(valoresPagamento)
+        //console.log(metodosPagamento)
+        //console.log(idsPagamento)
         clearAll()
         openModal()
     }
@@ -224,6 +254,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         setStart('')
         setEnd('')
         setPayment([])
+        //setPayList([])
         setAddButton(true)
         setIndexToRemove(null)
         setIndexController(0)
@@ -287,6 +318,12 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
             if(list) {
                 list.forEach((data, index) => {addComponent(data, index)});
             }
+
+            //setPayList(prevPayList => [...prevPayList, payMethods.filter(item => item.agendamento_id === selected.agendamento_id)])
+
+            //if(payList) {
+                //payList.map((data, index) => (addComponent(data, index)));
+            //}
 
             handleCliente(selected.cliente_id)
             handleServico(selected.servico_id)
