@@ -137,6 +137,8 @@ function deleteFromPaymentsList(idsToDelete) {
 
   if(idsToDelete) {
     idsToDelete.forEach(element => {
+      console.log(payMethods)
+      console.log(idsToDelete)
       let paymentIndex = payMethods.findIndex((pay) => pay.pagamento_id === element)
       if(paymentIndex !== -1){
         setPayMethods((prevPayMethods) => {

@@ -148,10 +148,32 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     }
 
+    async function getCorrespondingPayments() {
+        let res = await api.get(`/pagamento?agendamento_id=${selected.agendamento_id}`)
+        return res.data
+    }
+
     async function deleteDataFromBackend() {
 
-        if(window.confirm(`Quer mesmo excluir a solicitação #${selected.agendamento_id}?`)){
-            return await api.delete(`/agendamento/${selected.agendamento_id}`)
+        if(payment.length > 0) {
+            if(window.confirm(`Deletar este agendamento apagará os registros de pagamento correspondentes. Deseja mesmo continuar?`)){
+                
+                let response = await getCorrespondingPayments()
+                let idsToDelete = []
+                for(let item of response) {
+                    await api.delete(`/pagamento/${item.pagamento_id}`)
+                    idsToDelete.push(item.pagamento_id)
+                }
+                handlePayments([], idsToDelete)
+                return await api.delete(`/agendamento/${selected.agendamento_id}`)
+
+                
+                
+            }
+        } else {
+            if(window.confirm(`Quer mesmo excluir este agendamento?`)){
+                return await api.delete(`/agendamento/${selected.agendamento_id}`)
+            }
         }
 
     }
@@ -210,21 +232,65 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     }
 
-    async function handleSave() {
+    function verifyTotalPayment() {
+        let valoresSoma = 0
 
+        for(let [index, item] of valoresPagamento.entries()) {
+            valoresSoma += valoresPagamento[index].valor
+        }
+
+        return valoresSoma
+    }
+
+    function verifyMethods() {
+        let metodo = ''
+        let status = false
+
+        for(let [index, item] of metodosPagamento.entries()) {
+            if(metodosPagamento[index].metodo !== '') {
+                if(metodosPagamento[index].metodo === metodo) {
+                    status = true
+                }
+                metodo = metodosPagamento[index].metodo
+            }
+        }
+
+        return status
+    }
+
+    async function saveInformation() {
         if(Array.isArray(selected)) {
             let res = await createDataInBackend()
             let resPay = await verifyPayment(res.data.agendamento_id)
             onSave(res.data, fkCliente, fkServico, fkFuncionario)
             handlePayments(resPay)
+            clearAll()
+            openModal()
         } else {
             let res = await updateDataInBackend()
-            let resPay = await verifyPayment()
+            let resPay = await verifyPayment(selected.agendamento_id)
             let idsToDelete = await deletePayment()
             onUpdate(res.data, fkCliente, fkServico, fkFuncionario)
             handlePayments(resPay, idsToDelete)
             clearAll()
             openModal()
+        }
+    }
+
+    async function handleSave() {
+        
+        if(payment.length > 0 && (fkServico.servico_preco !== verifyTotalPayment())) {
+
+            if(window.confirm('Valor informado é diferente do valor do serviço. Deseja salvar mesmo assim?')){
+                return saveInformation()
+            }            
+
+        } else if (verifyMethods()){
+            
+            window.alert('Há métodos de pagamento idênticos. Por favor, revise as informações.')
+
+        } else {
+            saveInformation()
         }
 
     }
@@ -234,8 +300,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         let res = await deleteDataFromBackend()
         if(res){
             onDeleteAgendamento()
+            clearAll()
             openModal()
-            clearSelected()
         }
 
     }
@@ -335,7 +401,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
             } 
             
         } 
-        
+    
     }, [selected])
 
     useEffect(() => {
@@ -349,6 +415,10 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     useEffect(() => {
         handleHorario(selectedDateTime)
     }, [selectedDateTime]);
+
+    useEffect(() => {
+        removeComponent()
+    }, [indexToRemove])
 
     useEffect(() => {
         removeComponent()

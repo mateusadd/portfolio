@@ -25,9 +25,10 @@ module.exports = {
 
     async read(req, res) {
 
-        const {agendamento_id} = req.body
+        const {agendamento_id} = req.query
 
         if(agendamento_id) {
+            console.log(agendamento_id)
             try {
 
                 const registers = await Pagamento.findAll({
