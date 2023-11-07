@@ -6,6 +6,7 @@ const FuncionarioController = require('./controllers/FuncionarioController')
 const ServicoController = require('./controllers/ServicoController')
 const AgendamentoController = require('./controllers/AgendamentoController')
 const PagamentoController = require('./controllers/PagamentoController')
+const ComissoesController = require('./controllers/ComissoesController')
 
 routes.post('/cliente', ClienteController.create)
 routes.get('/cliente', ClienteController.read)
@@ -25,5 +26,7 @@ routes.post('/pagamento', PagamentoController.create)
 routes.get('/pagamento', PagamentoController.read)
 routes.post('/pagamento/:pagamento_id', PagamentoController.update)
 routes.delete('/pagamento/:pagamento_id', PagamentoController.delete)
+
+routes.get('/comissoes', ComissoesController.read)
 
 module.exports = routes

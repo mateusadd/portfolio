@@ -6,3 +6,9 @@ export function dateFormat(date) {
         return newDate
 
 }
+
+export function dateFormatReport(date) {
+        let newDate = new Date(date)
+
+        return newDate.toLocaleDateString()
+}

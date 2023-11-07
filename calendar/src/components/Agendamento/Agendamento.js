@@ -21,15 +21,12 @@ const localizer = dateFnsLocalizer({
 	locales
 });
 
-function Agendamento() {
+function Agendamento(props) {
 
   const [calendar, setCalendar] = useState([])
   const [selectedDateTime, setSelectedDateTime] = useState(new Date())
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState([])
-  const [clientes, setClientes] = useState([])
-  const [servicos, setServicos] = useState([])
-  const [funcionarios, setFuncionarios] = useState([])
   const [payMethods, setPayMethods] = useState([])
 
 async function getCalendar() {
@@ -55,21 +52,6 @@ async function getCalendar() {
   ))}
 
   setCalendar(events)
-}
-
-async function getClientes() {
-  let res = await api.get('/cliente')
-  setClientes(res.data)
-}
-
-async function getServicos() {
-  let res = await api.get('/servico')
-  setServicos(res.data)
-}
-
-async function getFuncionarios() {
-  let res = await api.get('/funcionario')
-  setFuncionarios(res.data)
 }
 
 async function getPayMethods() {
@@ -198,9 +180,6 @@ const handleSelectSlot = (slotInfo) => {
 
 useEffect(() => {
   getCalendar()
-  getClientes()
-  getServicos()
-  getFuncionarios()
   getPayMethods()
 }, [])
 
@@ -231,9 +210,9 @@ useEffect(() => {
           handlePayments={handlePayments}
           onDeleteAgendamento={onDeleteAgendamento}
           selected={selected}
-          clientes={clientes}
-          servicos={servicos}
-          funcionarios={funcionarios}
+          clientes={props.clientes}
+          servicos={props.servicos}
+          funcionarios={props.funcionarios}
           payMethods={payMethods}
           clearSelected={() => setSelected([])}
           selectedDateTime={moment(selectedDateTime).format('YYYY-MM-DDTHH:mm')}

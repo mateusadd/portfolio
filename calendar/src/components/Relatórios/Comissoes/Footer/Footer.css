@@ -1,0 +1,23 @@
+.reports-footer {
+    background-color: #999;
+    width: 100%;
+    height: 7vh;
+    position: sticky;
+    bottom: 0;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+    
+}
+
+.reports-footer p {
+    color: white;
+}
+
+.reports-footer table {
+    width: 100%;
+}
+
+.reports-footer table td {
+    width: 25%;
+}

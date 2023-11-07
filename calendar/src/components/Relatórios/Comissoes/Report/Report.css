@@ -1,0 +1,29 @@
+.reports {
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.report-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    overflow: auto;
+}
+
+.report-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #999;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+.report-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 25%;
+    height: 200px;
+}

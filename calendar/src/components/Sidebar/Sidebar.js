@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {IoIosHome, IoIosCalendar} from "react-icons/io"
 import {GiHairStrands} from "react-icons/gi"
 import {BiSolidUser} from "react-icons/bi"
+import {BiSolidReport} from "react-icons/bi"
 import {FaUsers} from "react-icons/fa"
 
 const Sidebar = () => {
@@ -38,6 +39,12 @@ const Sidebar = () => {
                     <Link className="navigate" to="/agendamento">
                         <FaUsers size="30" /> 
                         Funcionários
+                    </Link>
+                </li>
+                <li>
+                    <Link className="navigate" to="/relatorios/comissoes">
+                        <BiSolidReport size="30" /> 
+                        Relatórios
                     </Link>
                 </li>
             </>
