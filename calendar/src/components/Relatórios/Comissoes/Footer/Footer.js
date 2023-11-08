@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import api from '../../../../services/api'
 //import moment from 'moment';
 
-function Footer({somaComissoes}) {
+function Footer({comissoes}) {
 
         return (
             <>
@@ -18,7 +18,7 @@ function Footer({somaComissoes}) {
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <p>Total: R$ {formatValues(somaComissoes)}</p>
+                                    <p>Total: R$ {formatValues(comissoes)}</p>
                                 </td>
                             </tr>
                         </tbody>

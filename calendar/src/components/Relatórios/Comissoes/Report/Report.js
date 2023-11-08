@@ -10,14 +10,16 @@ function Report({results, somarComissoes}) {
 
     var soma = 0
 
-    useEffect(() => {
-        // Atualiza o estado de somaComissoes no componente Main
-        somarComissoes(soma);
-    }, [soma, somarComissoes]);
-
     if(results.length > 0) {
 
         results = aggregateReports(results)
+
+        results.forEach(data => {
+            soma += (data.pagamento_valor * (data.agendamento.servico.servico_comissao / 100))
+        });
+
+        // Pass the total commission to the parent component
+        somarComissoes(soma);
 
         return (
             <>
@@ -35,7 +37,6 @@ function Report({results, somarComissoes}) {
                             {results.map((data, index) => {
 
                                 let comissao = data.pagamento_valor * (data.agendamento.servico.servico_comissao / 100);
-                                soma += comissao;
 
                                 return (
                                     <tr key={index}>

@@ -60,7 +60,7 @@ function Main(props) {
             somarComissoes={setSomaComissoes}
         />
         <Footer 
-            somaComissoes={somaComissoes}
+            comissoes={somaComissoes}
         />
     </div>
     </>
