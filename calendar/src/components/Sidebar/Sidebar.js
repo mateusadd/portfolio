@@ -64,7 +64,7 @@ const Sidebar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link className="navigate">
+                                <Link className="navigate" to="/relatorios/pagamentos">
                                     Pagamentos
                                 </Link>
                             </li>

@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - database
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build: ./calendar
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  database:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD='.sCrIiqTls5XAotK'
+      - MYSQL_DATABASE=salao

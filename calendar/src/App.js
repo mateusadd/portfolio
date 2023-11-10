@@ -11,7 +11,8 @@ import api from './services/api'
 import Agendamento from './components/Agendamento/Agendamento';
 import Home from './components/Home/Home';
 import Clientes from './components/Clientes/Clientes/Clientes';
-import Main from './components/Relatórios/Comissoes/Main/Main';
+import MainComissoes from './components/Relatórios/Comissoes/Main/MainComissoes';
+import MainPagamentos from './components/Relatórios/Pagamentos/Main/MainPagamentos';
 
 function App() {
 
@@ -61,9 +62,13 @@ function App() {
         },
         {
           path: "/relatorios/comissoes",
-          element: <Main
+          element: <MainComissoes
             funcionarios={funcionarios} 
           />
+        },
+        {
+          path: "/relatorios/pagamentos",
+          element: <MainPagamentos/>
         }
       ])}/>
     </div>

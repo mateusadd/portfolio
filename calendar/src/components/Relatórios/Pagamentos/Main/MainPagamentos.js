@@ -1,4 +1,4 @@
-import './Main.css';
+import './MainPagamentos.css';
 import { useEffect, useState } from 'react';
 import api from '../../../../services/api'
 //import moment from 'moment';
@@ -9,16 +9,16 @@ import Filter from '../Filter/Filter'
 import Report from '../Report/Report'
 import Footer from '../Footer/Footer'
 
-function Main(props) {
+function MainPagamentos() {
 
-    const [funcionario, setFuncionario] = useState('')
+    const [metodoPagamento, setMetodoPagamento] = useState('')
     const [filterStart, setFilterStart] = useState('')
     const [filterEnd, setFilterEnd] = useState('')
     const [results, setResults] = useState([])
-    const [somaComissoes, setSomaComissoes] = useState(0)
+    const [somaPagamentos, setSomaPagamentos] = useState(0)
 
-    function  handleFilterFuncionario(value) {
-        setFuncionario(value)
+    function  handleFilterMetodoPagamento(value) {
+        setMetodoPagamento(value)
     }
 
     function  handleFilterStart(value) {
@@ -31,9 +31,9 @@ function Main(props) {
 
     async function handleGerarRelatorio() {
 
-        let res = await api.get(`/comissoes`, {
+        let res = await api.get(`/pagamentos`, {
             params: {
-                funcionario: funcionario,
+                metodoPagamento: metodoPagamento,
                 filterStart: filterStart,
                 filterEnd: filterEnd
             }
@@ -48,23 +48,22 @@ function Main(props) {
     <Sidebar/>
     <div className='reports-main'>
         <Filter
-            funcionario={funcionario}
-            handleFilterFuncionario={handleFilterFuncionario}
+            metodoPagamento={metodoPagamento}
+            handleFilterMetodoPagamento={handleFilterMetodoPagamento}
             handleFilterStart={handleFilterStart}
             handleFilterEnd={handleFilterEnd}
             handleGerarRelatorio={handleGerarRelatorio}
-            funcionarios={props.funcionarios}
         />
         <Report
             results={results}
-            somarComissoes={setSomaComissoes}
+            somarPagamentos={setSomaPagamentos}
         />
         <Footer 
-            comissoes={somaComissoes}
+            pagamentos={somaPagamentos}
         />
     </div>
     </>
   );
 }
 
-export default Main;
+export default MainPagamentos;
