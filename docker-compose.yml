@@ -1,26 +1,13 @@
 version: '3'
-
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend   # O diretório onde está o Dockerfile do backend
     ports:
-      - "3001:3001"
-    depends_on:
-      - database
-    environment:
-      - NODE_ENV=production
+      - "3001:3001"  # Mapeia a porta do host para a porta do contêiner
 
   frontend:
-    build: ./calendar
+    build:
+      context: ./calendar   # O diretório onde está o Dockerfile do frontend
     ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
-  database:
-    image: mysql:latest
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD='.sCrIiqTls5XAotK'
-      - MYSQL_DATABASE=salao
+      - "3000:3000"   # Mapeia a porta do host para a porta do contêiner

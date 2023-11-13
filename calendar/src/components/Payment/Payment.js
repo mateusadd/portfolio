@@ -34,9 +34,10 @@ function Payment({ id, setIndexToRemove, data, index, onValorChange, onMetodoCha
                     <p className='payment-label'>Método de pagamento: </p>
                     <select className='payment-field' value={metodo} onChange={handleChangeMetodo}>
                         <option value=""></option>
-                        <option value="Método1">Primeiro</option>
-                        <option value="Segundo">Segundo</option>
-                        <option value="Terceiro">Terceiro</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Credito">Crédito</option>
+                        <option value="Debito">Débito</option>
                     </select>
                 </div>
             </div>

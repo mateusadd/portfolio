@@ -8,8 +8,10 @@ function Filter({ metodoPagamento, handleFilterMetodoPagamento, handleFilterStar
             <p className='filter-label'>Funcionário</p>
             <select className='select' id='metodoPagamento' name='metodoPagamento' value={metodoPagamento} onChange={e => handleFilterMetodoPagamento(e.target.value)}>
                 <option value=""></option>
-                <option value="Método1">Primeiro</option>
-                <option value="Segundo">Segundo</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Pix">Pix</option>
+                <option value="Credito">Crédito</option>
+                <option value="Debito">Débito</option>
             </select>
             <p className='filter-label'>Data Início</p>
             <input className='select' type='date' id='filter-start' name='filter-start' onChange={e => handleFilterStart(e.target.value)}/>
