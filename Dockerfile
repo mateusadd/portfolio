@@ -60,6 +60,3 @@ COPY --from=frontend /app/calendar /app/calendar
 # Exponha as portas do backend e do frontend
 EXPOSE 3001
 EXPOSE 3000
-
-# Comando para iniciar ambos os aplicativos
-CMD ["npm", "run", "start:both"]
