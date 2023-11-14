@@ -60,3 +60,5 @@ COPY --from=frontend /app/calendar /app/calendar
 # Exponha as portas do backend e do frontend
 EXPOSE 3001
 EXPOSE 3000
+
+CMD ["sh", "-c", "cd /app/backend && npm start & cd /app/calendar && npm start"]
