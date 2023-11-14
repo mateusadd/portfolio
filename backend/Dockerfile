@@ -1,6 +1,8 @@
 # Use a imagem oficial do Node.js como base
 FROM node:14
 
+RUN npm set strict-ssl false
+
 # Crie e defina o diretório de trabalho na imagem
 WORKDIR /app/backend
 
