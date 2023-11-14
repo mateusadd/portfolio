@@ -1,5 +1,5 @@
 # Use a imagem oficial do Node.js como base
-FROM node:14 as backeend
+FROM node:14 as backend
 
 RUN npm set strict-ssl false
 
