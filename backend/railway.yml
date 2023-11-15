@@ -1,0 +1,9 @@
+# railway.yml
+
+services:
+  - name: backend
+    type: node
+    env:
+      - PORT: 3001
+    buildArgs:
+      NODE_ENV: production
