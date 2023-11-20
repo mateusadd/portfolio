@@ -152,3 +152,33 @@
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s;
   }
+
+  .input-payment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .payment-input {
+    height: 10%;
+    width: 80%;
+    text-align: left;
+    flex: 1;
+    margin: auto;
+  }
+
+  .payment-label {
+    font-size: 15px;
+    color: lightpink;
+    font-weight: 600;
+  }
+
+  .payment-field {
+    width: 100%;
+    padding: 5px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    border: 1px solid #ccc; /* Borda */
+    border-radius: 20px; /* Cantos arredondados */
+    background-color: #fff; /* Cor de fundo */
+    color: #333; /* Cor do texto */
+  }

@@ -7,11 +7,14 @@ module.exports = {
 
     async create(req, res) {
 
+        let newDate = new Date(req.body.agendamento_datetime_start);
+        newDate.setHours(newDate.getHours() + 3);
+
         const agendamento = {
             cliente_id: req.body.cliente_id,
             servico_id: req.body.servico_id,
             funcionario_id: req.body.funcionario_id,
-            agendamento_datetime_start: req.body.agendamento_datetime_start,
+            agendamento_datetime_start: newDate,
             agendamento_datetime_end: req.body.agendamento_datetime_end,
             pago: req.body.pago
         }

@@ -214,6 +214,7 @@ useEffect(() => {
           servicos={props.servicos}
           funcionarios={props.funcionarios}
           payMethods={payMethods}
+          setPayMethods={setPayMethods}
           clearSelected={() => setSelected([])}
           selectedDateTime={moment(selectedDateTime).format('YYYY-MM-DDTHH:mm')}
           clearSelectedDateTime={() => setSelectedDateTime(new Date())}

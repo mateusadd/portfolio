@@ -49,7 +49,7 @@ const Sidebar = () => {
                     </Link>
                 </li>
                 <li>
-                    <div className="report-toggle" onClick={toggleReports}>
+                    <div aria-hidden="true" className="report-toggle" onClick={toggleReports}>
                         <Link className="navigate">
                             <BiSolidReport size="30" />
                             Relatórios

@@ -4,13 +4,11 @@ import api from '../../services/api'
 import { dateFormat } from '../../utils/dateFormat';
 import Payment from '../Payment/Payment';
 
-const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAgendamento, selected, clientes, servicos, funcionarios, payMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
+const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAgendamento, selected, clientes, servicos, funcionarios, payMethods, setPayMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
 
-    const [valoresPagamento, setValoresPagamento] = useState([
-        { valor: 0 },
-        { valor: 0 },
-        { valor: 0 }
-    ])
+    console.log(payMethods)
+    
+    const [valoresPagamento, setValoresPagamento] = useState([])
 
     const [metodosPagamento, setMetodosPagamento] = useState([
         { metodo: '' },
@@ -25,8 +23,6 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     ])
     
     //const [payList, setPayList] = useState([])
-    const [indexToRemove, setIndexToRemove] = useState(null)
-    const [indexController, setIndexController] = useState(0)
     const [payment, setPayment] = useState([])
     const [addButton, setAddButton] = useState(true)
     const [cliente, setCliente] = useState('')
@@ -37,92 +33,9 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     const [fkCliente, setfkCliente] = useState({})
     const [fkServico, setfkServico] = useState({})
     const [fkFuncionario, setfkFuncionario] = useState({})
-
-    function addComponent(data, index) {
-
-        
-
-        if(index===undefined){
-            index = indexController + 1
-        }
-
-        const newComponent = (
-            <Payment 
-                key={payment.length} 
-                id={data.pagamento_id}
-                setIndexToRemove={setIndexToRemove}
-                data={data}
-                index={index}
-                onValorChange={atualizaValor}
-                onMetodoChange={atualizaMetodo}
-            />
-        )   
-        
-        if(data.pagamento_id) {
-            atualizaValor(index, data.pagamento_valor)
-            atualizaMetodo(index, data.pagamento_metodo)
-            atualizaIdPagamento(index, data.pagamento_id)
-        }
-        
-        setIndexController(index)
-        setPayment(prevPayment => [...prevPayment, newComponent]);
-    
-    }
-
-    function atualizaValor(ind, novoValor) {
-        setValoresPagamento((prevValores) => {
-            const novosValores = [...prevValores];
-            novosValores[ind].valor = parseFloat(novoValor);
-            return novosValores;
-        });
-    }
-
-    function atualizaMetodo(ind, novoMetodo) {
-        setMetodosPagamento((prevMetodos) => {
-            const novosMetodos = [...prevMetodos];
-            novosMetodos[ind].metodo = novoMetodo;
-            return novosMetodos;
-        });
-    }
-
-    function atualizaIdPagamento(ind, id) {
-        setIdsPagamento((prevIds) => {
-            const novosIds = [...prevIds];
-            novosIds[ind].id = id;
-            return novosIds;
-        });
-    }
-
-    function removeComponent(pagamento_id) {
-        const updatedPayment = [...payment]; // Cria uma cópia do estado payment
-        updatedPayment.splice(indexToRemove, 1); // Remove o item do array
-        setPayment(updatedPayment); // Atualiza o estado payment
-
-        //const updatedPayment = [...payment]
-        //let removeIndex = updatedPayment.findIndex((pay) => pay.pagamento_id === indexToRemove)
-        //updatedPayment.splice(removeIndex, 1);
-        //setPayment(updatedPayment)
-
-        setValoresPagamento((prevValores) => {
-            const removeValor = [...prevValores];
-            removeValor[indexToRemove] = { valor: 0 };
-            return removeValor;
-        });
-
-
-        setMetodosPagamento((prevMetodos) => {
-            const removeMetodo = [...prevMetodos];
-            removeMetodo[indexToRemove] = { metodo: '' };
-            return removeMetodo;
-        });
-
-        setIdsPagamento((prevIdsPagamento) => {
-            const removeId = [...prevIdsPagamento];
-            removeId[indexToRemove] = { id: null };
-            return removeId;
-        });
-
-    }
+    const [valor, setValor] = useState('');
+    const [metodoPagamento, setMetodoPagamento] = useState('');
+    const [listOfPayments, setListofPayments] = useState([])
 
     async function createDataInBackend() {
 
@@ -146,6 +59,17 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
             agendamento_datetime_end: agendamento_datetime_end
         })
 
+    }
+
+    async function handleCreatePayment() {
+        const res = await createPayment();
+        setPayMethods(prevList => [...prevList, res]);
+        return res;
+      }
+      
+    async function handleDeletePayment(id) {
+        await deletePayment(id);
+        setPayMethods(prevList => prevList.filter(payment => payment.pagamento_id !== id));
     }
 
     async function getCorrespondingPayments() {
@@ -178,13 +102,13 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     }
 
-    async function createPayment(index, agendamentoId) {
+    async function createPayment() {
         let res = await api.post(`/pagamento`, {
-            agendamento_id: agendamentoId,
+            agendamento_id: selected.agendamento_id,
             dividido: 0,
             valor_dividido: null,
-            pagamento_metodo: metodosPagamento[index].metodo,
-            pagamento_valor: valoresPagamento[index].valor
+            pagamento_metodo: metodoPagamento,
+            pagamento_valor: valor
         })
 
         return res.data
@@ -202,25 +126,16 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         return res.data
     }
 
-    async function deletePayment() {
-        let idsToDelete = []
-        let list = payMethods.filter(item => item.agendamento_id === selected.agendamento_id)
-        for (let pay of list) {
-            let found = idsPagamento.findIndex((el) => el.id === pay.pagamento_id)
-            if(found === -1) {
-                let res = await api.delete(`/pagamento/${pay.pagamento_id}`)
-                idsToDelete.push(pay.pagamento_id)
-            }
-        }
-
-        return idsToDelete
+    async function deletePayment(pagamento_id) {
+        let res = await api.delete(`/pagamento/${pagamento_id}`)
+        return res.data
     }
 
     async function verifyPayment(agendamentoId) {
         let resPay = []
         for (const [index, item] of valoresPagamento.entries()) {
             if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id === null){
-                let res = await createPayment(index, agendamentoId)
+                let res = await createPayment(agendamentoId)
                 resPay.push(res)
             } else if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id !== null){
                 let res = await updatePayment(index, idsPagamento[index].id)
@@ -261,17 +176,12 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     async function saveInformation() {
         if(Array.isArray(selected)) {
             let res = await createDataInBackend()
-            let resPay = await verifyPayment(res.data.agendamento_id)
             onSave(res.data, fkCliente, fkServico, fkFuncionario)
-            handlePayments(resPay)
             clearAll()
             openModal()
         } else {
             let res = await updateDataInBackend()
-            let resPay = await verifyPayment(selected.agendamento_id)
-            let idsToDelete = await deletePayment()
             onUpdate(res.data, fkCliente, fkServico, fkFuncionario)
-            handlePayments(resPay, idsToDelete)
             clearAll()
             openModal()
         }
@@ -317,13 +227,14 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     function clearAll(){
         clearSelected()
         //clearSelectedDateTime()
+        setListofPayments([])
         setStart('')
         setEnd('')
         setPayment([])
         //setPayList([])
         setAddButton(true)
-        setIndexToRemove(null)
-        setIndexController(0)
+        setValor('')
+        setMetodoPagamento('')
         setValoresPagamento([
             { valor: 0 },
             { valor: 0 },
@@ -350,6 +261,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     function handleServico(value) {
         setServico(value)
         let select = servicos.find(servico => servico.servico_id == value)
+        if(select) {setValor(select.servico_preco)}
         setfkServico(select)
     }
 
@@ -379,11 +291,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     useEffect(() => {
 
         if(selected){
-            let list = payMethods.filter(item => item.agendamento_id === selected.agendamento_id)
 
-            if(list) {
-                list.forEach((data, index) => {addComponent(data, index)});
-            }
+            setListofPayments(payMethods.filter(item => item.agendamento_id === selected.agendamento_id))
 
             //setPayList(prevPayList => [...prevPayList, payMethods.filter(item => item.agendamento_id === selected.agendamento_id)])
 
@@ -415,14 +324,6 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     useEffect(() => {
         handleHorario(selectedDateTime)
     }, [selectedDateTime]);
-
-    useEffect(() => {
-        removeComponent()
-    }, [indexToRemove])
-
-    useEffect(() => {
-        removeComponent()
-    }, [indexToRemove])
 
   if(isOpen) {
     return (
@@ -472,17 +373,15 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
                         </div>
                     </div>
                     <div className='modal-right'>
-                        {payment.map((component, index) => (
-                            <div key={index}>
-                                {component}
-                            </div>
-                        ))}
-                        {addButton && (
-                            <div className='modal-add-pay' onClick={addComponent}>
-                                <div className='modal-add-pay-button'>+</div>
-                                <p className='modal-add-pay-label'>Adicionar pagamento</p>
-                            </div>
-                        )}
+                        <Payment 
+                            valor={valor}
+                            setValor={setValor}
+                            metodoPagamento={metodoPagamento}
+                            listOfPayments={listOfPayments}
+                            setMetodoPagamento={setMetodoPagamento}
+                            handleCreatePayment={handleCreatePayment}
+                            handleDeletePayment={handleDeletePayment}
+                        />
                     </div>
                 </div>
 
