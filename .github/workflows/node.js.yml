@@ -23,12 +23,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: "npm"
-        cache-dependency-path: "../backend"
+        cache-dependency-path: "backend"
 
     - name: Install Backend Dependencies
+      working-directory: ../backend
       run: npm i
 
     - name: Test Backend
+      working-directory: ../backend
       run: npm test
 
     #- name: Install Frontend Dependencies
