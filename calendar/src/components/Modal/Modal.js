@@ -131,7 +131,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         return res.data
     }
 
-    async function verifyPayment(agendamentoId) {
+    /* async function verifyPayment(agendamentoId) {
         let resPay = []
         for (const [index, item] of valoresPagamento.entries()) {
             if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id === null){
@@ -145,7 +145,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
         return resPay
 
-    }
+    } */
 
     function verifyTotalPayment() {
         let valoresSoma = 0
