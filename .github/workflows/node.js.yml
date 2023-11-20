@@ -26,11 +26,11 @@ jobs:
         cache-dependency-path: "backend"
 
     - name: Install Backend Dependencies
-      working-directory: ../backend
+      working-directory: backend
       run: npm i
 
     - name: Test Backend
-      working-directory: ../backend
+      working-directory: backend
       run: npm test
 
     #- name: Install Frontend Dependencies
