@@ -3,6 +3,9 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 
+// Ocultar informações de versão
+app.disable('x-powered-by');
+
 app.use(cors())
 
 const routes = require('./routes')
