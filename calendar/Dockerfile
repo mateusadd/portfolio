@@ -15,6 +15,7 @@ RUN npm install --ignore-scripts
 # Copie todo o código-fonte para o diretório de trabalho na imagem
 COPY package*.json ./
 COPY src/ ./src/
+COPY public/ ./public/
 
 # Construa o aplicativo React
 RUN npm run build
