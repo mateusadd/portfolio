@@ -19,7 +19,7 @@ COPY . .
 RUN npm run build
 
 # Instale o pacote 'serve' globalmente
-RUN npm install -g serve
+RUN npm install -g serve --ignore-scripts
 
 # Exponha a porta em que o aplicativo estará em execução
 EXPOSE 3000
