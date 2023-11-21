@@ -1,5 +1,4 @@
 import './Filter.css';
-import { useEffect, useState } from 'react';
 
 
 function Filter({ metodoPagamento, handleFilterMetodoPagamento, handleFilterStart, handleFilterEnd, handleGerarRelatorio }) {
