@@ -10,7 +10,7 @@ WORKDIR /app/calendar
 COPY package*.json ./
 
 # Instale as dependências
-RUN npm install
+RUN npm install --ignore-scripts
 
 # Copie todo o código-fonte para o diretório de trabalho na imagem
 COPY . .
