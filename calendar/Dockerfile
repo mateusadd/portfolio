@@ -1,10 +1,17 @@
 # Use a imagem oficial do Node.js como base
 FROM node:14
 
+# Crie um usuário não privilegiado
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+
 RUN npm set strict-ssl false
 
 # Crie e defina o diretório de trabalho na imagem
 WORKDIR /app/calendar
+RUN chown -R appuser:appgroup /app/calendar
+
+# Troque para o novo usuário
+USER appuser
 
 # Copie o arquivo de dependências e o arquivo de configuração
 COPY package*.json ./
