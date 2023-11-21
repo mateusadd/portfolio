@@ -13,7 +13,7 @@ COPY package*.json ./
 RUN npm install --ignore-scripts
 
 # Copie todo o código-fonte para o diretório de trabalho na imagem
-COPY calendar/ app/calendar/
+COPY . calendar/
 
 # Construa o aplicativo React
 RUN npm run build
