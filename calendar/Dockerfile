@@ -4,14 +4,14 @@ FROM node:14
 # Crie um usuário não privilegiado
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 
-RUN npm set strict-ssl false
-
 # Crie e defina o diretório de trabalho na imagem
 WORKDIR /app/calendar
 RUN chown -R appuser:appgroup /app/calendar
 
 # Troque para o novo usuário
 USER appuser
+
+RUN npm set strict-ssl false
 
 # Copie o arquivo de dependências e o arquivo de configuração
 COPY package*.json ./
@@ -20,7 +20,6 @@ COPY package*.json ./
 RUN npm install --ignore-scripts
 
 # Copie todo o código-fonte para o diretório de trabalho na imagem
-COPY package*.json ./
 COPY src/ ./src/
 COPY public/ ./public/
 
@@ -28,10 +27,10 @@ COPY public/ ./public/
 RUN npm run build
 
 # Instale o pacote 'serve' globalmente
-RUN npm install --ignore-scripts -g serve
+RUN npm install --ignore-scripts serve
 
 # Exponha a porta em que o aplicativo estará em execução
 EXPOSE 3000
 
 # Comando para iniciar o servidor de produção usando 'serve'
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["npx", "serve", "-s", "build", "-l", "3000"]
