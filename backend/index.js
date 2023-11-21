@@ -7,14 +7,10 @@ require('dotenv').config()
 app.disable('x-powered-by');
 
 const corsOptions = {
-  origin: 'https://portfolio-production-691c.up.railway.app/', // Substitua com o seu domínio permitido
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204,
+  origin: 'https://portfolio-production-691c.up.railway.app', // Substitua com o seu domínio permitido
 };
 
-app.use(cors())
-app.options(corsOptions, cors());
+app.use(cors(corsOptions))
 
 const routes = require('./routes')
 
