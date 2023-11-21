@@ -8,7 +8,7 @@ import api from '../../../../services/api'
 
 function Report({results, somarComissoes}) {
 
-    var soma = 0
+    let soma = 0
 
     if(results.length > 0) {
 

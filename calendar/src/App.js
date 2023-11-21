@@ -1,9 +1,7 @@
-import React from 'react';
-import {useState, useEffect} from 'react'
+import {React, useState, useEffect} from 'react'
 import {
   createBrowserRouter,
-  RouterProvider,
-  Route
+  RouterProvider
 } from 'react-router-dom'
 import './App.css';
 

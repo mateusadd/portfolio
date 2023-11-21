@@ -31,8 +31,9 @@ function Agendamento(props) {
 
 async function getCalendar() {
   let res = await api.get('/agendamento')
-  var events = []
-  {res.data.map(t => (
+  let events = []
+
+  res.data.map(t => (
     t.agendamento_datetime_start = new Date(t.agendamento_datetime_start),
     t.agendamento_datetime_end = new Date(t.agendamento_datetime_end),
 
@@ -49,7 +50,7 @@ async function getCalendar() {
       title: `${t.cliente.cliente_nome} - ${t.servico.servico_nome}`,
 
     })
-  ))}
+  ))
 
   setCalendar(events)
 }

@@ -3,8 +3,7 @@ import './Sidebar.css'
 import { Link } from 'react-router-dom';
 import {IoIosHome, IoIosCalendar} from "react-icons/io"
 import {GiHairStrands} from "react-icons/gi"
-import {BiSolidUser} from "react-icons/bi"
-import {BiSolidReport} from "react-icons/bi"
+import {BiSolidUser, BiSolidReport} from "react-icons/bi"
 import {FaUsers} from "react-icons/fa"
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi'
 

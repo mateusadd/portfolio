@@ -3,7 +3,6 @@ import {formatValues} from '../../utils/formatValues'
 
 const CarrinhoCompras = ({ valor, setValor, metodoPagamento, setMetodoPagamento, listOfPayments, handleCreatePayment, handleDeletePayment }) => {
   const [carrinho, setCarrinho] = useState([]);
-  const [valorController, setValorController] = useState(0)
 
   function handleChangePagamento(value) {
     setMetodoPagamento(value)

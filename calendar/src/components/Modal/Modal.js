@@ -5,8 +5,6 @@ import { dateFormat } from '../../utils/dateFormat';
 import Payment from '../Payment/Payment';
 
 const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAgendamento, selected, clientes, servicos, funcionarios, payMethods, setPayMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
-
-    console.log(payMethods)
     
     const [valoresPagamento, setValoresPagamento] = useState([])
 
@@ -15,27 +13,20 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         { metodo: '' },
         { metodo: '' }
     ])
-
-    const [idsPagamento, setIdsPagamento] = useState([
-        { id: null },
-        { id: null },
-        { id: null }
-    ])
     
     //const [payList, setPayList] = useState([])
     const [payment, setPayment] = useState([])
-    const [addButton, setAddButton] = useState(true)
     const [cliente, setCliente] = useState('')
     const [servico, setServico] = useState('')
     const [funcionario, setFuncionario] = useState('')
-    const [agendamento_datetime_start, setStart] = useState('')
-    const [agendamento_datetime_end, setEnd] = useState('') 
-    const [fkCliente, setfkCliente] = useState({})
-    const [fkServico, setfkServico] = useState({})
-    const [fkFuncionario, setfkFuncionario] = useState({})
+    const [agendamento_datetime_start, setAgendamento_datetime_start] = useState('')
+    const [agendamento_datetime_end, setAgendamento_datetime_end] = useState('') 
+    const [fkCliente, setFkCliente] = useState({})
+    const [fkServico, setFkServico] = useState({})
+    const [fkFuncionario, setFkFuncionario] = useState({})
     const [valor, setValor] = useState('');
     const [metodoPagamento, setMetodoPagamento] = useState('');
-    const [listOfPayments, setListofPayments] = useState([])
+    const [listOfPayments, setListOfPayments] = useState([])
 
     async function createDataInBackend() {
 
@@ -97,7 +88,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         } else {
             if(window.confirm(`Quer mesmo excluir este agendamento?`)){
                 return await api.delete(`/agendamento/${selected.agendamento_id}`)
-            }
+            } else {}
         }
 
     }
@@ -114,43 +105,15 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         return res.data
     }
 
-    async function updatePayment(index, id) {
-        let res = await api.post(`/pagamento/${id}`, {
-            pagamento_id: id,
-            dividido: 0,
-            valor_dividido: null,
-            pagamento_metodo: metodosPagamento[index].metodo,
-            pagamento_valor: valoresPagamento[index].valor
-        })
-
-        return res.data
-    }
-
     async function deletePayment(pagamento_id) {
         let res = await api.delete(`/pagamento/${pagamento_id}`)
         return res.data
     }
 
-    /* async function verifyPayment(agendamentoId) {
-        let resPay = []
-        for (const [index, item] of valoresPagamento.entries()) {
-            if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id === null){
-                let res = await createPayment(agendamentoId)
-                resPay.push(res)
-            } else if(valoresPagamento[index].valor !== 0 && idsPagamento[index].id !== null){
-                let res = await updatePayment(index, idsPagamento[index].id)
-                resPay.push(res)
-            }
-        }
-
-        return resPay
-
-    } */
-
     function verifyTotalPayment() {
         let valoresSoma = 0
 
-        for(let [index, item] of valoresPagamento.entries()) {
+        for(let [index] of valoresPagamento.entries()) {
             valoresSoma += valoresPagamento[index].valor
         }
 
@@ -161,7 +124,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         let metodo = ''
         let status = false
 
-        for(let [index, item] of metodosPagamento.entries()) {
+        for(let [index] of metodosPagamento.entries()) {
             if(metodosPagamento[index].metodo !== '') {
                 if(metodosPagamento[index].metodo === metodo) {
                     status = true
@@ -227,12 +190,11 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     function clearAll(){
         clearSelected()
         //clearSelectedDateTime()
-        setListofPayments([])
-        setStart('')
-        setEnd('')
+        setListOfPayments([])
+        setAgendamento_datetime_start('')
+        setAgendamento_datetime_end('')
         setPayment([])
         //setPayList([])
-        setAddButton(true)
         setValor('')
         setMetodoPagamento('')
         setValoresPagamento([
@@ -245,81 +207,62 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
             { metodo: '' },
             { metodo: '' }
         ])
-        setIdsPagamento([
-            { id: null },
-            { id: null },
-            { id: null }
-        ])
     }
 
     function handleCliente(value) {
         setCliente(value)
         let select = clientes.find(cliente => cliente.cliente_id == value)
-        setfkCliente(select)
+        setFkCliente(select)
     }
 
     function handleServico(value) {
         setServico(value)
         let select = servicos.find(servico => servico.servico_id == value)
         if(select) {setValor(select.servico_preco)}
-        setfkServico(select)
+        setFkServico(select)
     }
 
     function handleFuncionario(value) {
         setFuncionario(value)
         let select = funcionarios.find(funcionario => funcionario.funcionario_id == value)
-        setfkFuncionario(select)
+        setFkFuncionario(select)
     }
 
     function handleHorario(value) {
 
-        setStart(value)
+        setAgendamento_datetime_start(value)
         
         let inputDate = new Date(value)
         // Adicione meia hora em milissegundos (30 minutos = 30 * 60 * 1000)
-        var novaDataEmMilissegundos = inputDate.getTime() + (30 * 60 * 1000);
+        let novaDataEmMilissegundos = inputDate.getTime() + (30 * 60 * 1000);
 
         // Crie um novo objeto Date com a nova data em milissegundos
-        var novaData = new Date(novaDataEmMilissegundos);
+        let novaData = new Date(novaDataEmMilissegundos);
 
         // Formate a nova data para exibição (por exemplo, no formato ISO)
-        var novaDataFormatada = novaData.toISOString();
+        let novaDataFormatada = novaData.toISOString();
                     
-        setEnd(novaDataFormatada)
+        setAgendamento_datetime_end(novaDataFormatada)
     }
 
     useEffect(() => {
 
         if(selected){
 
-            setListofPayments(payMethods.filter(item => item.agendamento_id === selected.agendamento_id))
-
-            //setPayList(prevPayList => [...prevPayList, payMethods.filter(item => item.agendamento_id === selected.agendamento_id)])
-
-            //if(payList) {
-                //payList.map((data, index) => (addComponent(data, index)));
-            //}
+            setListOfPayments(payMethods.filter(item => item.agendamento_id === selected.agendamento_id))
 
             handleCliente(selected.cliente_id)
             handleServico(selected.servico_id)
             handleFuncionario(selected.funcionario_id)
 
             if (selected.start) {
-                setStart(dateFormat(selected.start).toISOString().slice(0, 16));
-                setEnd(dateFormat(selected.end).toISOString().slice(0, 16));
+                setAgendamento_datetime_start(dateFormat(selected.start).toISOString().slice(0, 16));
+                setAgendamento_datetime_end(dateFormat(selected.end).toISOString().slice(0, 16));
             } 
             
         } 
     
     }, [selected])
-
-    useEffect(() => {
-        if (payment.length === 3) {
-            setAddButton(false);
-        } else {
-            setAddButton(true);
-        }
-    }, [payment]);
 
     useEffect(() => {
         handleHorario(selectedDateTime)
