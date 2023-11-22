@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { formatValues } from '../../utils/formatValues';
+import { v4 as uuidv4 } from 'uuid';
 
 const CarrinhoCompras = ({
   carrinho,
@@ -37,7 +38,7 @@ const CarrinhoCompras = ({
     if (valor && metodoPagamento) {
       // NOSONAR
       const novoItem = {
-        id: carrinho.id || Math.floor(100000 + Math.random() * 900000),
+        id: carrinho.id || uuidv4(),
         valor: parseFloat(valor),
         metodoPagamento: metodoPagamento
       };

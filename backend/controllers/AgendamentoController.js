@@ -59,10 +59,15 @@ module.exports = {
 
         const agendamento = await Agendamento.findOne({where: {agendamento_id: req.params.agendamento_id}})
 
+        console.log(req.body)
+
+        let newDate = new Date(req.body.agendamento_datetime_start);
+        newDate.setHours(newDate.getHours() + 3);
+
         agendamento.cliente_id = req.body.cliente_id
         agendamento.servico_id = req.body.servico_id
         agendamento.funcionario_id = req.body.funcionario_id
-        agendamento.agendamento_datetime_start = req.body.agendamento_datetime_start
+        agendamento.agendamento_datetime_start = newDate
         agendamento.agendamento_datetime_end = req.body.agendamento_datetime_end
 
         await agendamento.save()
