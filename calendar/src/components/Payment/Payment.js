@@ -37,7 +37,7 @@ const CarrinhoCompras = ({
     if (valor && metodoPagamento) {
 
       const novoItem = {
-        id: carrinho.id || Math.floor(100000 + Math.random() * 900000),
+        id: carrinho.id ?? Math.floor(100000 + Math.random() * 900000),
         valor: parseFloat(valor),
         metodoPagamento: metodoPagamento
       };
