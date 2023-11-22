@@ -61,7 +61,7 @@ module.exports = {
 
         let newDate = new Date(req.body.agendamento_datetime_start);
         newDate.setHours(newDate.getHours() + 3);
-        let newDateEnd = newDate.setMinutes(newDate.getMinutes() + 30);
+        let newDateEnd = newDate.getMinutes() + 30;
 
         agendamento.cliente_id = req.body.cliente_id
         agendamento.servico_id = req.body.servico_id
