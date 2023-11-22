@@ -8,18 +8,7 @@ import api from '../../../../services/api'
 
 function Report({results, somarComissoes}) {
 
-    let soma = 0
-
     if(results.length > 0) {
-
-        results = aggregateReports(results)
-
-        results.forEach(data => {
-            soma += (data.pagamento_valor * (data.agendamento.servico.servico_comissao / 100))
-        });
-
-        // Pass the total commission to the parent component
-        somarComissoes(soma);
 
         return (
             <>

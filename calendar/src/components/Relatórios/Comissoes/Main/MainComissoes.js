@@ -1,5 +1,5 @@
 import './MainComissoes.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../../../services/api'
 
 import Sidebar from '../../../Sidebar/Sidebar';
@@ -30,6 +30,8 @@ function MainComissoes(props) {
 
     async function handleGerarRelatorio() {
 
+        setSomaComissoes(0)
+
         let res = await api.get(`/comissoes`, {
             params: {
                 funcionario: funcionario,
@@ -40,6 +42,11 @@ function MainComissoes(props) {
 
         setResults(res.data)
     }
+
+    useEffect(() => {
+        const novaSoma = results.reduce((total, data) => total + (data.pagamento_valor * (data.agendamento.servico.servico_comissao / 100)), 0);
+        setSomaComissoes(novaSoma);
+    }, [results]);
 
   return (
     <>

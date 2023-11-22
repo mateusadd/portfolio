@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import {formatValues} from '../../utils/formatValues'
+import { formatValues } from '../../utils/formatValues';
 
-const CarrinhoCompras = ({ valor, setValor, metodoPagamento, setMetodoPagamento, listOfPayments, handleCreatePayment, handleDeletePayment }) => {
-  const [carrinho, setCarrinho] = useState([]);
+const CarrinhoCompras = ({
+  carrinho,
+  setCarrinho,
+  valor,
+  setValor,
+  metodoPagamento,
+  setMetodoPagamento,
+  listOfPayments,
+  setIdsToDelete
+}) => {
 
   function handleChangePagamento(value) {
-    setMetodoPagamento(value)
-
+    setMetodoPagamento(value);
   }
 
   useEffect(() => {
     if (listOfPayments.length > 0) {
-      const payments = listOfPayments.map(payment => ({
+      const payments = listOfPayments.map((payment) => ({
         id: payment.pagamento_id,
         valor: parseFloat(payment.pagamento_valor),
-        metodoPagamento: payment.pagamento_metodo,
+        metodoPagamento: payment.pagamento_metodo
       }));
 
       setCarrinho((prevCarrinho) => [...prevCarrinho, ...payments]);
@@ -22,13 +29,17 @@ const CarrinhoCompras = ({ valor, setValor, metodoPagamento, setMetodoPagamento,
   }, [listOfPayments]);
 
   const adicionarItem = async () => {
+    if (carrinho.length >= 3) {
+      alert('Você atingiu o limite de 3 itens.');
+      return;
+    }
+
     if (valor && metodoPagamento) {
-      let res = await handleCreatePayment();
 
       const novoItem = {
-        id: res.pagamento_id,
+        id: carrinho.id || Math.floor(100000 + Math.random() * 900000),
         valor: parseFloat(valor),
-        metodoPagamento: metodoPagamento,
+        metodoPagamento: metodoPagamento
       };
 
       setCarrinho((prevCarrinho) => [...prevCarrinho, novoItem]);
@@ -42,7 +53,8 @@ const CarrinhoCompras = ({ valor, setValor, metodoPagamento, setMetodoPagamento,
   };
 
   const removerItem = async (id) => {
-    handleDeletePayment(id);
+    //handleDeletePayment(id);
+    setIdsToDelete((prevIds) => [...prevIds, id]);
     const novoCarrinho = carrinho.filter((item) => item.id !== id);
     setCarrinho(novoCarrinho);
   };

@@ -6,14 +6,6 @@ import Payment from '../Payment/Payment';
 
 const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAgendamento, selected, clientes, servicos, funcionarios, payMethods, setPayMethods, clearSelected, selectedDateTime, clearSelectedDateTime }) => {
     
-    const [valoresPagamento, setValoresPagamento] = useState([])
-
-    const [metodosPagamento, setMetodosPagamento] = useState([
-        { metodo: '' },
-        { metodo: '' },
-        { metodo: '' }
-    ])
-    
     //const [payList, setPayList] = useState([])
     const [payment, setPayment] = useState([])
     const [cliente, setCliente] = useState('')
@@ -27,6 +19,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     const [valor, setValor] = useState('');
     const [metodoPagamento, setMetodoPagamento] = useState('');
     const [listOfPayments, setListOfPayments] = useState([])
+    const [carrinho, setCarrinho] = useState([]);
+    const [idsToDelete, setIdsToDelete] = useState([])
 
     async function createDataInBackend() {
 
@@ -52,15 +46,18 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     }
 
-    async function handleCreatePayment() {
-        const res = await createPayment();
+    async function handleCreatePayment(item, id) {
+        let res = await createPayment(item, id);
         setPayMethods(prevList => [...prevList, res]);
         return res;
       }
       
     async function handleDeletePayment(id) {
-        await deletePayment(id);
-        setPayMethods(prevList => prevList.filter(payment => payment.pagamento_id !== id));
+        let res = await api.get(`/pagamento?pagamento_id=${id}`)
+        if(res.data) {
+            await deletePayment(id);
+            setPayMethods(prevList => prevList.filter(payment => payment.pagamento_id !== id));
+        }
     }
 
     async function getCorrespondingPayments() {
@@ -93,13 +90,13 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     }
 
-    async function createPayment() {
+    async function createPayment(item, id) {
         let res = await api.post(`/pagamento`, {
-            agendamento_id: selected.agendamento_id,
+            agendamento_id: id,
             dividido: 0,
             valor_dividido: null,
-            pagamento_metodo: metodoPagamento,
-            pagamento_valor: valor
+            pagamento_metodo: item.metodoPagamento,
+            pagamento_valor: item.valor
         })
 
         return res.data
@@ -113,8 +110,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     function verifyTotalPayment() {
         let valoresSoma = 0
 
-        for(let [index] of valoresPagamento.entries()) {
-            valoresSoma += valoresPagamento[index].valor
+        for(let [index] of carrinho.entries()) {
+            valoresSoma += carrinho[index].valor
         }
 
         return valoresSoma
@@ -124,13 +121,11 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         let metodo = ''
         let status = false
 
-        for(let [index] of metodosPagamento.entries()) {
-            if(metodosPagamento[index].metodo !== '') {
-                if(metodosPagamento[index].metodo === metodo) {
-                    status = true
-                }
-                metodo = metodosPagamento[index].metodo
+        for(let [index] of carrinho.entries()) {
+            if(carrinho[index].metodoPagamento === metodo) {
+                status = true
             }
+            metodo = carrinho[index].metodoPagamento
         }
 
         return status
@@ -139,12 +134,29 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     async function saveInformation() {
         if(Array.isArray(selected)) {
             let res = await createDataInBackend()
+            for(let [index] of carrinho.entries()) {
+                handleCreatePayment(carrinho[index], res.data.agendamento_id)
+            }
             onSave(res.data, fkCliente, fkServico, fkFuncionario)
             clearAll()
             openModal()
         } else {
             let res = await updateDataInBackend()
             onUpdate(res.data, fkCliente, fkServico, fkFuncionario)
+            for(let [index] of carrinho.entries()) {
+                let control = false
+                for(let [j] of listOfPayments.entries()) {
+                    if(carrinho[index].id === listOfPayments[j].pagamento_id) {
+                        control = true
+                    }
+                }
+                if(control !== true) {
+                    handleCreatePayment(carrinho[index], res.data.agendamento_id)
+                }
+            }
+            for(let [index] of idsToDelete.entries()) {
+                handleDeletePayment(idsToDelete[index])
+            }
             clearAll()
             openModal()
         }
@@ -152,7 +164,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     async function handleSave() {
         
-        if(payment.length > 0 && (fkServico.servico_preco !== verifyTotalPayment())) {
+        if(carrinho.length > 0 && (fkServico.servico_preco !== verifyTotalPayment())) {
 
             if(window.confirm('Valor informado é diferente do valor do serviço. Deseja salvar mesmo assim?')){
                 return saveInformation()
@@ -194,19 +206,11 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         setAgendamento_datetime_start('')
         setAgendamento_datetime_end('')
         setPayment([])
+        setCarrinho([])
+        setIdsToDelete([])
         //setPayList([])
         setValor('')
         setMetodoPagamento('')
-        setValoresPagamento([
-            { valor: 0 },
-            { valor: 0 },
-            { valor: 0 }
-        ])
-        setMetodosPagamento([
-            { metodo: '' },
-            { metodo: '' },
-            { metodo: '' }
-        ])
     }
 
     function handleCliente(value) {
@@ -317,13 +321,14 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
                     </div>
                     <div className='modal-right'>
                         <Payment 
+                            carrinho={carrinho}
+                            setCarrinho={setCarrinho}
                             valor={valor}
                             setValor={setValor}
                             metodoPagamento={metodoPagamento}
-                            listOfPayments={listOfPayments}
                             setMetodoPagamento={setMetodoPagamento}
-                            handleCreatePayment={handleCreatePayment}
-                            handleDeletePayment={handleDeletePayment}
+                            listOfPayments={listOfPayments}
+                            setIdsToDelete={setIdsToDelete}
                         />
                     </div>
                 </div>

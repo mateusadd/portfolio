@@ -1,5 +1,5 @@
 import './MainPagamentos.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../../../services/api'
 
 import Sidebar from '../../../Sidebar/Sidebar';
@@ -30,6 +30,8 @@ function MainPagamentos() {
 
     async function handleGerarRelatorio() {
 
+        setSomaPagamentos(0)
+
         let res = await api.get(`/pagamentos`, {
             params: {
                 metodoPagamento: metodoPagamento,
@@ -40,6 +42,11 @@ function MainPagamentos() {
 
         setResults(res.data)
     }
+
+    useEffect(() => {
+        const novaSoma = results.reduce((total, data) => total + data.pagamento_valor, 0);
+        setSomaPagamentos(novaSoma);
+    }, [results]);
 
   return (
     <>

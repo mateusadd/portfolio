@@ -1,7 +1,12 @@
 import './Footer.css';
 import { formatValues } from '../../../../utils/formatValues';
+import { useEffect } from 'react';
 
 function Footer({pagamentos}) {
+
+    useEffect(() => {
+        console.log(pagamentos)
+    }, [pagamentos])
 
         return (
             <div className='reports-footer'>
