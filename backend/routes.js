@@ -11,12 +11,16 @@ const RelatorioPagamentoController = require('./controllers/RelatorioPagamentoCo
 
 routes.post('/cliente', ClienteController.create)
 routes.get('/cliente', ClienteController.read)
+routes.post('/cliente/:cliente_id', ClienteController.update)
+routes.delete('/cliente/:cliente_id', ClienteController.delete)
 
 routes.post('/funcionario', FuncionarioController.create)
 routes.get('/funcionario', FuncionarioController.read)
 
 routes.post('/servico', ServicoController.create)
 routes.get('/servico', ServicoController.read)
+routes.post('/servico/:servico_id', ServicoController.update)
+routes.delete('/servico/:servico_id', ServicoController.delete)
 
 routes.post('/agendamento', AgendamentoController.create)
 routes.get('/agendamento', AgendamentoController.read)

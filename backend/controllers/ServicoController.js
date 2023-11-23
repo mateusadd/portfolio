@@ -10,8 +10,8 @@ module.exports = {
             servico_comissao: req.body.servico_comissao
         }
 
-        await Servico.create(servico)
-        return res.json({msg : `criado com sucesso`})
+        const registers = await Servico.create(servico)
+        return res.json(registers)
 
     },
 
@@ -25,6 +25,30 @@ module.exports = {
             console.log(error)
         }
 
+    },
+
+    async update(req, res) {
+
+        const servico = await Servico.findOne({where: {servico_id: req.params.servico_id}})
+
+        servico.servico_nome = req.body.servico_nome
+        servico.servico_preco = req.body.servico_preco
+        servico.servico_comissao = req.body.servico_comissao
+
+        await servico.save()
+
+        return res.json(servico)
+
+    },
+
+    async delete(req, res) {
+        try {
+            await Servico.destroy({where: {servico_id: req.params.servico_id}})
+
+            return res.json({msg:`${req.params.servico_id} deleted successfully!`})
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 }

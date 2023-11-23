@@ -1,4 +1,4 @@
-import './ClienteCard.css';
+import './ServicoCard.css';
 import { useEffect, useState } from 'react';
 import api from '../../../services/api'
 import moment from 'moment';
@@ -6,21 +6,21 @@ import moment from 'moment';
 import Sidebar from '../../Sidebar/Sidebar';
 import Header from '../../Header/Header';
 
-function ClienteCard({key, data, onClick}) {
+function ServicoCard({key, data, onClick}) {
 
   return (
     <>
-        <div className="cliente-card" onClick={onClick}>
+        <div className="servico-card" onClick={onClick}>
 
-            <ul className="cliente-properties">
+            <ul className="servico-properties">
                 <li>
-                    {data.cliente_nome}
+                    {data.servico_nome}
                 </li>
                 <li>
-                    {data.cliente_contato}
+                    {data.servico_preco}
                 </li>
                 <li>
-                    {data.funcionario !== true ? 'Não' : 'Sim'}
+                    {data.servico_comissao}
                 </li>
             </ul>
 
@@ -29,4 +29,4 @@ function ClienteCard({key, data, onClick}) {
   );
 }
 
-export default ClienteCard;
+export default ServicoCard;

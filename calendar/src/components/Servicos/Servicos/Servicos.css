@@ -1,4 +1,4 @@
-.cliente-container {
+.servico-container {
     width: 70%; /* Largura desejada */
     height: 70%; /* Altura desejada */
     margin-top: 190px;
@@ -14,7 +14,7 @@
     z-index: 1;
 }
 
-.cliente-container::-webkit-scrollbar-thumb {
+.servico-container::-webkit-scrollbar-thumb {
     background-color: rgb(145, 204, 142);
 }
 
@@ -31,7 +31,7 @@
     align-items: center;
 }
 
-.cliente-column-header {
+.servico-column-header {
     flex: 1;
     padding: 10px;
     white-space: nowrap;
@@ -40,7 +40,7 @@
     text-align: center;
 }
 
-.cliente-adicionar {
+.servico-adicionar {
     align-items: center;
     box-sizing: border-box;
     width:70%;

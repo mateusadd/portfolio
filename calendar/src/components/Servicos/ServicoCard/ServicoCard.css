@@ -1,4 +1,4 @@
-.cliente-card {
+.servico-card {
     box-sizing: border-box;
     width: 100%;
     min-height: 55px;
@@ -8,7 +8,7 @@
     overflow-x: hidden;
 }
 
-.cliente-properties {
+.servico-properties {
     display: flex;
     max-height: 100%;
     max-width: 100%;
@@ -18,7 +18,7 @@
     cursor: default;
 }
 
-.cliente-properties li {
+.servico-properties li {
     font-size: smaller;
     font-weight: 400;
     flex: 1; /* Ocupa o espaço disponível igualmente */

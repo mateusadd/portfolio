@@ -36,7 +36,7 @@ const Sidebar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link className="navigate" to="/agendamento">
+                    <Link className="navigate" to="/servicos">
                         <GiHairStrands size="30" /> 
                         Serviços
                     </Link>

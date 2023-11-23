@@ -1,14 +1,14 @@
-import './Clientes.css';
+import './Servicos.css';
 import { useEffect, useState } from 'react';
 import api from '../../../services/api'
 import moment from 'moment';
 
 import Sidebar from '../../Sidebar/Sidebar';
 import Header from '../../Header/Header';
-import ClienteCard from '../ClienteCard/ClienteCard'
-import ClienteModal from '../ClienteModal/ClienteModal'
+import ServicoCard from '../ServicoCard/ServicoCard'
+import ServicoModal from '../ServicoModal/ServicoModal'
 
-function Clientes({clientes, createCliente, updateCliente, deleteCliente}) {
+function Servicos({servicos, createServico, updateServico, deleteServico}) {
 
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState([])
@@ -25,40 +25,40 @@ function Clientes({clientes, createCliente, updateCliente, deleteCliente}) {
       <Header/>
       <Sidebar/>
       <div className='top-bar'>
-        <div className="cliente-column-header">
+        <div className="servico-column-header">
           Nome
         </div>
-        <div className="cliente-column-header">
-          Contato
+        <div className="servico-column-header">
+          Preço
         </div>
-        <div className="cliente-column-header">
-          Funcionário
+        <div className="servico-column-header">
+          Comissão
         </div>
       </div>
-      <div className='cliente-adicionar' onClick={() => setModalOpen(true)}>
-        Adicionar cliente
+      <div className='servico-adicionar' onClick={() => setModalOpen(true)}>
+        Adicionar serviço
       </div>
-      <div className="cliente-container">
-        {clientes.map(data => (
-          <ClienteCard 
-            key={data.cliente_id}
+      <div className="servico-container">
+        {servicos.map(data => (
+          <ServicoCard 
+            key={data.servico_id}
             data={data}
             onClick={() => clickCard(data)}
           />
         ))}
       </div>
 
-      <ClienteModal 
+      <ServicoModal 
         data={selectedCard} 
         isOpen={modalOpen} 
         openModal={() => setModalOpen(!modalOpen)}
-        createCliente={createCliente}
-        updateCliente={updateCliente}
-        deleteCliente={deleteCliente}
+        createServico={createServico}
+        updateServico={updateServico}
+        deleteServico={deleteServico}
         clearCard={() => setSelectedCard([])}
       />
     </>
   );
 }
 
-export default Clientes;
+export default Servicos;

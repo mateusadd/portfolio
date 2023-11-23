@@ -1,4 +1,5 @@
 module.exports = {
+    
     dialect: 'mysql',
     host: 'database-portfolio.caa9x9ctigzd.us-east-1.rds.amazonaws.com',
     timezone: '-03:00',
