@@ -25,53 +25,54 @@ module.exports = {
 
     async read(req, res) {
 
-        const {agendamento_id} = req.query
-        const {pagamento_id} = req.query
+        if(req.query) {
+            const {agendamento_id} = req.query
+            const {pagamento_id} = req.query
 
-        if(agendamento_id) {
-            console.log(agendamento_id)
-            try {
-
-                const registers = await Pagamento.findAll({
-                    where: {
-                        agendamento_id: agendamento_id
-                    },
-                    include: [{
-                        model: Agendamento,
-                        as: 'agendamento',
-                        attributes: ['agendamento_id', 'cliente_id', 'servico_id', 'funcionario_id', 'agendamento_datetime_start', 'pago']
-                    }]
-                })
-                return res.json(registers)
+            if(agendamento_id) {
+                try {
     
-            } catch (error) {
+                    const registers = await Pagamento.findAll({
+                        where: {
+                            agendamento_id: agendamento_id
+                        },
+                        include: [{
+                            model: Agendamento,
+                            as: 'agendamento',
+                            attributes: ['agendamento_id', 'cliente_id', 'servico_id', 'funcionario_id', 'agendamento_datetime_start', 'pago']
+                        }]
+                    })
+                    return res.json(registers)
+        
+                } catch (error) {
+        
+                    console.log(error)
+                    
+                }
+            } else if (pagamento_id) {
+                try {
     
-                console.log(error)
-                
-            }
-        } else if (pagamento_id) {
-            try {
-
-                const registers = await Pagamento.findAll({
-                    where: {
-                        pagamento_id: pagamento_id
-                    },
-                    include: [{
-                        model: Agendamento,
-                        as: 'agendamento',
-                        attributes: ['agendamento_id', 'cliente_id', 'servico_id', 'funcionario_id', 'agendamento_datetime_start', 'pago']
-                    }]
-                })
-                return res.json(registers)
-    
-            } catch (error) {
-    
-                console.log(error)
-                
+                    const registers = await Pagamento.findAll({
+                        where: {
+                            pagamento_id: pagamento_id
+                        },
+                        include: [{
+                            model: Agendamento,
+                            as: 'agendamento',
+                            attributes: ['agendamento_id', 'cliente_id', 'servico_id', 'funcionario_id', 'agendamento_datetime_start', 'pago']
+                        }]
+                    })
+                    return res.json(registers)
+        
+                } catch (error) {
+        
+                    console.log(error)
+                    
+                }
             }
         } else {
             try {
-
+    
                 const registers = await Pagamento.findAll({
                     include: [{
                         model: Agendamento,
