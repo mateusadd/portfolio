@@ -31,11 +31,11 @@ jobs:
 
     - name: Test Backend
       working-directory: backend
-      run: |
-        echo "PORT=${{ secrets.PORT }}" >> $GITHUB_ENV
-        echo "USER=${{ secrets.USER }}" >> $GITHUB_ENV
-        echo "PASSWORD=${{ secrets.PASSWORD }}" >> $GITHUB_ENV
-        npm test
+      env:
+        PASSWORD: ${{ secrets.DB_PASSWORD }}
+        USER: ${{ secrets.USER }}
+        PORT: ${{ secrets.PORT }}
+      run: npm test
 
     #- name: Install Frontend Dependencies
     #  working-directory: ../calendar  # Define o diretório onde estão os arquivos do frontend
