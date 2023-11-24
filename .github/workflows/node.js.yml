@@ -32,7 +32,7 @@ jobs:
     - name: Test Backend
       working-directory: backend
       env:
-        PASSWORD: ${{ secrets.DB_PASSWORD }}
+        PASSWORD: ${{ secrets.PASSWORD }}
         USER: ${{ secrets.USER }}
         PORT: ${{ secrets.PORT }}
       run: npm test
