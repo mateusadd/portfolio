@@ -31,8 +31,9 @@ jobs:
 
     - name: Set up Secrets
       env:
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        USER: ${{ secrets.USER }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        PORT: ${{ secrets.PORT }}
 
     - name: Test Backend
       working-directory: backend
