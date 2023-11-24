@@ -67,21 +67,15 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     async function deleteDataFromBackend() {
 
-        if(payment.length > 0) {
-            if(window.confirm(`Deletar este agendamento apagará os registros de pagamento correspondentes. Deseja mesmo continuar?`)){
-                
-                let response = await getCorrespondingPayments()
-                let idsToDelete = []
-                for(let item of response) {
-                    await api.delete(`/pagamento/${item.pagamento_id}`)
-                    idsToDelete.push(item.pagamento_id)
-                }
-                handlePayments([], idsToDelete)
-                return await api.delete(`/agendamento/${selected.agendamento_id}`)
+        let res = await getCorrespondingPayments()
 
-                
-                
-            }
+        if(res.length > 0) {
+            if(window.confirm(`Deletar este agendamento apagará os registros de pagamento correspondentes. Deseja mesmo continuar?`)){
+                for(let item of res) {
+                    await deletePayment(item.pagamento_id)
+                }
+                return await api.delete(`/agendamento/${selected.agendamento_id}`)
+            } else {}
         } else {
             if(window.confirm(`Quer mesmo excluir este agendamento?`)){
                 return await api.delete(`/agendamento/${selected.agendamento_id}`)

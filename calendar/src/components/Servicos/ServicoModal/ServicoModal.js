@@ -39,9 +39,11 @@ function ServicoModal({data, isOpen, openModal, createServico, updateServico, de
     }
 
     async function handleDelete() {
-        await deleteServico(data.servico_id)
-        openModal()
-        clearCard()
+        if(window.confirm(`Quer mesmo excluir este registro?`)){
+            await deleteServico(data.servico_id)
+            openModal()
+            clearCard()
+        } else {}
     }
 
     useEffect(() => {

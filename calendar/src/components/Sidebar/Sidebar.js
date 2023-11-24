@@ -42,7 +42,7 @@ const Sidebar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link className="navigate" to="/agendamento">
+                    <Link className="navigate" to="/funcionarios">
                         <FaUsers size="30" /> 
                         Funcionários
                     </Link>

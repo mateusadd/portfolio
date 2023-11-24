@@ -12,6 +12,7 @@ import Clientes from './components/Clientes/Clientes/Clientes';
 import Servicos from './components/Servicos/Servicos/Servicos';
 import MainComissoes from './components/Relatórios/Comissoes/Main/MainComissoes';
 import MainPagamentos from './components/Relatórios/Pagamentos/Main/MainPagamentos';
+import Funcionarios from './components/Funcionarios/Funcionarios/Funcionarios';
 
 function App() {
 
@@ -89,6 +90,33 @@ function App() {
     setFuncionarios(res.data)
   }
 
+  async function createFuncionario(funcionario) {
+    let res = await api.post(`/funcionario`, {
+      funcionario_nome: funcionario.funcionario_nome,
+      funcionario_contato: funcionario.funcionario_contato,
+      funcionario_cor: funcionario.funcionario_cor
+    })
+    setFuncionarios([...funcionarios, res.data])
+  }
+
+  async function updateFuncionario(funcionario) {
+    let res = await api.post(`/funcionario/${funcionario.funcionario_id}`, {
+      funcionario_nome: funcionario.funcionario_nome,
+      funcionario_contato: funcionario.funcionario_contato,
+      funcionario_cor: funcionario.funcionario_cor
+    })
+
+    let indexToUpdate = funcionarios.findIndex((data) => data.funcionario_id === funcionario.funcionario_id)
+    let updatedFuncionarios = [...funcionarios]
+    updatedFuncionarios[indexToUpdate] = res.data
+    setFuncionarios(updatedFuncionarios)
+  }
+
+  async function deleteFuncionario(funcionario_id) {
+    let res = await api.delete(`/funcionario/${funcionario_id}`)
+    setFuncionarios(funcionarios.filter(data => data.funcionario_id !== funcionario_id))
+  }
+
   useEffect(() => {
     getClientes()
     getServicos()
@@ -126,6 +154,15 @@ function App() {
             createServico={createServico}
             updateServico={updateServico}
             deleteServico={deleteServico}
+          />
+        },
+        {
+          path: "/funcionarios",
+          element: <Funcionarios
+            funcionarios={funcionarios}
+            createFuncionario={createFuncionario}
+            updateFuncionario={updateFuncionario}
+            deleteFuncionario={deleteFuncionario}
           />
         },
         {

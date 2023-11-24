@@ -1,0 +1,41 @@
+.funcionario-card {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 55px;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+.funcionario-properties {
+    display: flex;
+    max-height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+}
+
+.funcionario-properties li {
+    font-size: smaller;
+    font-weight: 400;
+    flex: 1; /* Ocupa o espaço disponível igualmente */
+    overflow: hidden; /* Esconde o texto excedente */
+    text-overflow: ellipsis; /* Adiciona reticências (...) ao final do texto */
+    white-space: nowrap; /* Impede quebras de linha */
+    text-align: center;
+
+    &:hover {
+        background-color: transparent;
+        cursor: default;
+    }
+}
+
+.funcionario-cor-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+}

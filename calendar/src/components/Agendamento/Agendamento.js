@@ -145,24 +145,15 @@ const onDeleteAgendamento = () => {
 }
 
 const eventStyleGetter = (event, start, end, isSelected) => {
-  // Aqui você pode personalizar o estilo do evento com base nas propriedades do evento,
-  // como o funcionário associado a ele.
-  const funcionarioId = event.funcionario.funcionario_id;
 
-  // Suponha que você tenha uma lista de cores associadas a cada funcionário.
-  const coresFuncionarios = {
-    1: 'red',
-    2: 'blue'
-    // Adicione mais cores e associações conforme necessário.
-  };
-
-  const backgroundColor = coresFuncionarios[funcionarioId] || 'gray';
+  const backgroundColor = event.funcionario.funcionario_cor || 'gray';
 
   return {
     style: {
       backgroundColor,
     },
   };
+
 };
 
 const handleSelected = (event) => {

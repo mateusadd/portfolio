@@ -42,7 +42,7 @@ module.exports = {
                 {
                     model: Funcionario,
                     as: 'funcionario',
-                    attributes: ['funcionario_id', 'funcionario_nome']
+                    attributes: ['funcionario_id', 'funcionario_nome', 'funcionario_cor']
                 }]
             })
             return res.json(registers)

@@ -1,0 +1,55 @@
+.funcionario-container {
+    width: 70%; /* Largura desejada */
+    height: 70%; /* Altura desejada */
+    margin-top: 190px;
+    margin-left: 325px;
+    padding: 0;
+    background-color: #fff; /* Cor de fundo */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra nas laterais e na parte inferior */
+    overflow: auto; /* Adiciona barra de rolagem quando necessário */
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 1;
+}
+
+.funcionario-container::-webkit-scrollbar-thumb {
+    background-color: rgb(145, 204, 142);
+}
+
+.top-bar {
+    width:70%;
+    height:10%;
+    margin-top: 60px;
+    margin-left: 325px;
+    position: fixed;
+    background-color: darkgray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.funcionario-column-header {
+    flex: 1;
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.funcionario-adicionar {
+    align-items: center;
+    box-sizing: border-box;
+    width:70%;
+    margin-left: 325px;
+    min-height: 55px;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 10px;
+    overflow-x: hidden;
+    position: fixed;
+    margin-top: 135px;
+}

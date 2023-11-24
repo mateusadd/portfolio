@@ -15,6 +15,10 @@ const Funcionario = sequelize.define('funcionario', {
     funcionario_contato: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    funcionario_cor: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     timestamps : false,

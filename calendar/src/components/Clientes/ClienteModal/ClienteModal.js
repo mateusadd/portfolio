@@ -39,9 +39,11 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
     }
 
     async function handleDelete() {
-        await deleteCliente(data.cliente_id)
-        openModal()
-        clearCard()
+        if(window.confirm(`Quer mesmo excluir este registro?`)){
+            await deleteCliente(data.cliente_id)
+            openModal()
+            clearCard()
+        } else {}
     }
 
     useEffect(() => {

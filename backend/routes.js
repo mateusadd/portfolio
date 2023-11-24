@@ -16,6 +16,8 @@ routes.delete('/cliente/:cliente_id', ClienteController.delete)
 
 routes.post('/funcionario', FuncionarioController.create)
 routes.get('/funcionario', FuncionarioController.read)
+routes.post('/funcionario/:funcionario_id', FuncionarioController.update)
+routes.delete('/funcionario/:funcionario_id', FuncionarioController.delete)
 
 routes.post('/servico', ServicoController.create)
 routes.get('/servico', ServicoController.read)
