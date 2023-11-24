@@ -20,6 +20,27 @@ function Clientes({clientes, createCliente, updateCliente, deleteCliente}) {
 
   }
 
+  function handleAddCliente() {
+    setModalOpen(true);
+  }
+
+  useEffect(() => {
+    // Adiciona um ouvinte de teclado quando o componente é montado
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Remove o ouvinte de teclado quando o componente é desmontado
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  function handleKeyDown(event) {
+    // Verifica se a tecla pressionada é a tecla Enter (código 13)
+    if (event.keyCode === 13) {
+      handleAddCliente();
+    }
+  }
+
   return (
     <>
       <Header/>
@@ -35,7 +56,7 @@ function Clientes({clientes, createCliente, updateCliente, deleteCliente}) {
           Funcionário
         </div>
       </div>
-      <div className='cliente-adicionar' onClick={() => setModalOpen(true)}>
+      <div className='cliente-adicionar' onClick={handleAddCliente} onKeyDown={handleKeyDown} role="button" tabIndex={0}>
         Adicionar cliente
       </div>
       <div className="cliente-container">

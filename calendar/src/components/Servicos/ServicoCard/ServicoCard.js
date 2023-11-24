@@ -8,9 +8,16 @@ import Header from '../../Header/Header';
 
 function ServicoCard({key, data, onClick}) {
 
+    const handleKeyPress = (event) => {
+        // Verifica se a tecla pressionada é a tecla Enter (código 13)
+        if (event.key === 'Enter') {
+          onClick();
+        }
+      };
+
   return (
     <>
-        <div className="servico-card" onClick={onClick}>
+        <div className="servico-card" onClick={onClick} onKeyPress={handleKeyPress} tabIndex={0} role="button">
 
             <ul className="servico-properties">
                 <li>

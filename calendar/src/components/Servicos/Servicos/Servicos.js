@@ -20,6 +20,27 @@ function Servicos({servicos, createServico, updateServico, deleteServico}) {
 
   }
 
+  function handleAddServico() {
+    setModalOpen(true);
+  }
+
+  useEffect(() => {
+    // Adiciona um ouvinte de teclado quando o componente é montado
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Remove o ouvinte de teclado quando o componente é desmontado
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  function handleKeyDown(event) {
+    // Verifica se a tecla pressionada é a tecla Enter (código 13)
+    if (event.keyCode === 13) {
+      handleAddServico();
+    }
+  }
+
   return (
     <>
       <Header/>
@@ -35,7 +56,7 @@ function Servicos({servicos, createServico, updateServico, deleteServico}) {
           Comissão
         </div>
       </div>
-      <div className='servico-adicionar' onClick={() => setModalOpen(true)}>
+      <div className='servico-adicionar' onClick={handleAddServico} onKeyDown={handleKeyDown} role="button" tabIndex={0}>
         Adicionar serviço
       </div>
       <div className="servico-container">
