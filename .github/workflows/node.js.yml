@@ -29,9 +29,9 @@ jobs:
       working-directory: backend
       run: npm i
 
-    #- name: Test Backend
-    #  working-directory: backend
-    #  run: npm start
+    - name: Test Backend
+      working-directory: backend
+      run: npm test
 
     #- name: Install Frontend Dependencies
     #  working-directory: ../calendar  # Define o diretório onde estão os arquivos do frontend
