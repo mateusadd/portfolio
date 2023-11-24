@@ -29,6 +29,11 @@ jobs:
       working-directory: backend
       run: npm i
 
+    - name: Set up Secrets
+      env:
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
     - name: Test Backend
       working-directory: backend
       run: npm test
