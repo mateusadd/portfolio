@@ -29,6 +29,12 @@ jobs:
       working-directory: backend
       run: npm i
 
+    - name: Set up Secrets
+      env:
+        USER: ${{ secrets.USER }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        PORT: ${{ secrets.PORT }}
+
     - name: Test Backend
       working-directory: backend
       run: npm test
