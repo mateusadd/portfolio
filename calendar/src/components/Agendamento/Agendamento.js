@@ -24,7 +24,7 @@ const localizer = dateFnsLocalizer({
 function Agendamento(props) {
 
   const [calendar, setCalendar] = useState([])
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date())
+  const [selectedDateTime, setSelectedDateTime] = useState(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState([])
   const [payMethods, setPayMethods] = useState([])
@@ -163,9 +163,7 @@ const handleSelectSlot = (slotInfo) => {
   // slotInfo contém a data e hora selecionadas
   const { start } = slotInfo;
   setSelectedDateTime(start);
-  setTimeout(function () {
-    setModalOpen(true);
-  }, 500);
+  setModalOpen(true)
 };
 
 useEffect(() => {
@@ -206,7 +204,9 @@ useEffect(() => {
           payMethods={payMethods}
           setPayMethods={setPayMethods}
           clearSelected={() => setSelected([])}
-          selectedDateTime={moment(selectedDateTime).format('YYYY-MM-DDTHH:mm')}
+          selectedDateTime={selectedDateTime
+            ? moment(selectedDateTime).format("YYYY-MM-DDTHH:mm")
+            : null}
           clearSelectedDateTime={() => setSelectedDateTime(new Date())}
         />
       </div>

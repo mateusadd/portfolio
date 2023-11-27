@@ -159,8 +159,11 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     }
 
     async function handleSave() {
-        
-        if(carrinho.length > 0 && controlaValorServico !== verifyTotalPayment()) {
+
+        if (!cliente || cliente.trim() === '' || !servico || servico.trim() === '' ||!funcionario || funcionario.trim() === '') {
+            window.alert("Por favor, preencha todos os campos.")
+            return;
+        } else if(carrinho.length > 0 && controlaValorServico !== verifyTotalPayment()) {
 
             if(window.confirm('Valor informado é diferente do valor do serviço. Deseja salvar mesmo assim?')){
                 return saveInformation()
@@ -207,6 +210,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
         //setPayList([])
         setValor('')
         setMetodoPagamento('')
+        setVerificaCliente(false)
+        setControlaValorServico('')
     }
 
     function handleCliente(value) {
@@ -282,20 +287,20 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
                 <div className='modal-body'>
                     <div className='modal-left'>
                         <div className='modal-input'>
-                            <p className='modal-label'>Cliente: </p>
-                            <select className='modal-select' id='cliente' name='cliente' value={cliente} onChange={e => handleCliente(e.target.value)}>
-                                <option value=""></option>
-                                {clientes.map(cliente => (
-                                    <option key={cliente.cliente_id} value={cliente.cliente_id}>{cliente.cliente_nome}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className='modal-input'>
                             <p className='modal-label'>Serviço: </p>
                             <select className='modal-select' id='servico' name='servico' value={servico} onChange={e => handleServico(e.target.value)}>
                                 <option value=""></option>
                                 {servicos.map(servico => (
                                     <option key={servico.servico_id} value={servico.servico_id}>{servico.servico_nome}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='modal-input'>
+                            <p className='modal-label'>Cliente: </p>
+                            <select className='modal-select' id='cliente' name='cliente' value={cliente} onChange={e => handleCliente(e.target.value)}>
+                                <option value=""></option>
+                                {clientes.map(cliente => (
+                                    <option key={cliente.cliente_id} value={cliente.cliente_id}>{cliente.cliente_nome}</option>
                                 ))}
                             </select>
                         </div>
