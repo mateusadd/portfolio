@@ -310,7 +310,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
                         </div>
                         <div className='modal-input'>
                             <p className='modal-label'>Data/Hora: </p>
-                            <input className='modal-select' type='datetime-local' min="08:00" max="18:00" step="1800" id='start' name='start' defaultValue={agendamento_datetime_start} onChange={e => handleHorario(e.target.value)}/>
+                            <input className='modal-select' type='datetime-local' id='start' name='start' defaultValue={agendamento_datetime_start} onChange={e => handleHorario(e.target.value)}/>
                         </div>
                         <div className='modal-footer'>
                             <button onClick={handleSave} className='modal-salvar'>SALVAR</button>

@@ -67,11 +67,11 @@ function ServicoModal({data, isOpen, openModal, createServico, updateServico, de
                     <input type='text' id='servico-nome' name='servico-nome' defaultValue={servicoNome} onChange={(event) => setServicoNome(event.target.value)} />
                 </div>
                 <div className='servico-modal-text'>
-                    <p>Preço: </p>
+                    <p>Preço (R$): </p>
                     <input type='text' id='servico-preco' name='servico-preco' defaultValue={servicoPreco} onChange={(event) => setServicoPreco(event.target.value)} />
                 </div>
                 <div className='servico-modal-text'>
-                    <p>Comissão: </p>
+                    <p>Comissão (%): </p>
                     <input type='text' id='servico-comissao' name='servico-comissao' defaultValue={servicoComissao} onChange={(event) => setServicoComissao(event.target.value)} />
                 </div>
                 <div className='servico-modal-footer'>

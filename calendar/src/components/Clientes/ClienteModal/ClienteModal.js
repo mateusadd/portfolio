@@ -1,5 +1,6 @@
 import './ClienteModal.css';
 import { useEffect, useState } from 'react';
+import { Switch } from '@mui/material';
 import api from '../../../services/api'
 import moment from 'moment';
 
@@ -7,8 +8,6 @@ import Sidebar from '../../Sidebar/Sidebar';
 import Header from '../../Header/Header';
 
 function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, deleteCliente, clearCard}) {
-
-    console.log(data)
 
     const [clienteNome, setClienteNome] = useState('')
     const [clienteContato, setClienteContato] = useState('')
@@ -72,10 +71,7 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
                 </div>
                 <div className='cliente-modal-funcionario'>
                     <p>Funcionário: </p>
-                    <input type='radio' id='cliente-funcionario-sim' name='cliente-funcionario' checked={clienteFuncionario === true} onChange={(event) => setClienteFuncionario(true)} />
-                    <label htmlFor="cliente-funcionario-sim">Sim</label><br></br>
-                    <input type='radio' id='cliente-funcionario-nao' name='cliente-funcionario' checked={clienteFuncionario === false} onChange={(event) => setClienteFuncionario(false)} />
-                    <label htmlFor="cliente-funcionario-nao">Não</label><br></br>
+                    <Switch checked={clienteFuncionario} onChange={(event) => setClienteFuncionario(event.target.checked)}/>
                 </div>
                 <div className='cliente-modal-footer'>
                     <button onClick={handleSave} className='cliente-modal-salvar'>SALVAR</button>

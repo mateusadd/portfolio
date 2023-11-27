@@ -12,14 +12,14 @@
   
   .funcionario-modal {
     position: fixed;
-    top: 5%;
-    width: 90%;
-    height: 90%;
+    top: 10%;
+    width: 70%;
+    height: 70%;
     background-color: #fff;
   }
   
   .funcionario-modal-header {
-    background-color: rgb(145, 204, 142);
+    background-color: rgb(49, 116, 173);
     color: #fff;
     margin-top: -2.5%;
     height: 5%;
@@ -33,9 +33,9 @@
   .funcionario-modal-text {
     display: flex;
     justify-content: space-between;
-    width: 95%;
-    height: 6%;
-    margin-left: 3%;
+    width: 90%;
+    margin-top: 3%;
+    margin-left: 5%;
   }
   
   .funcionario-modal-text input {
@@ -43,21 +43,29 @@
     border-bottom: 1px solid #eee;
     outline: none;
     transition: border-bottom 0.3s;
-    width: 90%;
+    width: 80%;
     padding: 1%;
   }
   
   .funcionario-modal-text input:focus {
     border-bottom: 2px solid #333; /* Por exemplo, mude a cor da borda inferior quando o input está focado */
   }
+
+  .funcionario-modal-cor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+    margin-top: 3%;
+    margin-left: 5%;
+  }
   
   .funcionario-modal-footer {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 5%;
+    left: 5%;
     height: 5%;
-    padding-left: 5px;
-    padding-top: 5px;
+    align-items: center;
     display: flex;
   }
   
