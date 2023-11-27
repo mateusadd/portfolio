@@ -48,3 +48,30 @@ jobs:
     #- name: Test Frontend
     #  working-directory: ../calendar
     #  run: npm test
+
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install packages
+        run: npm install --frozen-lockfile
+
+      - name: Run tests
+        run: npm test
+
+      - name: Install Railway
+        run: npm i -g @railway/cli
+
+      - name: Deploy
+        run: railway up
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
