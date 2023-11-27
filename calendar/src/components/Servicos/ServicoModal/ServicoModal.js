@@ -16,6 +16,14 @@ function ServicoModal({data, isOpen, openModal, createServico, updateServico, de
 
     async function handleSave() {
 
+        if (!servicoNome || !servicoPreco || !servicoComissao || servicoNome.trim() === '' || servicoPreco.trim() === '' || servicoComissao.trim() === '') {
+            window.alert("Por favor, preencha todos os campos.")
+            return;
+        } else if (isNaN(servicoPreco) || isNaN(servicoComissao) || !isNaN(servicoNome)) {
+            window.alert("Há valores inconsistentes. Por favor, revise as informações.")
+            return;
+        }
+
         const servico = {
             servico_id: data.servico_id,
             servico_nome: servicoNome,

@@ -19,6 +19,11 @@ function FuncionarioModal({data, isOpen, openModal, createFuncionario, updateFun
 
     async function handleSave() {
 
+        if (!funcionarioNome || funcionarioNome.trim() === '') {
+            window.alert("Por favor, preencha todos os campos.")
+            return;
+        }
+
         const funcionario = {
             funcionario_id: data.funcionario_id,
             funcionario_nome: funcionarioNome,

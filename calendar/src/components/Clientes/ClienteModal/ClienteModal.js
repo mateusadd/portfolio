@@ -11,9 +11,17 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
 
     const [clienteNome, setClienteNome] = useState('')
     const [clienteContato, setClienteContato] = useState('')
-    const [clienteFuncionario, setClienteFuncionario] = useState(false)
+    const [clienteFuncionario, setClienteFuncionario] = useState('')
 
     async function handleSave() {
+
+        if (!clienteNome || clienteNome.trim() === '') {
+            window.alert("Por favor, preencha todos os campos.")
+            return;
+        } else if (!isNaN(clienteNome)) {
+            window.alert("Há valores inconsistentes. Por favor, revise as informações.")
+            return;
+        }
 
         const cliente = {
             cliente_id: data.cliente_id,
@@ -42,7 +50,7 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
             await deleteCliente(data.cliente_id)
             openModal()
             clearCard()
-        } else {}
+        }
     }
 
     useEffect(() => {
@@ -52,6 +60,10 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
             setClienteFuncionario(data.funcionario)
         }
     }, [data])
+
+    useEffect(() => {
+        setClienteFuncionario(false)
+    }, [])
 
   if(isOpen) {
     return (

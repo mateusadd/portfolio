@@ -10,8 +10,11 @@ const corsOptions = {
   origin: 'https://portfolio-production-691c.up.railway.app', // Substitua com o seu domínio permitido
 };
 
-app.use(cors(corsOptions))
-//app.use(cors())
+if(process.env.ENV === 'dev') {
+  app.use(cors())
+} else {
+  app.use(cors(corsOptions))
+}
 
 const routes = require('./routes')
 
