@@ -11,7 +11,7 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
 
     const [clienteNome, setClienteNome] = useState('')
     const [clienteContato, setClienteContato] = useState('')
-    const [clienteFuncionario, setClienteFuncionario] = useState('')
+    const [clienteFuncionario, setClienteFuncionario] = useState(false)
 
     async function handleSave() {
 
