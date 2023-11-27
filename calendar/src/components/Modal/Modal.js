@@ -21,6 +21,8 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     const [listOfPayments, setListOfPayments] = useState([])
     const [carrinho, setCarrinho] = useState([]);
     const [idsToDelete, setIdsToDelete] = useState([])
+    const [verificaCliente, setVerificaCliente] = useState(false)
+    const [controlaValorServico, setControlaValorServico] = useState('')
 
     async function createDataInBackend() {
 
@@ -158,7 +160,7 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
 
     async function handleSave() {
         
-        if(carrinho.length > 0 && (fkServico.servico_preco !== verifyTotalPayment())) {
+        if(carrinho.length > 0 && controlaValorServico !== verifyTotalPayment()) {
 
             if(window.confirm('Valor informado é diferente do valor do serviço. Deseja salvar mesmo assim?')){
                 return saveInformation()
@@ -210,13 +212,14 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     function handleCliente(value) {
         setCliente(value)
         let select = clientes.find(cliente => cliente.cliente_id == value)
+        if(select) { select.funcionario === false ? setVerificaCliente(false) : setVerificaCliente(true) }
         setFkCliente(select)
     }
 
     function handleServico(value) {
         setServico(value)
         let select = servicos.find(servico => servico.servico_id == value)
-        if(select) {setValor(select.servico_preco)}
+        if(select) { verificaCliente === false ? setValor(select.servico_preco) : setValor((select.servico_preco) * 0.6) }
         setFkServico(select)
     }
 
@@ -265,6 +268,10 @@ const Modal = ({ isOpen, openModal, onSave, onUpdate, handlePayments, onDeleteAg
     useEffect(() => {
         handleHorario(selectedDateTime)
     }, [selectedDateTime]);
+
+    useEffect(() => {
+        setControlaValorServico(valor)
+    }, [servico])
 
   if(isOpen) {
     return (
