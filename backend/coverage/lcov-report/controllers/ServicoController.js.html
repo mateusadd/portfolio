@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.47% </span>
+                <span class="strong">57.89% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/19</span>
+                <span class='fraction'>11/19</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.47% </span>
+                <span class="strong">57.89% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/19</span>
+                <span class='fraction'>11/19</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -129,43 +129,43 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,7 +182,7 @@ module.exports = {
         }
 &nbsp;
         const registers = await Servico.create(servico)
-        return res.json(registers)
+<span class="cstat-no" title="statement not covered" >        return res.json(registers)</span>
 &nbsp;
     },
 &nbsp;
@@ -191,9 +191,9 @@ module.exports = {
         try {
             const registers = await Servico.findAll()
 &nbsp;
-            return res.json(registers)
+<span class="cstat-no" title="statement not covered" >            return res.json(registers)</span>
         } catch (error) {
-<span class="cstat-no" title="statement not covered" >            console.log(error)</span>
+            console.log(error)
         }
 &nbsp;
     },
@@ -202,13 +202,13 @@ module.exports = {
 &nbsp;
         const servico = await Servico.findOne({where: {servico_id: req.params.servico_id}})
 &nbsp;
-        servico.servico_nome = req.body.servico_nome
-        servico.servico_preco = req.body.servico_preco
-        servico.servico_comissao = req.body.servico_comissao
+<span class="cstat-no" title="statement not covered" >        servico.servico_nome = req.body.servico_nome</span>
+<span class="cstat-no" title="statement not covered" >        servico.servico_preco = req.body.servico_preco</span>
+<span class="cstat-no" title="statement not covered" >        servico.servico_comissao = req.body.servico_comissao</span>
 &nbsp;
-        await servico.save()
+<span class="cstat-no" title="statement not covered" >        await servico.save()</span>
 &nbsp;
-        return res.json(servico)
+<span class="cstat-no" title="statement not covered" >        return res.json(servico)</span>
 &nbsp;
     },
 &nbsp;
@@ -216,9 +216,9 @@ module.exports = {
         try {
             await Servico.destroy({where: {servico_id: req.params.servico_id}})
 &nbsp;
-            return res.json({msg:`${req.params.servico_id} deleted successfully!`})
+<span class="cstat-no" title="statement not covered" >            return res.json({msg:`${req.params.servico_id} deleted successfully!`})</span>
         } catch (error) {
-<span class="cstat-no" title="statement not covered" >            console.log(error)</span>
+            console.log(error)
         }
     }
 &nbsp;
@@ -229,7 +229,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-24T18:48:24.219Z
+                at 2023-11-27T22:49:08.790Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.42% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/28</span>
+                <span class='fraction'>14/28</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.42% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/28</span>
+                <span class='fraction'>14/28</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -171,7 +171,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,10 +193,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -204,26 +200,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -231,7 +210,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -257,7 +257,7 @@ module.exports = {
         }
 &nbsp;
         const agendamentoCriado = await Agendamento.create(agendamento)
-        return res.json(agendamentoCriado)
+<span class="cstat-no" title="statement not covered" >        return res.json(agendamentoCriado)</span>
 &nbsp;
     },
 &nbsp;
@@ -282,11 +282,11 @@ module.exports = {
                     attributes: ['funcionario_id', 'funcionario_nome', 'funcionario_cor']
                 }]
             })
-            return res.json(registers)
+<span class="cstat-no" title="statement not covered" >            return res.json(registers)</span>
 &nbsp;
         } catch (error) {
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            console.log(error)</span>
+            console.log(error)
             
         }
 &nbsp;
@@ -296,20 +296,20 @@ module.exports = {
 &nbsp;
         const agendamento = await Agendamento.findOne({where: {agendamento_id: req.params.agendamento_id}})
 &nbsp;
-        let newDate = new Date(req.body.agendamento_datetime_start);
-        newDate.setHours(newDate.getHours() + 3);
-        let newDateEnd = new Date(req.body.agendamento_datetime_end)
-        newDateEnd.setHours(newDateEnd.getHours() + 3);
+        let newDate = <span class="cstat-no" title="statement not covered" >new Date(req.body.agendamento_datetime_start);</span>
+<span class="cstat-no" title="statement not covered" >        newDate.setHours(newDate.getHours() + 3);</span>
+        let newDateEnd = <span class="cstat-no" title="statement not covered" >new Date(newDate)</span>
+<span class="cstat-no" title="statement not covered" >        newDateEnd.setMinutes(newDate.getMinutes() + 30);</span>
 &nbsp;
-        agendamento.cliente_id = req.body.cliente_id
-        agendamento.servico_id = req.body.servico_id
-        agendamento.funcionario_id = req.body.funcionario_id
-        agendamento.agendamento_datetime_start = newDate
-        agendamento.agendamento_datetime_end = newDateEnd
+<span class="cstat-no" title="statement not covered" >        agendamento.cliente_id = req.body.cliente_id</span>
+<span class="cstat-no" title="statement not covered" >        agendamento.servico_id = req.body.servico_id</span>
+<span class="cstat-no" title="statement not covered" >        agendamento.funcionario_id = req.body.funcionario_id</span>
+<span class="cstat-no" title="statement not covered" >        agendamento.agendamento_datetime_start = newDate</span>
+<span class="cstat-no" title="statement not covered" >        agendamento.agendamento_datetime_end = newDateEnd</span>
 &nbsp;
-        await agendamento.save()
+<span class="cstat-no" title="statement not covered" >        await agendamento.save()</span>
 &nbsp;
-        return res.json(agendamento)
+<span class="cstat-no" title="statement not covered" >        return res.json(agendamento)</span>
 &nbsp;
     },
 &nbsp;
@@ -317,7 +317,7 @@ module.exports = {
 &nbsp;
         await Agendamento.destroy({where: {agendamento_id: req.params.agendamento_id}})
 &nbsp;
-        return res.json({ msg:`${req.params.agendamento_id} deleted successfully!` })
+<span class="cstat-no" title="statement not covered" >        return res.json({ msg:`${req.params.agendamento_id} deleted successfully!` })</span>
 &nbsp;
     }
 &nbsp;
@@ -328,7 +328,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-24T18:48:24.219Z
+                at 2023-11-27T22:49:08.790Z
             </div>
         <script src="../prettify.js"></script>
         <script>
