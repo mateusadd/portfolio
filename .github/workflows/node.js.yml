@@ -25,11 +25,6 @@ jobs:
         cache: "npm"
         cache-dependency-path: "backend"
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
     - name: Install Backend Dependencies
       working-directory: backend
       run: npm ci
@@ -41,6 +36,11 @@ jobs:
         USER: ${{ secrets.USER }}
         PORT: ${{ secrets.PORT }}
       run: npm test --coverage
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     #- name: Install Frontend Dependencies
     #  working-directory: ../calendar  # Define o diretório onde estão os arquivos do frontend
