@@ -1,10 +1,15 @@
 const AgendamentoController = require('../controllers/AgendamentoController');
+const PagamentoController = require('../controllers/PagamentoController');
+const ClienteController = require('../controllers/ClienteController');
+const ServicoController = require('../controllers/ServicoController');
+const FuncionarioController = require('../controllers/FuncionarioController');
 const Agendamento = require('../models/Agendamento');
 const Cliente = require('../models/Cliente');
 const Servico = require('../models/Servico');
 const Funcionario = require('../models/Funcionario');
 
 jest.mock('../models/Agendamento');
+jest.mock('../models/Pagamento');
 jest.mock('../models/Cliente');
 jest.mock('../models/Servico');
 jest.mock('../models/Funcionario');
