@@ -40,7 +40,7 @@ jobs:
         PASSWORD: ${{ secrets.PASSWORD }}
         USER: ${{ secrets.USER }}
         PORT: ${{ secrets.PORT }}
-      run: npm test
+      run: npm test --coverage
 
     #- name: Install Frontend Dependencies
     #  working-directory: ../calendar  # Define o diretório onde estão os arquivos do frontend
