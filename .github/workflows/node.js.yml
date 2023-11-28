@@ -35,7 +35,7 @@ jobs:
         PASSWORD: ${{ secrets.PASSWORD }}
         USER: ${{ secrets.USER }}
         PORT: ${{ secrets.PORT }}
-      run: npm test --coverage
+      run: npm run test:coverage
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
