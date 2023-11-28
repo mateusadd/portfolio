@@ -1,84 +1,160 @@
-const AgendamentoController = require('../controllers/AgendamentoController'); // Ajuste conforme necessário
-const Agendamento = require('../models/Agendamento'); // Ajuste conforme necessário
-const Cliente = require('../models/Cliente'); // Ajuste conforme necessário
-const Servico = require('../models/Servico'); // Ajuste conforme necessário
-const Funcionario = require('../models/Funcionario'); // Ajuste conforme necessário
+const AgendamentoController = require('../controllers/AgendamentoController');
+const Agendamento = require('../models/Agendamento');
+const Cliente = require('../models/Cliente');
+const Servico = require('../models/Servico');
+const Funcionario = require('../models/Funcionario');
 
-describe('Testes do Agendamento Controller', () => {
-  let agendamentoId;
+jest.mock('../models/Agendamento');
+jest.mock('../models/Cliente');
+jest.mock('../models/Servico');
+jest.mock('../models/Funcionario');
 
-  // Teste de criação de agendamento
-  it('Deve criar um agendamento', async () => {
-    const req = {
-      body: {
-        cliente_id: 1, // Substitua com um ID de cliente válido
-        servico_id: 1, // Substitua com um ID de serviço válido
-        funcionario_id: 1, // Substitua com um ID de funcionário válido
-        agendamento_datetime_start: '2023-01-01T12:00:00Z', // Substitua com uma data e hora válida
-        agendamento_datetime_end: '2023-01-01T13:00:00Z', // Substitua com uma data e hora válida
-        pago: false,
-      },
-    };
-
-    const res = {
-      json: jest.fn(),
-    };
-
-    await AgendamentoController.create(req, res);
-    expect(res.json).toHaveBeenCalled();
-
-    // Guarde o ID do agendamento para testes futuros
-    agendamentoId = res.json.mock.calls[0][0].agendamento_id;
+describe('AgendamentoController', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  // Teste de leitura de agendamentos
-  it('Deve listar todos os agendamentos', async () => {
-    const req = {};
-    const res = {
-      json: jest.fn(),
-    };
+  describe('create', () => {
+    it('should create a new agendamento', async () => {
+      const req = {
+        body: {
+          cliente_id: 1,
+          servico_id: 2,
+          funcionario_id: 3,
+          agendamento_datetime_start: '2023-01-01T12:00:00.000Z',
+          agendamento_datetime_end: '2023-01-01T12:30:00.000Z',
+          pago: true,
+        },
+      };
+      const res = { json: jest.fn() };
 
-    await AgendamentoController.read(req, res);
-    expect(res.json).toHaveBeenCalled();
-  });
+      Agendamento.create.mockResolvedValueOnce({ agendamento_id: 1 });
 
-  // Teste de atualização de agendamento
-  it('Deve atualizar um agendamento existente', async () => {
-    const req = {
-      params: {
-        agendamento_id: agendamentoId,
-      },
-      body: {
-        cliente_id: 2, // Substitua com um novo ID de cliente válido
-        servico_id: 2, // Substitua com um novo ID de serviço válido
-        funcionario_id: 2, // Substitua com um novo ID de funcionário válido
-        agendamento_datetime_start: '2023-02-01T14:00:00Z', // Substitua com uma nova data e hora válida
-        agendamento_datetime_end: '2023-02-01T15:00:00Z', // Substitua com uma nova data e hora válida
+      await AgendamentoController.create(req, res);
+
+      expect(Agendamento.create).toHaveBeenCalledWith({
+        cliente_id: 1,
+        servico_id: 2,
+        funcionario_id: 3,
+        agendamento_datetime_start: new Date('2023-01-01T12:00:00.000Z'),
+        agendamento_datetime_end: '2023-01-01T12:30:00.000Z',
         pago: true,
-      },
-    };
+      });
+      expect(res.json).toHaveBeenCalledWith({ agendamento_id: 1 });
+    });
 
-    const res = {
-      json: jest.fn(),
-    };
+    it('should handle errors during agendamento creation', async () => {
+      const req = { body: {} };
+      const res = { json: jest.fn() };
 
-    await AgendamentoController.update(req, res);
-    expect(res.json).toHaveBeenCalled();
+      Agendamento.create.mockRejectedValueOnce(new Error('Failed to create agendamento'));
+
+      await expect(AgendamentoController.create(req, res)).rejects.toThrow('Failed to create agendamento');
+      expect(Agendamento.create).toHaveBeenCalledWith(expect.any(Object));
+      expect(res.json).not.toHaveBeenCalled();
+    });
   });
 
-  // Teste de exclusão de agendamento
-  it('Deve excluir um agendamento existente', async () => {
-    const req = {
-      params: {
-        agendamento_id: agendamentoId,
-      },
-    };
+  describe('read', () => {
+    it('should retrieve all agendamentos with related data', async () => {
+      const req = {};
+      const res = { json: jest.fn() };
 
-    const res = {
-      json: jest.fn(),
-    };
+      Agendamento.findAll.mockResolvedValueOnce([
+        { agendamento_id: 1, cliente: { cliente_id: 1, cliente_nome: 'Cliente1' }, /* ... outras propriedades */ },
+        { agendamento_id: 2, cliente: { cliente_id: 2, cliente_nome: 'Cliente2' }, /* ... outras propriedades */ },
+      ]);
 
-    await AgendamentoController.delete(req, res);
-    expect(res.json).toHaveBeenCalled();
+      await AgendamentoController.read(req, res);
+
+      expect(Agendamento.findAll).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith([
+        { agendamento_id: 1, cliente_id: 1, cliente_nome: 'Cliente1', /* ... outras propriedades */ },
+        { agendamento_id: 2, cliente_id: 2, cliente_nome: 'Cliente2', /* ... outras propriedades */ },
+      ]);
+    });
+
+    it('should handle errors during agendamento retrieval', async () => {
+      const req = {};
+      const res = { json: jest.fn() };
+
+      Agendamento.findAll.mockRejectedValueOnce(new Error('Failed to retrieve agendamentos'));
+
+      await expect(AgendamentoController.read(req, res)).rejects.toThrow('Failed to retrieve agendamentos');
+      expect(Agendamento.findAll).toHaveBeenCalled();
+      expect(res.json).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('update', () => {
+    it('should update an existing agendamento', async () => {
+      const req = {
+        params: { agendamento_id: 1 },
+        body: {
+          cliente_id: 4,
+          servico_id: 5,
+          funcionario_id: 6,
+          agendamento_datetime_start: '2023-01-01T14:00:00.000Z',
+        },
+      };
+      const res = { json: jest.fn() };
+
+      Agendamento.findOne.mockResolvedValueOnce({
+        agendamento_id: 1,
+        save: jest.fn(),
+      });
+
+      await AgendamentoController.update(req, res);
+
+      expect(Agendamento.findOne).toHaveBeenCalledWith({
+        where: { agendamento_id: 1 },
+      });
+      expect(Agendamento.save).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith({
+        agendamento_id: 1,
+        cliente_id: 4,
+        servico_id: 5,
+        funcionario_id: 6,
+        agendamento_datetime_start: new Date('2023-01-01T14:00:00.000Z'),
+        agendamento_datetime_end: expect.any(Date),
+      });
+    });
+
+    it('should handle errors during agendamento update', async () => {
+      const req = { params: { agendamento_id: 1 }, body: {} };
+      const res = { json: jest.fn() };
+
+      Agendamento.findOne.mockResolvedValueOnce({
+        agendamento_id: 1,
+        save: jest.fn().mockRejectedValueOnce(new Error('Failed to update agendamento')),
+      });
+
+      await expect(AgendamentoController.update(req, res)).rejects.toThrow('Failed to update agendamento');
+      expect(Agendamento.findOne).toHaveBeenCalledWith({ where: { agendamento_id: 1 } });
+      expect(res.json).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('delete', () => {
+    it('should delete an existing agendamento', async () => {
+      const req = { params: { agendamento_id: 1 } };
+      const res = { json: jest.fn() };
+
+      await AgendamentoController.delete(req, res);
+
+      expect(Agendamento.destroy).toHaveBeenCalledWith({ where: { agendamento_id: 1 } });
+      expect(res.json).toHaveBeenCalledWith({ msg: '1 deleted successfully!' });
+    });
+
+    it('should handle errors during agendamento deletion', async () => {
+      const req = { params: { agendamento_id: 1 } };
+      const res = { json: jest.fn() };
+
+      Agendamento.destroy.mockRejectedValueOnce(new Error('Failed to delete agendamento'));
+
+      await expect(AgendamentoController.delete(req, res)).rejects.toThrow('Failed to delete agendamento');
+      expect(Agendamento.destroy).toHaveBeenCalledWith({ where: { agendamento_id: 1 } });
+      expect(res.json).not.toHaveBeenCalled();
+    });
   });
 });
