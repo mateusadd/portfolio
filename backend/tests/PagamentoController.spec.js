@@ -9,7 +9,8 @@ describe('Testes do Pagamento Controller', () => {
   it('Deve criar um pagamento', async () => {
     const req = {
       body: {
-        agendamento_id: 85, // Substitua com um ID de agendamento válido
+        //agendamento_id: 85, // Substitua com um ID de agendamento válido
+        agendamento_id: 40,
         pagamento_valor: 50,
         dividido: false,
         pagamento_metodo: 'Cartão',
@@ -37,6 +38,75 @@ describe('Testes do Pagamento Controller', () => {
 
     await PagamentoController.read(req, res);
     expect(res.json).toHaveBeenCalled();
+  });
+
+  it('Deve listar pagamentos de acordo com id do agendamento ', async () => {
+    const req = {
+      query: {
+        //agendamento_id: 85,
+        agendamento_id: 40,
+      },
+    };
+
+    const res = {
+      json: jest.fn(),
+    };
+
+    await PagamentoController.read(req, res);
+    expect(res.json).toHaveBeenCalled();
+  });
+
+  it('Deve retornar erro ao listar pagamentos de acordo com id do agendamento ', async () => {
+    const req = {
+      query: {
+        agendamento_id: 'erro',
+      },
+    };
+
+    const res = {
+      json: jest.fn(),
+    };
+
+    try {
+      await PagamentoController.read(req, res);
+    } catch (e) {
+      expect(e).toMatch('error');
+    }
+  });
+
+  it('Deve listar um pagamento específico ', async () => {
+    const req = {
+      query: {
+        //agendamento_id: 85,
+        pagamento_id: pagamentoId,
+      },
+    };
+
+    const res = {
+      json: jest.fn(),
+    };
+
+    await PagamentoController.read(req, res);
+    expect(res.json).toHaveBeenCalled();
+  });
+
+  it('Deve retornar erro ao listar um pagamento específico ', async () => {
+    const req = {
+      query: {
+        //agendamento_id: 85,
+        pagamento_id: 'erro',
+      },
+    };
+
+    const res = {
+      json: jest.fn(),
+    };
+
+    try {
+      await PagamentoController.read(req, res);
+    } catch (e) {
+      expect(e).toMatch('error');
+    }
   });
 
   // Teste de atualização de pagamento

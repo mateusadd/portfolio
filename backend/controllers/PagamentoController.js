@@ -63,7 +63,8 @@ module.exports = {
                 } catch (error) {
         
                     console.log(error)
-                    
+                    throw error;
+
                 }
             } else {
                 try {
@@ -80,7 +81,8 @@ module.exports = {
                 } catch (error) {
         
                     console.log(error)
-                    
+                    throw error;
+
                 }
             }
 
