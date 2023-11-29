@@ -2,7 +2,7 @@ import axios from 'axios'
 
 var url
 
-if(process.env.NODE_ENV === 'development') {
+if(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     url = "http://localhost:3001"
 } else {
     url="https://portfolio-backend-production-3bf8.up.railway.app"
