@@ -9,8 +9,8 @@ describe('Testes do Pagamento Controller', () => {
   it('Deve criar um pagamento', async () => {
     const req = {
       body: {
-        //agendamento_id: 85, // Substitua com um ID de agendamento válido
-        agendamento_id: 40,
+        agendamento_id: 85, // Substitua com um ID de agendamento válido
+        //agendamento_id: 40,
         pagamento_valor: 50,
         dividido: false,
         pagamento_metodo: 'Cartão',
@@ -43,8 +43,8 @@ describe('Testes do Pagamento Controller', () => {
   it('Deve listar pagamentos de acordo com id do agendamento ', async () => {
     const req = {
       query: {
-        //agendamento_id: 85,
-        agendamento_id: 40,
+        agendamento_id: 85,
+        //agendamento_id: 40,
       },
     };
 
