@@ -1,11 +1,6 @@
 import './ClienteModal.css';
 import { useEffect, useState } from 'react';
 import { Switch } from '@mui/material';
-import api from '../../../services/api'
-import moment from 'moment';
-
-import Sidebar from '../../Sidebar/Sidebar';
-import Header from '../../Header/Header';
 
 function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, deleteCliente, clearCard}) {
 
@@ -13,7 +8,7 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
     const [clienteContato, setClienteContato] = useState('')
     const [clienteFuncionario, setClienteFuncionario] = useState('')
 
-    async function handleSave() {
+    async function handleSaveCliente() {
 
         if (!clienteNome || clienteNome.trim() === '') {
             window.alert("Por favor, preencha todos os campos.")
@@ -36,21 +31,19 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
             await updateCliente(cliente)
         }
 
-        openModal()
-        clearCard()
+        handleCloseModalCliente()
     }
 
-    function handleClose() {
-        openModal()
-        clearCard()
-    }
-
-    async function handleDelete() {
+    async function handleDeleteCliente() {
         if(window.confirm(`Quer mesmo excluir este registro?`)){
             await deleteCliente(data.cliente_id)
-            openModal()
-            clearCard()
+            handleCloseModalCliente()
         }
+    }
+
+    function handleCloseModalCliente() {
+        openModal()
+        clearCard()
     }
 
     useEffect(() => {
@@ -86,9 +79,9 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
                     <Switch checked={clienteFuncionario} onChange={(event) => setClienteFuncionario(event.target.checked)}/>
                 </div>
                 <div className='cliente-modal-footer'>
-                    <button onClick={handleSave} className='cliente-modal-salvar'>SALVAR</button>
-                    <button onClick={handleClose} className='cliente-modal-fechar'>FECHAR</button>
-                    <button onClick={handleDelete} className='cliente-modal-delete'>DELETAR</button>
+                    <button onClick={handleSaveCliente} className='cliente-modal-salvar'>SALVAR</button>
+                    <button onClick={handleCloseModalCliente} className='cliente-modal-fechar'>FECHAR</button>
+                    <button onClick={handleDeleteCliente} className='cliente-modal-delete'>DELETAR</button>
                 </div>
             </div>
           </div>

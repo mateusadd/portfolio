@@ -3,21 +3,13 @@ import React, { useEffect, useState } from 'react';
 
 import { CirclePicker } from 'react-color'
 
-import api from '../../../services/api'
-import moment from 'moment';
-
-import Sidebar from '../../Sidebar/Sidebar';
-import Header from '../../Header/Header';
-
 function FuncionarioModal({data, isOpen, openModal, createFuncionario, updateFuncionario, deleteFuncionario, clearCard}) {
-
-    console.log(data)
 
     const [funcionarioNome, setFuncionarioNome] = useState('')
     const [funcionarioContato, setFuncionarioContato] = useState('')
     const [funcionarioCor, setFuncionarioCor] = useState('#fff')
 
-    async function handleSave() {
+    async function handleSaveFuncionario() {
 
         if (!funcionarioNome || funcionarioNome.trim() === '') {
             window.alert("Por favor, preencha todos os campos.")
@@ -39,21 +31,19 @@ function FuncionarioModal({data, isOpen, openModal, createFuncionario, updateFun
             await updateFuncionario(funcionario)
         }
 
-        openModal()
-        clearCard()
+        handleCloseModalFuncionario()
     }
 
-    function handleClose() {
-        openModal()
-        clearCard()
-    }
-
-    async function handleDelete() {
+    async function handleDeleteFuncionario() {
         if(window.confirm(`Quer mesmo excluir este registro?`)){
             await deleteFuncionario(data.funcionario_id)
-            openModal()
-            clearCard()
-        } else {}
+            handleCloseModalFuncionario()
+        }
+    }
+
+    function handleCloseModalFuncionario() {
+        openModal()
+        clearCard()
     }
 
     useEffect(() => {
@@ -85,9 +75,9 @@ function FuncionarioModal({data, isOpen, openModal, createFuncionario, updateFun
                     <CirclePicker color={funcionarioCor} onChangeComplete={(color) => setFuncionarioCor(color.hex)} />
                 </div>
                 <div className='funcionario-modal-footer'>
-                    <button onClick={handleSave} className='funcionario-modal-salvar'>SALVAR</button>
-                    <button onClick={handleClose} className='funcionario-modal-fechar'>FECHAR</button>
-                    <button onClick={handleDelete} className='funcionario-modal-delete'>DELETAR</button>
+                    <button onClick={handleSaveFuncionario} className='funcionario-modal-salvar'>SALVAR</button>
+                    <button onClick={handleCloseModalFuncionario} className='funcionario-modal-fechar'>FECHAR</button>
+                    <button onClick={handleDeleteFuncionario} className='funcionario-modal-delete'>DELETAR</button>
                 </div>
             </div>
           </div>

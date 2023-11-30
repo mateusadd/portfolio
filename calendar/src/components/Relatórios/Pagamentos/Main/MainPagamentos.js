@@ -1,6 +1,7 @@
-import './MainPagamentos.css';
 import { useState, useEffect } from 'react';
 import api from '../../../../services/api'
+
+import './MainPagamentos.css';
 
 import Sidebar from '../../../Sidebar/Sidebar';
 import Header from '../../../Header/Header';
@@ -16,6 +17,18 @@ function MainPagamentos() {
     const [results, setResults] = useState([])
     const [somaPagamentos, setSomaPagamentos] = useState(0)
 
+    async function getPagamentos() {
+        let res = await api.get(`/pagamentos`, {
+            params: {
+                metodoPagamento: metodoPagamento,
+                filterStart: filterStart,
+                filterEnd: filterEnd
+            }
+        })
+
+        setResults(res.data)
+    }
+
     function  handleFilterMetodoPagamento(value) {
         setMetodoPagamento(value)
     }
@@ -29,18 +42,8 @@ function MainPagamentos() {
     }
 
     async function handleGerarRelatorio() {
-
         setSomaPagamentos(0)
-
-        let res = await api.get(`/pagamentos`, {
-            params: {
-                metodoPagamento: metodoPagamento,
-                filterStart: filterStart,
-                filterEnd: filterEnd
-            }
-        })
-
-        setResults(res.data)
+        await getPagamentos()
     }
 
     useEffect(() => {

@@ -1,20 +1,13 @@
 import './ServicoModal.css';
 import { useEffect, useState } from 'react';
-import api from '../../../services/api'
-import moment from 'moment';
-
-import Sidebar from '../../Sidebar/Sidebar';
-import Header from '../../Header/Header';
 
 function ServicoModal({data, isOpen, openModal, createServico, updateServico, deleteServico, clearCard}) {
-
-    console.log(data)
 
     const [servicoNome, setServicoNome] = useState('')
     const [servicoPreco, setServicoPreco] = useState('')
     const [servicoComissao, setServicoComissao] = useState('')
 
-    async function handleSave() {
+    async function handleSaveServico() {
 
         if (!servicoNome || !servicoPreco || !servicoComissao || servicoNome.trim() === '' || servicoPreco.trim() === '' || servicoComissao.trim() === '') {
             window.alert("Por favor, preencha todos os campos.")
@@ -37,21 +30,19 @@ function ServicoModal({data, isOpen, openModal, createServico, updateServico, de
             await updateServico(servico)
         }
 
-        openModal()
-        clearCard()
+        handleCloseModalServico()
     }
 
-    function handleClose() {
-        openModal()
-        clearCard()
-    }
-
-    async function handleDelete() {
+    async function handleDeleteServico() {
         if(window.confirm(`Quer mesmo excluir este registro?`)){
             await deleteServico(data.servico_id)
-            openModal()
-            clearCard()
-        } else {}
+            handleCloseModalServico()
+        }
+    }
+
+    function handleCloseModalServico() {
+        openModal()
+        clearCard()
     }
 
     useEffect(() => {
@@ -83,9 +74,9 @@ function ServicoModal({data, isOpen, openModal, createServico, updateServico, de
                     <input type='text' id='servico-comissao' name='servico-comissao' defaultValue={servicoComissao} onChange={(event) => setServicoComissao(event.target.value)} />
                 </div>
                 <div className='servico-modal-footer'>
-                    <button onClick={handleSave} className='servico-modal-salvar'>SALVAR</button>
-                    <button onClick={handleClose} className='servico-modal-fechar'>FECHAR</button>
-                    <button onClick={handleDelete} className='servico-modal-delete'>DELETAR</button>
+                    <button onClick={handleSaveServico} className='servico-modal-salvar'>SALVAR</button>
+                    <button onClick={handleCloseModalServico} className='servico-modal-fechar'>FECHAR</button>
+                    <button onClick={handleDeleteServico} className='servico-modal-delete'>DELETAR</button>
                 </div>
             </div>
           </div>

@@ -1,6 +1,5 @@
 import './Report.css';
 import { dateFormatReport } from '../../../../utils/dateFormat';
-import { aggregateReports } from '../../../../utils/aggregateReports';
 import { formatValues } from '../../../../utils/formatValues';
 
 function Report({results}) {

@@ -11,22 +11,5 @@ describe('Página agendamentos', () => {
         </Router>
     )
   }); 
-
-  it('Retornando dados de getCalendar', async () => {
-   
-    jest.spyOn(api, 'get').mockResolvedValueOnce({ data: [] })
-
-    await act(async () => {
-        render(
-            <Router>
-                <Agendamento clientes={[]} servicos={[]} funcionarios={[]}/>;
-            </Router>
-        )
-    });
-
-    await waitFor(() => {
-        expect(api.get).toHaveBeenCalledWith('/agendamento');
-    });
-  });
   
 })

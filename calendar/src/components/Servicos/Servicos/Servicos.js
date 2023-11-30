@@ -1,7 +1,5 @@
 import './Servicos.css';
 import { useEffect, useState } from 'react';
-import api from '../../../services/api'
-import moment from 'moment';
 
 import Sidebar from '../../Sidebar/Sidebar';
 import Header from '../../Header/Header';
@@ -24,6 +22,13 @@ function Servicos({servicos, createServico, updateServico, deleteServico}) {
     setModalOpen(true);
   }
 
+  function handleKeyDown(event) {
+    // Verifica se a tecla pressionada é a tecla Enter (código 13)
+    if (event.keyCode === 13) {
+      handleAddServico();
+    }
+  }
+
   useEffect(() => {
     // Adiciona um ouvinte de teclado quando o componente é montado
     document.addEventListener("keydown", handleKeyDown);
@@ -33,13 +38,6 @@ function Servicos({servicos, createServico, updateServico, deleteServico}) {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
-
-  function handleKeyDown(event) {
-    // Verifica se a tecla pressionada é a tecla Enter (código 13)
-    if (event.keyCode === 13) {
-      handleAddServico();
-    }
-  }
 
   return (
     <>

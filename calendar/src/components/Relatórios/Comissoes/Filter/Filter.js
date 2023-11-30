@@ -1,6 +1,5 @@
 import './Filter.css';
 
-
 function Filter({ funcionario, handleFilterFuncionario, handleFilterStart, handleFilterEnd, handleGerarRelatorio, funcionarios }) {
     return (
         <div className='options-bar'>

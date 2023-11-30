@@ -1,6 +1,7 @@
-import './MainComissoes.css';
 import { useState, useEffect } from 'react';
 import api from '../../../../services/api'
+
+import './MainComissoes.css';
 
 import Sidebar from '../../../Sidebar/Sidebar';
 import Header from '../../../Header/Header';
@@ -8,13 +9,25 @@ import Filter from '../Filter/Filter'
 import Report from '../Report/Report'
 import Footer from '../Footer/Footer'
 
-function MainComissoes(props) {
+function MainComissoes({funcionarios}) {
 
     const [funcionario, setFuncionario] = useState('')
     const [filterStart, setFilterStart] = useState('')
     const [filterEnd, setFilterEnd] = useState('')
     const [results, setResults] = useState([])
     const [somaComissoes, setSomaComissoes] = useState(0)
+
+    async function getComissoes() {
+        let res =  await api.get(`/comissoes`, {
+            params: {
+                funcionario: funcionario,
+                filterStart: filterStart,
+                filterEnd: filterEnd
+            }
+        })
+
+        setResults(res.data)
+    }
 
     function  handleFilterFuncionario(value) {
         setFuncionario(value)
@@ -29,18 +42,8 @@ function MainComissoes(props) {
     }
 
     async function handleGerarRelatorio() {
-
         setSomaComissoes(0)
-
-        let res = await api.get(`/comissoes`, {
-            params: {
-                funcionario: funcionario,
-                filterStart: filterStart,
-                filterEnd: filterEnd
-            }
-        })
-
-        setResults(res.data)
+        await getComissoes()
     }
 
     useEffect(() => {
@@ -59,11 +62,10 @@ function MainComissoes(props) {
             handleFilterStart={handleFilterStart}
             handleFilterEnd={handleFilterEnd}
             handleGerarRelatorio={handleGerarRelatorio}
-            funcionarios={props.funcionarios}
+            funcionarios={funcionarios}
         />
         <Report
             results={results}
-            somarComissoes={setSomaComissoes}
         />
         <Footer 
             comissoes={somaComissoes}
