@@ -1,6 +1,8 @@
 # Portfolio
-Este repositório contém o código fonte de um sistema para gestão de salão de beleza desenvolvido para apresentação do Portfolio, 8º Semestre do curso de Eng. Software da CatolicaSC Joinville.    
+Este repositório contém o código fonte de um sistema para gestão de salão de beleza desenvolvido para apresentação do Portfolio, 8º Semestre do curso de Eng. Software da CatolicaSC Joinville.
+
 O sistema permite agendar atendimentos com informações como cliente atendido, serviço realizado e profissional responsável, organizando os cards de atendimento em uma UI de calendário intuitiva e de fácil visualização. Além disso, é possível registrar os valores e métodos de pagamento utilizados pelos clientes.    
+
 Tmabém é possível gerar relatórios quanto as comissões a serem recebidas por um funcionário pelos serviços realizados em um determinado período de tempo, além de controlar o valor total recebido através de determinado método de pagamento em um intervalo de tempo. Finalmente, também é possível gerenciar clientes, funcionários e catálogo de serviços.
 
 # Motivação do Projeto
@@ -34,7 +36,7 @@ Este projeto é licenciado sob a [Licença MIT](LICENSE). Consulte o arquivo [LI
 Mateus Andrade
 
 # Arquitetura do Projeto
-![image](https://github.com/mateusadd/portfolio/assets/81190849/1a4f4f98-745b-42e5-9bb5-eb37b389fd2d)
+![image](https://github.com/mateusadd/portfolio/assets/81190849/1a4f4f98-745b-42e5-9bb5-eb37b389fd2d)  
 *Mais informações sobre a arquitetura do projeto podem ser encontrdas na Wiki*
 
 # Requisitos do projeto
