@@ -37,7 +37,7 @@ Mateus Andrade
 
 # Arquitetura do Projeto
 ![image](https://github.com/mateusadd/portfolio/assets/81190849/1a4f4f98-745b-42e5-9bb5-eb37b389fd2d)  
-*Mais informações sobre a arquitetura do projeto podem ser encontrdas na Wiki*
+*Mais informações sobre a arquitetura do projeto podem ser encontradas na Wiki*
 
 # Requisitos do projeto
 ## Requisitos Funcionais
