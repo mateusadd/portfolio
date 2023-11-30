@@ -25,7 +25,7 @@ module.exports = {
 
     async read(req, res) {
 
-            if(req.query && req.query.agendamento_id) {
+            if(req.query?.agendamento_id) {
                 try {
     
                     const registers = await Pagamento.findAll({
@@ -45,7 +45,7 @@ module.exports = {
                     console.log(error)
                     
                 }
-            } else if (req.query && req.query.pagamento_id) {
+            } else if (req.query?.pagamento_id) {
                 try {
     
                     const registers = await Pagamento.findAll({
