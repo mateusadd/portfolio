@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-var url
+let url
 
 if(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     url = "http://localhost:3001"

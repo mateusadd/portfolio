@@ -60,8 +60,7 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
 
   if(isOpen) {
     return (
-        <>
-          <div className='cliente-background'>
+        <div className='cliente-background'>
             <div className='cliente-modal'>
                 <div className='cliente-modal-header'>
                     <p>{data && Array.isArray(data) ? 'ADICIONAR CLIENTE' : `EDITAR CLIENTE: #${data.cliente_id}`}</p>
@@ -84,8 +83,7 @@ function ClienteModal({data, isOpen, openModal, createCliente, updateCliente, de
                     <button onClick={handleDeleteCliente} className='cliente-modal-delete'>DELETAR</button>
                 </div>
             </div>
-          </div>
-        </>
+        </div>
       );
   }
 }

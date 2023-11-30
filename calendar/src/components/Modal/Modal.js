@@ -4,7 +4,7 @@ import api from '../../services/api'
 import { dateFormat } from '../../utils/dateFormat';
 import { verifyTotalPayment } from '../../utils/verifyTotalPayment'
 import { verifyMethods } from '../../utils/verifyMethods'
-import Pagamentos from '../Payment/Pagamentos';
+import Pagamentos from '../Pagamentos/Pagamentos';
 
 function Modal({ isOpen, openModal, onSave, onUpdate, onDeleteAgendamento, selected, clientes, servicos, funcionarios, payMethods, setPayMethods, clearSelected, selectedDateTime }) {
     
@@ -136,9 +136,12 @@ function Modal({ isOpen, openModal, onSave, onUpdate, onDeleteAgendamento, selec
 
     async function handleSaveAgendamento() {
 
+        console.log(pagamentos)
+
         if (!cliente || cliente === '' || !servico || servico === '' ||!funcionario || funcionario === '') {
+
             window.alert("Por favor, preencha todos os campos.")
-            return;
+            
         } else if(pagamentos.length > 0 && controlaValorServico !== verifyTotalPayment(pagamentos)) {
 
             if(window.confirm('Valor informado é diferente do valor do serviço. Deseja salvar mesmo assim?')){

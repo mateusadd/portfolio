@@ -10,23 +10,21 @@ function ServicoCard({key, data, onClick}) {
       };
 
   return (
-    <>
-        <div className="servico-card" onClick={onClick} onKeyPress={handleKeyPress} tabIndex={0} role="button">
+    <div className="servico-card" onClick={onClick} onKeyPress={handleKeyPress} tabIndex={0} role="button">
 
-            <ul className="servico-properties">
-                <li>
-                    {data.servico_nome}
-                </li>
-                <li>
-                    {data.servico_preco}
-                </li>
-                <li>
-                    {data.servico_comissao}
-                </li>
-            </ul>
+        <ul className="servico-properties">
+            <li>
+                {data.servico_nome}
+            </li>
+            <li>
+                {data.servico_preco}
+            </li>
+            <li>
+                {data.servico_comissao}
+            </li>
+        </ul>
 
-        </div>
-    </>
+    </div>
   );
 }
 

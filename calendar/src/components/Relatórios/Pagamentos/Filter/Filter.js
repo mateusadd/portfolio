@@ -4,7 +4,7 @@ import './Filter.css';
 function Filter({ metodoPagamento, handleFilterMetodoPagamento, handleFilterStart, handleFilterEnd, handleGerarRelatorio }) {
     return (
         <div className='options-bar'>
-            <p className='filter-label'>Funcionário</p>
+            <p className='filter-label'>Método</p>
             <select className='select' id='metodoPagamento' name='metodoPagamento' value={metodoPagamento} onChange={e => handleFilterMetodoPagamento(e.target.value)}>
                 <option value=""></option>
                 <option value="Dinheiro">Dinheiro</option>

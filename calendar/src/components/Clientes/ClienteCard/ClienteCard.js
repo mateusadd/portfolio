@@ -10,23 +10,21 @@ function ClienteCard({key, data, onClick}) {
       };
 
   return (
-    <>
-        <div className="cliente-card" onClick={onClick} onKeyPress={handleKeyPress} tabIndex={0} role="button">
+    <div className="cliente-card" onClick={onClick} onKeyPress={handleKeyPress} tabIndex={0} role="button">
 
-            <ul className="cliente-properties">
-                <li>
-                    {data.cliente_nome}
-                </li>
-                <li>
-                    {data.cliente_contato}
-                </li>
-                <li>
-                    {data.funcionario !== true ? 'Não' : 'Sim'}
-                </li>
-            </ul>
+        <ul className="cliente-properties">
+            <li>
+                {data.cliente_nome}
+            </li>
+            <li>
+                {data.cliente_contato}
+            </li>
+            <li>
+                {data.funcionario !== true ? 'Não' : 'Sim'}
+            </li>
+        </ul>
 
-        </div>
-    </>
+    </div>
   );
 }
 

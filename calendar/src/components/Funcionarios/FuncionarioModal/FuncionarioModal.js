@@ -56,8 +56,7 @@ function FuncionarioModal({data, isOpen, openModal, createFuncionario, updateFun
 
   if(isOpen) {
     return (
-        <>
-          <div className='funcionario-background'>
+        <div className='funcionario-background'>
             <div className='funcionario-modal'>
                 <div className='funcionario-modal-header'>
                     <p>{data && Array.isArray(data) ? 'ADICIONAR FUNCIONÁRIO' : `EDITAR FUNCIONÁRIO: #${data.funcionario_id}`}</p>
@@ -80,8 +79,7 @@ function FuncionarioModal({data, isOpen, openModal, createFuncionario, updateFun
                     <button onClick={handleDeleteFuncionario} className='funcionario-modal-delete'>DELETAR</button>
                 </div>
             </div>
-          </div>
-        </>
+        </div>
       );
   }
 }

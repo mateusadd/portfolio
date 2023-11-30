@@ -55,8 +55,7 @@ function ServicoModal({data, isOpen, openModal, createServico, updateServico, de
 
   if(isOpen) {
     return (
-        <>
-          <div className='servico-background'>
+        <div className='servico-background'>
             <div className='servico-modal'>
                 <div className='servico-modal-header'>
                     <p>{data && Array.isArray(data) ? 'ADICIONAR SERVIÇO' : `EDITAR SERVIÇO: #${data.servico_id}`}</p>
@@ -79,8 +78,7 @@ function ServicoModal({data, isOpen, openModal, createServico, updateServico, de
                     <button onClick={handleDeleteServico} className='servico-modal-delete'>DELETAR</button>
                 </div>
             </div>
-          </div>
-        </>
+        </div>
       );
   }
 }

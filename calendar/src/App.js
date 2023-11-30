@@ -21,6 +21,7 @@ function App() {
   const [servicos, setServicos] = useState([])
   const [funcionarios, setFuncionarios] = useState([])
 
+  //---------------------------/CLIENTE---------------------------
   async function getClientes() {
     let res = await api.get('/cliente')
     setClientes(res.data)
@@ -49,10 +50,12 @@ function App() {
   }
 
   async function deleteCliente(cliente_id) {
-    let res = await api.delete(`/cliente/${cliente_id}`)
+    await api.delete(`/cliente/${cliente_id}`)
     setClientes(clientes.filter(data => data.cliente_id !== cliente_id))
   }
 
+  //--------------------------------------------------------------
+  //---------------------------/SERVICO---------------------------
 
   async function getServicos() {
     let res = await api.get('/servico')
@@ -82,9 +85,12 @@ function App() {
   }
 
   async function deleteServico(servico_id) {
-    let res = await api.delete(`/servico/${servico_id}`)
+    await api.delete(`/servico/${servico_id}`)
     setServicos(servicos.filter(data => data.servico_id !== servico_id))
   }
+  
+  //------------------------------------------------------------------
+  //---------------------------/FUNCIONARIO---------------------------
 
   async function getFuncionarios() {
     let res = await api.get('/funcionario')
@@ -114,9 +120,11 @@ function App() {
   }
 
   async function deleteFuncionario(funcionario_id) {
-    let res = await api.delete(`/funcionario/${funcionario_id}`)
+    await api.delete(`/funcionario/${funcionario_id}`)
     setFuncionarios(funcionarios.filter(data => data.funcionario_id !== funcionario_id))
   }
+
+  //------------------------------------------------------------------
 
   useEffect(() => {
     getClientes()
