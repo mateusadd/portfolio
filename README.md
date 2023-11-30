@@ -1,31 +1,41 @@
 # Portfolio
-Sistema de Gestão Salão de Beleza
+Este repositório contém o código fonte de um sistema para gestão de salão de beleza desenvolvido para apresentação do Portfolio, 8º Semestre do curso de Eng. Software da CatolicaSC Joinville.    
+O sistema permite agendar atendimentos com informações como cliente atendido, serviço realizado e profissional responsável, organizando os cards de atendimento em uma UI de calendário intuitiva e de fácil visualização. Além disso, é possível registrar os valores e métodos de pagamento utilizados pelos clientes.    
+Tmabém é possível gerar relatórios quanto as comissões a serem recebidas por um funcionário pelos serviços realizados em um determinado período de tempo, além de controlar o valor total recebido através de determinado método de pagamento em um intervalo de tempo. Finalmente, também é possível gerenciar clientes, funcionários e catálogo de serviços.
+
+# Motivação do Projeto
+Ajudar um estabelecimento que mantém seus processos de histórico de agendamento, cálculo de comissões e controle de faturamento em papel e caneta, acarretando perda dos registros de atendimento, erros na distribuição das comissões e multas por conta do limite de faturamento da MEI.
 
 # Organização das Tarefas
 Utilização do método FDD(Feature Driven Development)
 **https://trello.com/invite/b/097zIW16/ATTI8622f07b55f3a3ed291b4fec72dca709E4B80A10/portfolio**
 
-
-# Execução  
-cd backend  
-npm run dev  
-cd calendar  
+# Instalação e execução  
+Após clonar o repositório, execute os seguintes comandos:
+```
+cd backend
+npm i  
+npm run dev 
+```
+```
+cd calendar
+npm i  
 npm start  
-Acesso em: http://localhost:3000  
+```
+
+# Utilização
+Após executar o projeto, basta acessá-lo localmente no endereço http://localhost:3000.  
+O sistema também está disponível publicamente no endereço https://portfolio-production-691c.up.railway.app  
 
 ## Licença
 Este projeto é licenciado sob a [Licença MIT](LICENSE). Consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
 
-# Contato
-m.andrade@catolicasc.edu.br
-
-
-# Motivação do Projeto
-Ajudar um estabelecimento que mantém seus processos de histórico de agendamento, cálculo de comissões e controle de faturamento em papel e caneta, acarretando perda dos registros de atendimento, erros na distribuição das comissões e multas por conta do limite de faturamento da MEI
+# Autor  
+Mateus Andrade
 
 # Arquitetura do Projeto
 ![image](https://github.com/mateusadd/portfolio/assets/81190849/1a4f4f98-745b-42e5-9bb5-eb37b389fd2d)
-
+*Mais informações sobre a arquitetura do projeto podem ser encontrdas na Wiki*
 
 # Requisitos do projeto
 ## Requisitos Funcionais
