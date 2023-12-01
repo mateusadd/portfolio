@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.23.5",
+    "@babel/preset-flow": "^7.23.3",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.18",
@@ -10,6 +12,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
+    "axios-mock-adapter": "^1.22.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^29.7.0",
+    "babel-plugin-styled-components": "^2.1.4",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "moment": "^2.29.4",
@@ -27,14 +33,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --detectOpenHandles",
+    "test": "jest --passWithNoTests --detectOpenHandles",
+    "test:coverage": "jest --coverage --detectOpenHandles",
     "eject": "react-scripts eject"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.(js|ts)$": "babel-jest"
-    },
-    "transformIgnorePatterns": []
   },
   "eslintConfig": {
     "extends": [
