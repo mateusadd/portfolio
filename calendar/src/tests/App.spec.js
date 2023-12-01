@@ -1,8 +1,9 @@
 import { render, screen, waitFor, act } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import App from '../calendar/src/App';
+import App from '../App';
 import axios from 'axios';
+import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
 
 describe('Página inicial', () => {
