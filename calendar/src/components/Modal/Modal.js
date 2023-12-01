@@ -22,7 +22,7 @@ function Modal({ isOpen, openModal, onSave, onUpdate, onDeleteAgendamento, selec
     const [pagamentos, setPagamentos] = useState([]);
     const [idsToDelete, setIdsToDelete] = useState([])
     const [verificaCliente, setVerificaCliente] = useState(false)
-    const [controlaValorServico, setControlaValorServico] = useState('')
+    const [controlaValorServico, setControlaValorServico] = useState(null)
 
     //------------------------COMUNICAÇÃO COM API------------------------
 
@@ -219,7 +219,7 @@ function Modal({ isOpen, openModal, onSave, onUpdate, onDeleteAgendamento, selec
         setValor('')
         setMetodoPagamento('')
         setVerificaCliente(false)
-        setControlaValorServico('')
+        setControlaValorServico(null)
         setPagamentos([])
         setListOfPayments([])
         setIdsToDelete([])
