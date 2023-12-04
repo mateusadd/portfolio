@@ -77,49 +77,15 @@ O sistema deve estar sempre disponível, para que agendamentos possam ser regist
 Deve haver backup regular para proteger os dados contra perda ou corrupção.
 
 # Ferramentas, dependências e configurações  
+Uma relação das principais ferramentas e dependências utilizadas no desenvolvimento:  
 ## Backend  
-"dependencies": {  
-    "cors": "^2.8.5",  
-    "dotenv": "^16.3.1",  
-    "express": "^4.18.2",  
-    "mysql2": "^3.6.3",  
-    "mysql8": "^2.17.3",  
-    "nodemon": "^3.0.1",  
-    "sequelize": "^6.35.0"  
-  }  
-  "devDependencies": {  
-    "jest": "^29.7.0",  
-    "nodemon": "^2.0.20",  
-    "supertest": "^6.3.3"  
-  }  
+[Express](https://www.npmjs.com/package/express)  
+[Nodemon](https://www.npmjs.com/package/nodemon)  
+[Mysql2](https://www.npmjs.com/package/mysql2)  
+[Sequelize](https://www.npmjs.com/package/sequelize)  
+[Jest](https://www.npmjs.com/package/jest)  
 
 ## Frontend  
-"dependencies": {  
-    "@emotion/react": "^11.11.1",  
-    "@emotion/styled": "^11.11.0",  
-    "@mui/material": "^5.14.18",  
-    "@testing-library/jest-dom": "^5.17.0",  
-    "@testing-library/react": "^13.4.0",  
-    "@testing-library/user-event": "^13.5.0",  
-    "axios": "^1.6.2",  
-    "date-fns": "^2.30.0",  
-    "dotenv": "^16.3.1",  
-    "moment": "^2.29.4",  
-    "moment-timezone": "^0.5.43",  
-    "react": "^18.2.0",  
-    "react-big-calendar": "^1.8.5",  
-    "react-color": "^2.19.3",  
-    "react-dom": "^18.2.0",  
-    "react-icons": "^4.12.0",  
-    "react-router-dom": "^6.18.0",  
-    "react-scripts": "5.0.1",  
-    "uuid": "^9.0.1",  
-    "web-vitals": "^2.1.4"  
-  }  
-
-# Instruções para Novos Desenvolvedores
-git clone https://github.com/mateusadd/portfolio.git  
-cd backend  
-npm run dev  
-cd calendar  
-npm start
+[Axios](https://www.npmjs.com/package/axios)  
+[Calendar](https://www.npmjs.com/package/react-big-calendar)  
+[Icons](https://www.npmjs.com/package/react-icons)  
